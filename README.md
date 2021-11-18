@@ -4,8 +4,8 @@ Two versions of my Euchre game -- the original VB/WinForms implementation, and t
 ## Background
 Starting around 2006 (when I became the Visual Basic development manager) and going though about 2011, I wrote up a series of blogs on the Microsoft Visual Basic site that were focused on 
 teaching people some of the basics of writing in VB.  I later posted these in an MSDN site called "The Temple of VB."  Both of these sites have,
-alas, succumbed to bit rot, though several of the blogs were captured in my e-book "The Temple of VB" which is available on Amazon.  (I know,
-that's a shameless plug.)  I later ported this game to Windows Mobile 6.0 as well -- it was basically identical to the desktop except for having to modify the sizes of the resources somewhat.
+alas, succumbed to bit rot, though several of the blogs (including the ones covering the material in this codebase) were captured in my e-book "The Temple of VB" which is available on Amazon.  (I know,
+that's a shameless plug.)  The very first series of posts dealt with writing a Euchre game in Visual Basic, Euchre being a particular passion of mine in college.  I later ported this game to Windows Mobile 6.0 as well -- it was basically identical to the desktop except for having to modify the sizes of the resources somewhat.
 
 That original Euchre game was written using WinForms, and as a result it was heavily focused on the "DoEvent" functionality to keep the game moving.  As a proof of concept, 
 it was OK, but realistically that's not a very efficient way to run a game, because it locks the UI thread whenever waiting on a specific user response. I'd always
