@@ -1,10 +1,15 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.22706.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.31907.60
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VBEuchre4", "VBEuchre4\VBEuchre4.vbproj", "{F3BE5255-C38F-4A1D-96D7-F24B0E007A20}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSEuchre4", "CSEuchre4\CSEuchre4.csproj", "{45601F87-5F3E-46C3-872D-B1EAF6DBA6B4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FA13D018-6833-49A5-B05E-F82FC6E93B07}"
+	ProjectSection(SolutionItems) = preProject
+		License.txt = License.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,5 +62,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {901E9951-183F-4561-8307-A043089F25C4}
 	EndGlobalSection
 EndGlobal
