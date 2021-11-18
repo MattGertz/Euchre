@@ -16,7 +16,7 @@ I simply cached the current state and let the message loop carryout whatever bus
 the VB version in that case), and then whenever the user clicked something on the screen, I'd figure out what state we were in and handle the event accordingly.
 
 Time has marched on, and even my later C#/WPF implementation is looking a little, um, _quaint_.  If I were rewriting this app now, I'd certainly make this a mobile app and (in the 
-spirit of .NET dogfooding) leverage something like MAUI to handle the UI stack.  Maui and WPF are similar in the way that they handle UI elements and both are XAML-based, so the resource 
+spirit of .NET dogfooding) leverage something like MAUI to handle the UI stack.  MAUI and WPF are similar in the way that they handle UI elements and both are XAML-based, so the resource 
 and event handling wouldn't be too much of a change, but the graphics themselves would certainly need an overhaul.  I'd also probably include a way to play with friends online.
 The AI & rules logic in this code still holds up well, at least! 
 
