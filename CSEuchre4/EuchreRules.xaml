@@ -1,0 +1,9 @@
+﻿<Window x:Class="CSEuchre4.EuchreRules"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="EuchreRules" Height="715" Width="707">
+    <Grid Background="Maroon">
+        <RichTextBox Height="612" HorizontalAlignment="Left" Name="RtfRules" VerticalAlignment="Top" Width="661" Background="Yellow" Margin="12,12,0,0" VerticalScrollBarVisibility="Auto" IsReadOnly="True" />
+        <Button Content="Close" Height="23" HorizontalAlignment="Left" Margin="598,641,0,0" Name="CloseBtn" VerticalAlignment="Top" Width="75" />
+    </Grid>
+</Window>

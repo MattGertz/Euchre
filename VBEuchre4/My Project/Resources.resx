@@ -1,0 +1,691 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BID_Clubs" xml:space="preserve">
+    <value>Choose this option if you want Clubs to be trump.  You will need to win three tricks in the hand or else be "euchred" (the opposing team will get two points if that happens).</value>
+  </data>
+  <data name="BID_Diamonds" xml:space="preserve">
+    <value>Choose this option if you want Diamonds to be trump.  You will need to win three tricks in the hand or else be "euchred" (the opposing team will get two points if that happens).</value>
+  </data>
+  <data name="BID_GoingAlone" xml:space="preserve">
+    <value>Choose this option if you want to play this hand without your partner's help.  If you take all five tricks, you will get four points. (If the "Quiet Dealer" option is being used in this game and your partner is the dealer, then this option is automatically selected for you and cannot be changed.)</value>
+  </data>
+  <data name="BID_Hearts" xml:space="preserve">
+    <value>Choose this option if you want Hearts to be trump.  You will need to win three tricks in the hand or else be "euchred" (the opposing team will get two points if that happens).</value>
+  </data>
+  <data name="BID_Pass1" xml:space="preserve">
+    <value>Choose the option if you do not want the dealer pick up the upturned card and have its suit be trump.</value>
+  </data>
+  <data name="BID_Pass2" xml:space="preserve">
+    <value>Choose this option if you do not want to call trump.</value>
+  </data>
+  <data name="BID_PickItUp" xml:space="preserve">
+    <value>Choose this option if you want the dealer to pick up the upturned card in the kitty and have its suit be trump.  You will need to win three tricks in the hand or else be "euchred" (the opposing team will get two points if that happens).</value>
+  </data>
+  <data name="BID_Spades" xml:space="preserve">
+    <value>Choose this option if you want Spades to be trump.  You will need to win three tricks in the hand or else be "euchred" (the opposing team will get two points if that happens).</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="CARDBACK" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDBACK.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEAceOfClubs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEAceOfClubs.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEAceOfDiamonds" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEAceOfDiamonds.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEAceOfHearts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEAceOfHearts.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEAceOfSpades" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEAceOfSpades.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEFiveOfClubs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEFiveOfClubs.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEFiveOfDiamonds" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEFiveOfDiamonds.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEFiveOfHearts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEFiveOfHearts.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEFiveOfSpades" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEFiveOfSpades.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEJackOfClubs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEJackOfClubs.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEJackOfDiamonds" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEJackOfDiamonds.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEJackOfHearts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEJackOfHearts.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEJackOfSpades" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEJackOfSpades.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEKingOfClubs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEKingOfClubs.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEKingOfDiamonds" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEKingOfDiamonds.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEKingOfHearts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEKingOfHearts.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEKingOfSpades" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEKingOfSpades.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACENineOfClubs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACENineOfClubs.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACENineOfDiamonds" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACENineOfDiamonds.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACENineOfHearts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACENineOfHearts.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACENineOfSpades" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACENineOfSpades.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEQueenOfClubs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEQueenOfClubs.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEQueenOfDiamonds" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEQueenOfDiamonds.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEQueenOfHearts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEQueenOfHearts.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACEQueenOfSpades" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACEQueenOfSpades.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACETenOfClubs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACETenOfClubs.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACETenOfDiamonds" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACETenOfDiamonds.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACETenOfHearts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACETenOfHearts.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDFACETenOfSpades" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CARDFACETenOfSpades.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARDNAME_AceOfClubs" xml:space="preserve">
+    <value>Ace of Clubs</value>
+  </data>
+  <data name="CARDNAME_AceOfDiamonds" xml:space="preserve">
+    <value>Ace of Diamonds</value>
+  </data>
+  <data name="CARDNAME_AceOfHearts" xml:space="preserve">
+    <value>Ace of Hearts</value>
+  </data>
+  <data name="CARDNAME_AceOfSpades" xml:space="preserve">
+    <value>Ace of Spades</value>
+  </data>
+  <data name="CARDNAME_BACK" xml:space="preserve">
+    <value>[Face-down card]</value>
+  </data>
+  <data name="CARDNAME_JackOfClubs" xml:space="preserve">
+    <value>Jack of Clubs</value>
+  </data>
+  <data name="CARDNAME_JackOfDiamonds" xml:space="preserve">
+    <value>Jack of Diamonds</value>
+  </data>
+  <data name="CARDNAME_JackOfHearts" xml:space="preserve">
+    <value>Jack of Hearts</value>
+  </data>
+  <data name="CARDNAME_JackOfSpades" xml:space="preserve">
+    <value>Jack of Spades</value>
+  </data>
+  <data name="CARDNAME_KingOfClubs" xml:space="preserve">
+    <value>King of Clubs</value>
+  </data>
+  <data name="CARDNAME_KingOfDiamonds" xml:space="preserve">
+    <value>King of Diamonds</value>
+  </data>
+  <data name="CARDNAME_KingOfHearts" xml:space="preserve">
+    <value>King of Hearts</value>
+  </data>
+  <data name="CARDNAME_KingOfSpades" xml:space="preserve">
+    <value>King of Spades</value>
+  </data>
+  <data name="CARDNAME_LeftBower" xml:space="preserve">
+    <value>Left Bower</value>
+  </data>
+  <data name="CARDNAME_NineOfClubs" xml:space="preserve">
+    <value>Nine of Clubs</value>
+  </data>
+  <data name="CARDNAME_NineOfDiamonds" xml:space="preserve">
+    <value>Nine of Diamonds</value>
+  </data>
+  <data name="CARDNAME_NineOfHearts" xml:space="preserve">
+    <value>Nine of Hearts</value>
+  </data>
+  <data name="CARDNAME_NineOfSpades" xml:space="preserve">
+    <value>Nine of Spades</value>
+  </data>
+  <data name="CARDNAME_QueenOfClubs" xml:space="preserve">
+    <value>Queen of Clubs</value>
+  </data>
+  <data name="CARDNAME_QueenOfDiamonds" xml:space="preserve">
+    <value>Queen of Diamonds</value>
+  </data>
+  <data name="CARDNAME_QueenOfHearts" xml:space="preserve">
+    <value>Queen of Hearts</value>
+  </data>
+  <data name="CARDNAME_QueenOfSpades" xml:space="preserve">
+    <value>Queen of Spades</value>
+  </data>
+  <data name="CARDNAME_RightBower" xml:space="preserve">
+    <value>Right Bower</value>
+  </data>
+  <data name="CARDNAME_TenOfClubs" xml:space="preserve">
+    <value>Ten of Clubs</value>
+  </data>
+  <data name="CARDNAME_TenOfDiamonds" xml:space="preserve">
+    <value>Ten of Diamonds</value>
+  </data>
+  <data name="CARDNAME_TenOfHearts" xml:space="preserve">
+    <value>Ten of Hearts</value>
+  </data>
+  <data name="CARDNAME_TenOfSpades" xml:space="preserve">
+    <value>Ten of Spades</value>
+  </data>
+  <data name="CLUBS" xml:space="preserve">
+    <value>Clubs</value>
+  </data>
+  <data name="CLUBSIMAGE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CLUBSIMAGE.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Command_Exit" xml:space="preserve">
+    <value>Are you sure you want to exit?</value>
+  </data>
+  <data name="Command_ExitTitle" xml:space="preserve">
+    <value>Exit VBEuchre</value>
+  </data>
+  <data name="Command_New" xml:space="preserve">
+    <value>Are you sure you want to start a new game?</value>
+  </data>
+  <data name="Command_NewTitle" xml:space="preserve">
+    <value>New Game</value>
+  </data>
+  <data name="DIAMONDS" xml:space="preserve">
+    <value>Diamonds</value>
+  </data>
+  <data name="DIAMONDSIMAGE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\DIAMONDSIMAGE.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Euchre" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Euchre.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Format_TheirScore" xml:space="preserve">
+    <value>Their Score: {0}</value>
+  </data>
+  <data name="Format_TheirTricks" xml:space="preserve">
+    <value>Their Tricks Taken: {0}</value>
+  </data>
+  <data name="Format_YourScore" xml:space="preserve">
+    <value>Your Score: {0}</value>
+  </data>
+  <data name="Format_YourTricks" xml:space="preserve">
+    <value>Your Tricks Taken: {0}</value>
+  </data>
+  <data name="HEARTS" xml:space="preserve">
+    <value>Hearts</value>
+  </data>
+  <data name="HEARTSIMAGE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\HEARTSIMAGE.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\logo.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SoundApplauseLoud" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\loudapplause.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="NOSUIT" xml:space="preserve">
+    <value>(no suit)</value>
+  </data>
+  <data name="NOSUITIMAGE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\NOSUITIMAGE.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Notice_AllPassedTwice" xml:space="preserve">
+    <value>All players passed twice. Deal passes to the next player.</value>
+  </data>
+  <data name="Notice_ChoosingDealer" xml:space="preserve">
+    <value>Selecting dealer (first Jack wins deal)...</value>
+  </data>
+  <data name="Notice_ChoseTrump" xml:space="preserve">
+    <value>{0} says "Trump is {1}."</value>
+  </data>
+  <data name="Notice_ChoseTrumpAlone" xml:space="preserve">
+    <value>{0} says "Trump is {1} -- I'm going alone!"</value>
+  </data>
+  <data name="Notice_DealingCards" xml:space="preserve">
+    <value>Dealing the cards...</value>
+  </data>
+  <data name="Notice_DealtACard" xml:space="preserve">
+    <value>{0} was dealt the {1}.</value>
+  </data>
+  <data name="Notice_IAmTheDealer" xml:space="preserve">
+    <value>{0} wins the deal!</value>
+  </data>
+  <data name="Notice_IPickItUp" xml:space="preserve">
+    <value>{0} says "I'll pick it up." Trump is {1}.</value>
+  </data>
+  <data name="Notice_IPickItUpAlone" xml:space="preserve">
+    <value>{0} says "I'll pick it up -- I'm going alone!" Trump is {1}.</value>
+  </data>
+  <data name="Notice_KittyCard" xml:space="preserve">
+    <value>The {0} was turned up in the kitty.</value>
+  </data>
+  <data name="Notice_Pass" xml:space="preserve">
+    <value>{0} says "I pass."</value>
+  </data>
+  <data name="Notice_PickItUp" xml:space="preserve">
+    <value>{0} says "Pick it up."  Trump is {1}.</value>
+  </data>
+  <data name="Notice_PickItUpAlone" xml:space="preserve">
+    <value>{0} says "Pick it up -- I'm going alone!" Trump is {1}.</value>
+  </data>
+  <data name="Notice_PlayACard" xml:space="preserve">
+    <value>Please select a card to play.</value>
+  </data>
+  <data name="Notice_PlayedACard" xml:space="preserve">
+    <value>{0} played the {1}.</value>
+  </data>
+  <data name="Notice_ShufflingCards" xml:space="preserve">
+    <value>Shuffling the cards...</value>
+  </data>
+  <data name="Notice_StartingNewGame" xml:space="preserve">
+    <value>Starting new game...</value>
+  </data>
+  <data name="Notice_SwapACard" xml:space="preserve">
+    <value>Please select a card to drop.</value>
+  </data>
+  <data name="Notice_TheirTeamWonTrick" xml:space="preserve">
+    <value>Their team took the trick.</value>
+  </data>
+  <data name="Notice_TheyEuchredYou" xml:space="preserve">
+    <value>Their team euchred your team for two points!</value>
+  </data>
+  <data name="Notice_TheySuperEuchredYou" xml:space="preserve">
+    <value>Their team super-euchred your team for four points!</value>
+  </data>
+  <data name="Notice_TheyWonTheGame" xml:space="preserve">
+    <value>Their team won the game!</value>
+  </data>
+  <data name="Notice_TheyWonTheHand" xml:space="preserve">
+    <value>Their team won the hand for one point.</value>
+  </data>
+  <data name="Notice_TheyWonTheHandAllTricks" xml:space="preserve">
+    <value>Their team took all of the tricks for two points!</value>
+  </data>
+  <data name="Notice_TheyWonTheHandAllTricksAlone" xml:space="preserve">
+    <value>Their team took all of the tricks, going alone, for four points!</value>
+  </data>
+  <data name="Notice_Welcome" xml:space="preserve">
+    <value>Welcome to VB Euchre! Choose "New Game" from the VBEuchre menu (or press F2) to start a new game.</value>
+  </data>
+  <data name="Notice_YouEuchredThem" xml:space="preserve">
+    <value>Your team euchred their team for two points!</value>
+  </data>
+  <data name="Notice_YourTeamWonTrick" xml:space="preserve">
+    <value>Your team took the trick.</value>
+  </data>
+  <data name="Notice_YouSuperEuchredThem" xml:space="preserve">
+    <value>Your team super-euchred their team for four points!</value>
+  </data>
+  <data name="Notice_YouWonTheGame" xml:space="preserve">
+    <value>Your team won the game!</value>
+  </data>
+  <data name="Notice_YouWonTheHand" xml:space="preserve">
+    <value>Your team won the hand for one point.</value>
+  </data>
+  <data name="Notice_YouWonTheHandAllTricks" xml:space="preserve">
+    <value>Your team won all the tricks for two points!</value>
+  </data>
+  <data name="Notice_YouWonTheHandAllTricksAlone" xml:space="preserve">
+    <value>Your team won all of the tricks, going alone, for four points!</value>
+  </data>
+  <data name="OPTION_Conservative" xml:space="preserve">
+    <value>If "Conservative" is selected, this player will tend to select trump only if winning the hand is guaranteed.</value>
+  </data>
+  <data name="OPTION_Crazy" xml:space="preserve">
+    <value>If "Crazy" is selected, this player will tend to select trump on hard-to-make hands.</value>
+  </data>
+  <data name="OPTION_LeftOpponent" xml:space="preserve">
+    <value>Specify a name for the player on your left here.</value>
+  </data>
+  <data name="OPTION_LeftOpponentVoice" xml:space="preserve">
+    <value>Specify a voice for your left opponent here.</value>
+  </data>
+  <data name="OPTION_Name" xml:space="preserve">
+    <value>Specify a name for yourself here.</value>
+  </data>
+  <data name="OPTION_NineOfHearts" xml:space="preserve">
+    <value>Checking this box will remove all of the cards of rank nine from the deck except the Nine of Hearts.  (This is a variant rule used in the Appalachian area.)</value>
+  </data>
+  <data name="OPTION_Normal" xml:space="preserve">
+    <value>If "Normal" is selected, this player will tend to select trump only when there is a reasonable chance of winning at least three tricks.</value>
+  </data>
+  <data name="OPTION_PeekAtOtherCards" xml:space="preserve">
+    <value>Checking this box means that you will be able to see all card hands (plus the kitty), instead of just your own cards. This is a useful option for when you're learning how to play the game.</value>
+  </data>
+  <data name="OPTION_QuietDealer" xml:space="preserve">
+    <value>Checking this box means that the dealer's partner has to "go alone" if he or she selects the trump suit.</value>
+  </data>
+  <data name="OPTION_RightOpponent" xml:space="preserve">
+    <value>Specify a name for the player on your right here.</value>
+  </data>
+  <data name="OPTION_RightOpponentVoice" xml:space="preserve">
+    <value>Specify a voice for your right opponent here.</value>
+  </data>
+  <data name="OPTION_SoundEffects" xml:space="preserve">
+    <value>Checking this box means that you'll hear sound effects during the game. (Game play is slightly quicker if this is turned off.)</value>
+  </data>
+  <data name="OPTION_StickTheDealer" xml:space="preserve">
+    <value>Checking this box will force the dealer to select the trump suit on the second round if no one else has called trump.  The dealer's team will need to win three tricks or else be euchred, as usual.</value>
+  </data>
+  <data name="OPTION_SuperEuchre" xml:space="preserve">
+    <value>Checking this box means that, if the calling teams loses all five tricks, the opposing team will get 4 points instead of 2 points.</value>
+  </data>
+  <data name="OPTION_YourPartner" xml:space="preserve">
+    <value>Specify a name for your partner here.</value>
+  </data>
+  <data name="OPTION_YourPartnerVoice" xml:space="preserve">
+    <value>Specify a voice for your partner here.</value>
+  </data>
+  <data name="SoundPlayCard" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\playcard.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Player_LeftOpponent" xml:space="preserve">
+    <value>The opponent on your left</value>
+  </data>
+  <data name="Player_Partner" xml:space="preserve">
+    <value>{0}'s partner</value>
+  </data>
+  <data name="Player_Player" xml:space="preserve">
+    <value>The player</value>
+  </data>
+  <data name="Player_RightOpponent" xml:space="preserve">
+    <value>The opponent on your right</value>
+  </data>
+  <data name="SAY_Alone" xml:space="preserve">
+    <value>and i'm going alone.</value>
+  </data>
+  <data name="SAY_Clubs" xml:space="preserve">
+    <value>trump is clubs.</value>
+  </data>
+  <data name="SAY_Diamonds" xml:space="preserve">
+    <value>trump is diamonds.</value>
+  </data>
+  <data name="SAY_Hearts" xml:space="preserve">
+    <value>trump is hearts.</value>
+  </data>
+  <data name="SAY_IPickItUp" xml:space="preserve">
+    <value>i'll pick it up.</value>
+  </data>
+  <data name="SAY_LetsPlayEuchre" xml:space="preserve">
+    <value>lets play euchre</value>
+  </data>
+  <data name="SAY_MeGotFour" xml:space="preserve">
+    <value>looks like i got some good cards that time {0}</value>
+  </data>
+  <data name="SAY_MeGotOne" xml:space="preserve">
+    <value>one point for us {0}</value>
+  </data>
+  <data name="SAY_MeGotTwo" xml:space="preserve">
+    <value>guess i made a good call that time, huh {0}</value>
+  </data>
+  <data name="SAY_Pass" xml:space="preserve">
+    <value>i pass.</value>
+  </data>
+  <data name="SAY_PickItUp" xml:space="preserve">
+    <value>pick it up!</value>
+  </data>
+  <data name="SAY_Spades" xml:space="preserve">
+    <value>trump is spades.</value>
+  </data>
+  <data name="SAY_TheyGotFour" xml:space="preserve">
+    <value>oh, man, they got the loner!</value>
+  </data>
+  <data name="SAY_TheyGotOne" xml:space="preserve">
+    <value>drat, one point for them.</value>
+  </data>
+  <data name="SAY_TheyGotTwo" xml:space="preserve">
+    <value>rats, they picked up all of the tricks.</value>
+  </data>
+  <data name="SAY_TheyWon" xml:space="preserve">
+    <value>oh well, nice try {0}.  Shall we have another go?</value>
+  </data>
+  <data name="SAY_WeEuchredThem" xml:space="preserve">
+    <value>all right {0}, we set them!</value>
+  </data>
+  <data name="SAY_WeGotEuchredMyFault" xml:space="preserve">
+    <value>sorry, i guess i messed up on that one {0}.</value>
+  </data>
+  <data name="SAY_WeGotEuchredOurFault" xml:space="preserve">
+    <value>rats, guess i was just not much help {0}.</value>
+  </data>
+  <data name="SAY_WeGotEuchredYourFault" xml:space="preserve">
+    <value>you just might want some help from me next time on that sort of hand {0}.</value>
+  </data>
+  <data name="SAY_WeGotFour" xml:space="preserve">
+    <value>way to go!  guess you didn't need my help {0}.</value>
+  </data>
+  <data name="SAY_WeGotOne" xml:space="preserve">
+    <value>nice job {0}!</value>
+  </data>
+  <data name="SAY_WeGotTwo" xml:space="preserve">
+    <value>great job {0}!</value>
+  </data>
+  <data name="SAY_WeSuperEuchredThem" xml:space="preserve">
+    <value>way to go {0}, we gave them the old super euchre!</value>
+  </data>
+  <data name="SAY_WeWon" xml:space="preserve">
+    <value>great game {0}!  Shall we play again?</value>
+  </data>
+  <data name="SCOREThem8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREThemEight.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREThem5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREThemFive.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREThem4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREThemFour.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREThem9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREThemNine.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREThem1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREThemOne.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREThem7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREThemSeven.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREThem6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREThemSix.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREThem10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREThemTen.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREThem3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREThemThree.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREThem2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREThemTwo.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREThem0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREThemZero.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREUs8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREUsEight.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREUs5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREUsFive.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREUs4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREUsFour.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREUs9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREUsNine.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREUs1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREUsOne.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREUs7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREUsSeven.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREUs6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREUsSix.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREUs10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREUsTen.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREUs3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREUsThree.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREUs2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREUsTwo.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SCOREUs0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SCOREUsZero.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SoundShuffleDeck" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\shuffle.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SoundApplauseSoft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\softapplause.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SPADES" xml:space="preserve">
+    <value>Spades</value>
+  </data>
+  <data name="SPADESIMAGE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\SPADESIMAGE.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SoundApplauseWild" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\sounds\wildapplause.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="VBEuchreRules" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\text\vbeuchrerules.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+</root>

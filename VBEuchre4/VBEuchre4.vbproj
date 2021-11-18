@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{F3BE5255-C38F-4A1D-96D7-F24B0E007A20}</ProjectGuid>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>VBEuchre4</RootNamespace>
+    <AssemblyName>VBEuchre4</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <MyType>Custom</MyType>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <ApplicationIcon>Resources\Euchre.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <IncrementalBuild>true</IncrementalBuild>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>VBEuchre4.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <IncrementalBuild>false</IncrementalBuild>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>VBEuchre4.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Speech" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Application.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="EuchreAboutBox.xaml.vb">
+      <DependentUpon>EuchreAboutBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EuchreBid2Control.xaml.vb">
+      <DependentUpon>EuchreBid2Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EuchreOptions.xaml.vb">
+      <DependentUpon>EuchreOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="EuchreBidControl.xaml.vb">
+      <DependentUpon>EuchreBidControl.xaml</DependentUpon>
+    </Compile>
+    <Page Include="EuchreBid2Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EuchreOptions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EuchreRules.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EuchreTable.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Application.xaml.vb">
+      <DependentUpon>Application.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EuchreCard.vb" />
+    <Compile Include="EuchrePlayer.vb" />
+    <Compile Include="EuchreRules.xaml.vb">
+      <DependentUpon>EuchreRules.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EuchreSpeech.vb" />
+    <Compile Include="EuchreTable.xaml.vb">
+      <DependentUpon>EuchreTable.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="EuchreAboutBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EuchreBidControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows" />
+    <Import Include="System.Windows.Controls" />
+    <Import Include="System.Windows.Data" />
+    <Import Include="System.Windows.Documents" />
+    <Import Include="System.Windows.Input" />
+    <Import Include="System.Windows.Shapes" />
+    <Import Include="System.Windows.Media" />
+    <Import Include="System.Windows.Media.Imaging" />
+    <Import Include="System.Windows.Navigation" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="My Project\AssemblyInfo.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="My Project\MyExtensions\MyWpfExtension.vb">
+      <VBMyExtensionTemplateID>Microsoft.VisualBasic.WPF.MyExtension</VBMyExtensionTemplateID>
+      <VBMyExtensionTemplateVersion>1.0.0.0</VBMyExtensionTemplateVersion>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <AppDesigner Include="My Project\" />
+    <None Include="text\VBEuchreRules.rtf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\CARDBACK.bmp" />
+    <Resource Include="Images\CARDFACEAceOfClubs.bmp" />
+    <Resource Include="Images\CARDFACEAceOfDiamonds.bmp" />
+    <Resource Include="Images\CARDFACEAceOfHearts.bmp" />
+    <Resource Include="Images\CARDFACEAceOfSpades.bmp" />
+    <Resource Include="Images\CARDFACEFiveOfClubs.bmp" />
+    <Resource Include="Images\CARDFACEFiveOfDiamonds.bmp" />
+    <Resource Include="Images\CARDFACEFiveOfHearts.bmp" />
+    <Resource Include="Images\CARDFACEFiveOfSpades.bmp" />
+    <Resource Include="Images\CARDFACEJackOfClubs.bmp" />
+    <Resource Include="Images\CARDFACEJackOfDiamonds.bmp" />
+    <Resource Include="Images\CARDFACEJackOfHearts.bmp" />
+    <Resource Include="Images\CARDFACEJackOfSpades.bmp" />
+    <Resource Include="Images\CARDFACEKingOfClubs.bmp" />
+    <Resource Include="Images\CARDFACEKingOfDiamonds.bmp" />
+    <Resource Include="Images\CARDFACEKingOfHearts.bmp" />
+    <Resource Include="Images\CARDFACEKingOfSpades.bmp" />
+    <Resource Include="Images\CARDFACENineOfClubs.bmp" />
+    <Resource Include="Images\CARDFACENineOfDiamonds.bmp" />
+    <Resource Include="Images\CARDFACENineOfHearts.bmp" />
+    <Resource Include="Images\CARDFACENineOfSpades.bmp" />
+    <Resource Include="Images\CARDFACEQueenOfClubs.bmp" />
+    <Resource Include="Images\CARDFACEQueenOfDiamonds.bmp" />
+    <Resource Include="Images\CARDFACEQueenOfHearts.bmp" />
+    <Resource Include="Images\CARDFACEQueenOfSpades.bmp" />
+    <Resource Include="Images\CARDFACETenOfClubs.bmp" />
+    <Resource Include="Images\CARDFACETenOfDiamonds.bmp" />
+    <Resource Include="Images\CARDFACETenOfHearts.bmp" />
+    <Resource Include="Images\CARDFACETenOfSpades.bmp" />
+    <Resource Include="Images\CLUBSIMAGE.bmp" />
+    <Resource Include="Images\DIAMONDSIMAGE.bmp" />
+    <Resource Include="Images\HEARTSIMAGE.bmp" />
+    <Resource Include="Images\logo.bmp" />
+    <Resource Include="Images\NOSUITIMAGE.bmp" />
+    <Resource Include="Images\SCOREThemEight.bmp" />
+    <Resource Include="Images\SCOREThemFive.bmp" />
+    <Resource Include="Images\SCOREThemFour.bmp" />
+    <Resource Include="Images\SCOREThemNine.bmp" />
+    <Resource Include="Images\SCOREThemOne.bmp" />
+    <Resource Include="Images\SCOREThemSeven.bmp" />
+    <Resource Include="Images\SCOREThemSix.bmp" />
+    <Resource Include="Images\SCOREThemTen.bmp" />
+    <Resource Include="Images\SCOREThemThree.bmp" />
+    <Resource Include="Images\SCOREThemTwo.bmp" />
+    <Resource Include="Images\SCOREThemZero.bmp" />
+    <Resource Include="Images\SCOREUsEight.bmp" />
+    <Resource Include="Images\SCOREUsFive.bmp" />
+    <Resource Include="Images\SCOREUsFour.bmp" />
+    <Resource Include="Images\SCOREUsNine.bmp" />
+    <Resource Include="Images\SCOREUsOne.bmp" />
+    <Resource Include="Images\SCOREUsSeven.bmp" />
+    <Resource Include="Images\SCOREUsSix.bmp" />
+    <Resource Include="Images\SCOREUsTen.bmp" />
+    <Resource Include="Images\SCOREUsThree.bmp" />
+    <Resource Include="Images\SCOREUsTwo.bmp" />
+    <Resource Include="Images\SCOREUsZero.bmp" />
+    <Resource Include="Images\SPADESIMAGE.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Euchre.ico" />
+    <Resource Include="AboutLogo.png">
+      <SubType>Image</SubType>
+    </Resource>
+    <Resource Include="Images\Euchre.ico" />
+    <Content Include="sounds\loudapplause.wav" />
+    <Content Include="sounds\playcard.wav" />
+    <Content Include="sounds\shuffle.wav" />
+    <Content Include="sounds\softapplause.wav" />
+    <Content Include="sounds\wildapplause.wav" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>

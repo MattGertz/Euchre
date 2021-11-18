@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="EuchreBidControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="118" d:DesignWidth="276" Background="Blue">
+    <Grid>
+        <RadioButton Content="_Pass" Height="16" HorizontalAlignment="Left" Margin="17,48,0,0" Name="Pass" VerticalAlignment="Top" Width="120" Foreground="White" />
+        <Button Content="OK" Height="23" HorizontalAlignment="Left" Margin="189,48,0,0" Name="OkButton" VerticalAlignment="Top" Width="75" />
+        <RadioButton Content="P_ick It Up" Height="16" HorizontalAlignment="Left" Margin="17,70,0,0" Name="PickItUp" VerticalAlignment="Top" Width="120" Foreground="White" />
+        <CheckBox Content="And I'm Going _Alone!" Height="16" HorizontalAlignment="Left" Margin="32,90,0,0" Name="GoingAlone" VerticalAlignment="Top" Width="175" Foreground="White" />
+        <Label Content="Bidding (first round)" Height="28" HorizontalAlignment="Left" Margin="12,12,0,0" Name="BidTitle" VerticalAlignment="Top" Width="252" FontFamily="Impact" Foreground="Black" Background="Yellow" />
+    </Grid>
+</UserControl>
