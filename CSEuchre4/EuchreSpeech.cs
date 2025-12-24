@@ -29,7 +29,7 @@ namespace CSEuchre4
             if (VoiceSynthesizer != null)
             {
                 VoiceSynthesizer.Dispose();
-                VoiceSynthesizer = null;
+                VoiceSynthesizer = null!;
             }
         }
 

@@ -98,7 +98,7 @@ namespace CSEuchre4
             if (_voiceSynthesizer != null)
             {
                 _voiceSynthesizer.Dispose();
-                _voiceSynthesizer = null;
+                _voiceSynthesizer = null!;
             }
         }
 
@@ -259,7 +259,7 @@ namespace CSEuchre4
         #endregion
 
         #region "Private variables"
-        private SpeechSynthesizer _voiceSynthesizer = null;
+        private SpeechSynthesizer _voiceSynthesizer = null!;
         private int _voiceCount = 0;
         #endregion
     }

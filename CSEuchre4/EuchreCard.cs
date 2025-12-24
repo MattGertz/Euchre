@@ -301,13 +301,13 @@ namespace CSEuchre4
                 int n = 0;
                 for (EuchreCard.Suits NewSuit = EuchreCard.Suits.Spades; NewSuit <= EuchreCard.Suits.Hearts; NewSuit++)
                 {
-                    EuchreCard.imagesSuit[(int)NewSuit] = (Image)Properties.Resources.ResourceManager.GetObject(EuchreCard.GetSuitImageResourceName(NewSuit));
+                    EuchreCard.imagesSuit[(int)NewSuit] = (Image)Properties.Resources.ResourceManager.GetObject(EuchreCard.GetSuitImageResourceName(NewSuit))!;
                     for (EuchreCard.Ranks NewRank = EuchreCard.Ranks.Nine; NewRank <= EuchreCard.Ranks.Ace; NewRank++)
                     {
                         if (!(_ruleNineOfHeartsVariation && NewRank == EuchreCard.Ranks.Nine && NewSuit != EuchreCard.Suits.Hearts))
                         {
                             _gameCards[n] = new EuchreCard(NewRank, NewSuit, _gameTable);
-                            _gameCards[n].imageCurrent = (Image)Properties.Resources.ResourceManager.GetObject(_gameCards[n].GetImageResourceName());
+                            _gameCards[n].imageCurrent = (Image)Properties.Resources.ResourceManager.GetObject(_gameCards[n].GetImageResourceName())!;
                             n = n + 1;
                         }
                     }

@@ -571,15 +571,15 @@ namespace CSEuchre4
         {
             for (int i = 0; i <= 23; i++)
             {
-                handCardsPlayed[i] = null;
+                handCardsPlayed[i] = null!;
             }
             _trickPlayedCardIndex = 0;
         }
 
         public void PostHumanBidFirstRound()
         {
-            bool rv = (bool)BidControl.PickItUp.IsChecked;
-            _handCurrentBidder.ProcessBidFirstRound((bool)BidControl.GoingAlone.IsChecked, rv);
+            bool rv = BidControl.PickItUp.IsChecked ?? false;
+            _handCurrentBidder.ProcessBidFirstRound(BidControl.GoingAlone.IsChecked ?? false, rv);
             if (rv)
                 UpdateEuchreState(EuchreState.Bid1PickUp);
             else
@@ -590,20 +590,20 @@ namespace CSEuchre4
 
         public void PostHumanBidSecondRound()
         {
-            bool calledIt = !(bool)BidControl2.Pass.IsChecked;
+            bool calledIt = !(BidControl2.Pass.IsChecked ?? true);
             if (calledIt)
             {
-                if ((bool)BidControl2.Hearts.IsChecked)
+                if (BidControl2.Hearts.IsChecked ?? false)
                     handTrumpSuit = EuchreCard.Suits.Hearts;
-                else if ((bool)BidControl2.Diamonds.IsChecked)
+                else if (BidControl2.Diamonds.IsChecked ?? false)
                     handTrumpSuit = EuchreCard.Suits.Diamonds;
-                else if ((bool)BidControl2.Clubs.IsChecked)
+                else if (BidControl2.Clubs.IsChecked ?? false)
                     handTrumpSuit = EuchreCard.Suits.Clubs;
-                else if ((bool)BidControl2.Spades.IsChecked)
+                else if (BidControl2.Spades.IsChecked ?? false)
                     handTrumpSuit = EuchreCard.Suits.Spades;
             }
 
-            _handCurrentBidder.ProcessBidSecondRound((bool)BidControl2.GoingAlone.IsChecked, calledIt);
+            _handCurrentBidder.ProcessBidSecondRound(BidControl2.GoingAlone.IsChecked ?? false, calledIt);
             if (calledIt)
                 UpdateEuchreState(EuchreState.Bid2Succeeded);
             else
@@ -724,7 +724,7 @@ namespace CSEuchre4
 
             // Fourth, free the image of the animated card
             animatedCard.Visibility = Visibility.Hidden;
-            animatedCard.Source = null;
+            animatedCard.Source = null!;
 
             // Fifth, invisibly move the animated card back to 0,0 margin
             animatedCardFrame.Margin = new Thickness(0, 0, 0, 0);
@@ -916,8 +916,8 @@ namespace CSEuchre4
 
             if (_gameYourScore > 10) _gameYourScore = 10;
 
-            SetImage(ThemScore, (System.Drawing.Image)Properties.Resources.ResourceManager.GetObject(GetScoreResourceName(ScorePrefix.ScoreThem, _gameTheirScore)));
-            SetImage(UsScore, (System.Drawing.Image)Properties.Resources.ResourceManager.GetObject(GetScoreResourceName(ScorePrefix.ScoreUs, _gameYourScore)));
+            SetImage(ThemScore, (System.Drawing.Image)Properties.Resources.ResourceManager.GetObject(GetScoreResourceName(ScorePrefix.ScoreThem, _gameTheirScore))!);
+            SetImage(UsScore, (System.Drawing.Image)Properties.Resources.ResourceManager.GetObject(GetScoreResourceName(ScorePrefix.ScoreUs, _gameYourScore))!);
             UsScore.UpdateLayout();
             ThemScore.UpdateLayout();
         }
@@ -1074,10 +1074,10 @@ namespace CSEuchre4
         {
             for (EuchrePlayer.Seats i = EuchrePlayer.Seats.LeftOpponent; i <= EuchrePlayer.Seats.Player; i++)
             {
-                gameTableTopCards[(int)i, 5].Source = null;
+                gameTableTopCards[(int)i, 5].Source = null!;
                 SetUIElementVisibility(gameTableTopCards[(int)i, 5], Visibility.Hidden);
-                SetTooltip(gameTableTopCards[(int)i, 5], null);
-                handPlayedCards[(int)i] = null;
+                SetTooltip(gameTableTopCards[(int)i, 5], null!);
+                handPlayedCards[(int)i] = null!;
             }
         }
 
@@ -1145,7 +1145,7 @@ namespace CSEuchre4
             {
                 SetCardImage(
                     gamePlayers[(int)EuchrePlayer.Seats.Player].handCardsHeld[i],
-                    Properties.Resources.ResourceManager.GetString(gamePlayers[(int)EuchrePlayer.Seats.Player].handCardsHeld[i].GetDisplayStringResourceName()),
+                    Properties.Resources.ResourceManager.GetString(gamePlayers[(int)EuchrePlayer.Seats.Player].handCardsHeld[i].GetDisplayStringResourceName())!,
                     EuchrePlayer.Seats.Player,
                     gameTableTopCards[(int)EuchrePlayer.Seats.Player, i],
                     gamePlayers[(int)EuchrePlayer.Seats.Player].handCardsHeld[i].GetImage(EuchrePlayer.Seats.Player));
@@ -1176,7 +1176,7 @@ namespace CSEuchre4
                 {
                     SetCardImage(
                         gamePlayers[(int)i].handCardsHeld[j],
-                        Properties.Resources.ResourceManager.GetString(gamePlayers[(int)i].handCardsHeld[j].GetDisplayStringResourceName(handTrumpSuit)),
+                        Properties.Resources.ResourceManager.GetString(gamePlayers[(int)i].handCardsHeld[j].GetDisplayStringResourceName(handTrumpSuit))!,
                         i,
                         gameTableTopCards[(int)i, j],
                         gamePlayers[(int)i].handCardsHeld[j].GetImage(i));
@@ -1185,7 +1185,7 @@ namespace CSEuchre4
 
             SetCardImage(
                 handKitty[0],
-                Properties.Resources.ResourceManager.GetString(handKitty[0].GetDisplayStringResourceName()),
+                Properties.Resources.ResourceManager.GetString(handKitty[0].GetDisplayStringResourceName())!,
                 EuchrePlayer.Seats.Player,
                 KittyCard1,
                 handKitty[0].GetImage(EuchrePlayer.Seats.NoPlayer)
@@ -1195,21 +1195,21 @@ namespace CSEuchre4
             {
                 SetCardImage(
                     handKitty[1],
-                    Properties.Resources.ResourceManager.GetString(handKitty[0].GetDisplayStringResourceName()),
+                    Properties.Resources.ResourceManager.GetString(handKitty[0].GetDisplayStringResourceName())!,
                     EuchrePlayer.Seats.Player,
                     KittyCard2,
                     handKitty[1].GetImage(EuchrePlayer.Seats.NoPlayer)
                     );
                 SetCardImage(
                     handKitty[2],
-                    Properties.Resources.ResourceManager.GetString(handKitty[0].GetDisplayStringResourceName()),
+                    Properties.Resources.ResourceManager.GetString(handKitty[0].GetDisplayStringResourceName())!,
                     EuchrePlayer.Seats.Player,
                     KittyCard3,
                     handKitty[2].GetImage(EuchrePlayer.Seats.NoPlayer)
                     );
                 SetCardImage(
                     handKitty[3],
-                    Properties.Resources.ResourceManager.GetString(handKitty[0].GetDisplayStringResourceName()),
+                    Properties.Resources.ResourceManager.GetString(handKitty[0].GetDisplayStringResourceName())!,
                     EuchrePlayer.Seats.Player,
                     KittyCard4,
                     handKitty[3].GetImage(EuchrePlayer.Seats.NoPlayer)
@@ -1326,7 +1326,7 @@ namespace CSEuchre4
             System.Drawing.Image faceImage = player.handCardsHeld[index].GetImage(player.Seat);
             SetImage(gameTableTopCards[(int)player.Seat, 5], faceImage);
 
-            string s = Properties.Resources.ResourceManager.GetString(player.handCardsHeld[index].GetDisplayStringResourceName(handTrumpSuit));
+            string? s = Properties.Resources.ResourceManager.GetString(player.handCardsHeld[index].GetDisplayStringResourceName(handTrumpSuit));
             if (string.IsNullOrEmpty(s)) throw new System.Exception("Invalid value");
 
             SetTooltip(gameTableTopCards[(int)player.Seat, 5], s);
@@ -1338,9 +1338,9 @@ namespace CSEuchre4
             handPlayedCards[(int)player.Seat] = player.handCardsHeld[index];
 
             MarkCardAsPlayed(player.handCardsHeld[index]);
-            player.handCardsHeld[index] = null;
-            SetTooltip(gameTableTopCards[(int)player.Seat, index], null);
-            gameTableTopCards[(int)player.Seat, index].Source = null;
+            player.handCardsHeld[index] = null!;
+            SetTooltip(gameTableTopCards[(int)player.Seat, index], null!);
+            gameTableTopCards[(int)player.Seat, index].Source = null!;
 
             SetUIElementVisibility(gameTableTopCards[(int)player.Seat, index], Visibility.Hidden);
             SetUIElementVisibility(gameTableTopCards[(int)player.Seat, 5], Visibility.Visible);
@@ -1525,7 +1525,7 @@ namespace CSEuchre4
         private void Bid1(EuchreState passedState)
         {
             _handCurrentBidder = gamePlayers[(int)EuchrePlayer.NextPlayer(_handCurrentBidder.Seat)];
-            _handCurrentBidder.trickBuriedCard = null;
+            _handCurrentBidder.trickBuriedCard = null!;
 
             bool GoingAlone = false;
             if (_handCurrentBidder.Seat == EuchrePlayer.Seats.Player)
@@ -1594,7 +1594,7 @@ namespace CSEuchre4
         {
             handKitty[0].stateCurrent = EuchreCard.States.FaceDown;
             SetImage(KittyCard1, handKitty[0].GetImage(EuchrePlayer.Seats.NoPlayer));
-            SetTooltip(KittyCard1, Properties.Resources.ResourceManager.GetString(handKitty[0].GetDisplayStringResourceName()));
+            SetTooltip(KittyCard1, Properties.Resources.ResourceManager.GetString(handKitty[0].GetDisplayStringResourceName())!);
             KittyCard1.UpdateLayout();
             MarkCardAsPlayed(handKitty[0]);
 
@@ -1640,10 +1640,10 @@ namespace CSEuchre4
             TrumpPlayer.Visibility = Visibility.Hidden;
             TrumpLeft.Visibility = Visibility.Hidden;
             TrumpRight.Visibility = Visibility.Hidden;
-            SetTooltip(TrumpPartner, null);
-            SetTooltip(TrumpPlayer, null);
-            SetTooltip(TrumpLeft, null);
-            SetTooltip(TrumpRight, null);
+            SetTooltip(TrumpPartner, null!);
+            SetTooltip(TrumpPlayer, null!);
+            SetTooltip(TrumpLeft, null!);
+            SetTooltip(TrumpRight, null!);
             handTrumpSuit = EuchreCard.Suits.NoSuit;
             ResetPlayedCards();
         }
@@ -1661,22 +1661,22 @@ namespace CSEuchre4
             {
             case EuchrePlayer.Seats.Partner:
                 SetImage(TrumpPartner, EuchreCard.imagesSuit[(int)handTrumpSuit]);
-                SetTooltip(TrumpPartner, Properties.Resources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(handTrumpSuit)));
+                SetTooltip(TrumpPartner, Properties.Resources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(handTrumpSuit))!);
                 SetUIElementVisibility(TrumpPartner, Visibility.Visible);
                 break;
             case EuchrePlayer.Seats.Player:
                 SetImage(TrumpPlayer, EuchreCard.imagesSuit[(int)handTrumpSuit]);
-                SetTooltip(TrumpPlayer, Properties.Resources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(handTrumpSuit)));
+                SetTooltip(TrumpPlayer, Properties.Resources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(handTrumpSuit))!);
                 SetUIElementVisibility(TrumpPlayer, Visibility.Visible);
                 break;
             case EuchrePlayer.Seats.LeftOpponent:
                 SetImage(TrumpLeft, EuchreCard.imagesSuit[(int)handTrumpSuit]);
-                SetTooltip(TrumpLeft, Properties.Resources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(handTrumpSuit)));
+                SetTooltip(TrumpLeft, Properties.Resources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(handTrumpSuit))!);
                 SetUIElementVisibility(TrumpLeft, Visibility.Visible);
                 break;
             case EuchrePlayer.Seats.RightOpponent:
                 SetImage(TrumpRight, EuchreCard.imagesSuit[(int)handTrumpSuit]);
-                SetTooltip(TrumpRight, Properties.Resources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(handTrumpSuit)));
+                SetTooltip(TrumpRight, Properties.Resources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(handTrumpSuit))!);
                 SetUIElementVisibility(TrumpRight, Visibility.Visible);
                 break;
             }
@@ -1729,7 +1729,7 @@ namespace CSEuchre4
 
             SetImage(gameTableTopCards[(int)player, slot], card.imageCurrent);
             SetUIElementVisibility(gameTableTopCards[(int)player, slot], Visibility.Visible);
-            SetTooltip(gameTableTopCards[(int)player, slot], Properties.Resources.ResourceManager.GetString(card.GetDisplayStringResourceName()));
+            SetTooltip(gameTableTopCards[(int)player, slot], Properties.Resources.ResourceManager.GetString(card.GetDisplayStringResourceName())!);
 
             StringBuilder sDealt = new StringBuilder();
             sDealt.AppendFormat(Properties.Resources.Notice_DealtACard, gamePlayers[(int)player].GetDisplayName(), Properties.Resources.ResourceManager.GetString(card.GetDisplayStringResourceName()));
@@ -1784,8 +1784,8 @@ namespace CSEuchre4
                 for (int j = 0; j < 4; j++)
                 {
                     SetUIElementVisibility(gameTableTopCards[i, j], Visibility.Hidden);
-                    gameTableTopCards[i, j].Source = null;
-                    SetTooltip(gameTableTopCards[i, j], null);
+                    gameTableTopCards[i, j].Source = null!;
+                    SetTooltip(gameTableTopCards[i, j], null!);
                 }
             }
 
@@ -1817,12 +1817,12 @@ namespace CSEuchre4
             _gameOptionsDialog.ShowDialog();
             if (_gameOptionsDialog.LocalDialogResult)
             {
-                ruleStickTheDealer = (bool)_gameOptionsDialog.StickTheDealer.IsChecked;
-                ruleUseNineOfHearts = (bool)_gameOptionsDialog.NineOfHearts.IsChecked;
-                modePeekAtOtherCards = (bool)_gameOptionsDialog.PeekAtOtherCards.IsChecked;
-                ruleUseSuperEuchre = (bool)_gameOptionsDialog.SuperEuchre.IsChecked;
-                ruleUseQuietDealer = (bool)_gameOptionsDialog.QuietDealer.IsChecked;
-                _modeSoundOn = (bool)_gameOptionsDialog.SoundOn.IsChecked;
+                ruleStickTheDealer = _gameOptionsDialog.StickTheDealer.IsChecked ?? false;
+                ruleUseNineOfHearts = _gameOptionsDialog.NineOfHearts.IsChecked ?? false;
+                modePeekAtOtherCards = _gameOptionsDialog.PeekAtOtherCards.IsChecked ?? false;
+                ruleUseSuperEuchre = _gameOptionsDialog.SuperEuchre.IsChecked ?? false;
+                ruleUseQuietDealer = _gameOptionsDialog.QuietDealer.IsChecked ?? false;
+                _modeSoundOn = _gameOptionsDialog.SoundOn.IsChecked ?? true;
 
                 gamePlayerName = string.IsNullOrEmpty(_gameOptionsDialog.PlayerName.Text) ? Properties.Resources.Player_Player : _gameOptionsDialog.PlayerName.Text;
                 gameLeftOpponentName = string.IsNullOrEmpty(_gameOptionsDialog.LeftOpponentName.Text) ? Properties.Resources.Player_LeftOpponent : _gameOptionsDialog.LeftOpponentName.Text;
@@ -1836,25 +1836,25 @@ namespace CSEuchre4
                     gamePartnerName = s.ToString();
                 }
 
-                if ((bool)_gameOptionsDialog.LeftOpponentCrazy.IsChecked)
+                if (_gameOptionsDialog.LeftOpponentCrazy.IsChecked ?? false)
                     gamePlayers[(int)EuchrePlayer.Seats.LeftOpponent].gamePersonality = EuchrePlayer.Personalities.Crazy;
-                else if ((bool)_gameOptionsDialog.LeftOpponentNormal.IsChecked)
+                else if (_gameOptionsDialog.LeftOpponentNormal.IsChecked ?? false)
                     gamePlayers[(int)EuchrePlayer.Seats.LeftOpponent].gamePersonality = EuchrePlayer.Personalities.Normal;
                 else
                     gamePlayers[(int)EuchrePlayer.Seats.LeftOpponent].gamePersonality = EuchrePlayer.Personalities.Conservative;
 
 
-                if ((bool)_gameOptionsDialog.RightOpponentCrazy.IsChecked)
+                if (_gameOptionsDialog.RightOpponentCrazy.IsChecked ?? false)
                     gamePlayers[(int)EuchrePlayer.Seats.RightOpponent].gamePersonality = EuchrePlayer.Personalities.Crazy;
-                else if ((bool)_gameOptionsDialog.RightOpponentNormal.IsChecked)
+                else if (_gameOptionsDialog.RightOpponentNormal.IsChecked ?? false)
                     gamePlayers[(int)EuchrePlayer.Seats.RightOpponent].gamePersonality = EuchrePlayer.Personalities.Normal;
                 else
                     gamePlayers[(int)EuchrePlayer.Seats.RightOpponent].gamePersonality = EuchrePlayer.Personalities.Conservative;
 
 
-                if ((bool)_gameOptionsDialog.PartnerCrazy.IsChecked)
+                if (_gameOptionsDialog.PartnerCrazy.IsChecked ?? false)
                     gamePlayers[(int)EuchrePlayer.Seats.Partner].gamePersonality = EuchrePlayer.Personalities.Crazy;
-                else if ((bool)_gameOptionsDialog.PartnerNormal.IsChecked)
+                else if (_gameOptionsDialog.PartnerNormal.IsChecked ?? false)
                     gamePlayers[(int)EuchrePlayer.Seats.Partner].gamePersonality = EuchrePlayer.Personalities.Normal;
                 else
                     gamePlayers[(int)EuchrePlayer.Seats.Partner].gamePersonality = EuchrePlayer.Personalities.Conservative;
@@ -1918,7 +1918,7 @@ namespace CSEuchre4
             {
                 Close(); // User cancelled out of the options dialog, so we'll quit.
                 _gameOptionsDialog.DisposeVoice();
-                _gameOptionsDialog = null; // Dialog has closed and is not useful anymore.
+                _gameOptionsDialog = null!; // Dialog has closed and is not useful anymore.
                 return false;
             }
         }
@@ -1952,10 +1952,10 @@ namespace CSEuchre4
             TrumpPlayer.Visibility = Visibility.Hidden;
             TrumpPartner.Visibility = Visibility.Hidden;
 
-            SetTooltip(TrumpPartner, null);
-            SetTooltip(TrumpPlayer, null);
-            SetTooltip(TrumpLeft, null);
-            SetTooltip(TrumpRight, null);
+            SetTooltip(TrumpPartner, null!);
+            SetTooltip(TrumpPlayer, null!);
+            SetTooltip(TrumpLeft, null!);
+            SetTooltip(TrumpRight, null!);
         }
         #endregion
 
@@ -2014,7 +2014,7 @@ namespace CSEuchre4
 
         private void RulesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Window rulesWindow = null;
+            Window rulesWindow = null!;
             foreach (Window win in System.Windows.Application.Current.Windows) // Man, I really miss the "My" namespace...
             {
                 if (win.GetType().ToString() == "CSEuchre4.EuchreRules")
@@ -2187,7 +2187,7 @@ namespace CSEuchre4
         private bool _stateGameStarted = false;
 
         private EuchreCardDeck _gameDeck = null!;
-        private EuchreOptions _gameOptionsDialog = null;
+        private EuchreOptions _gameOptionsDialog = null!;
 
         private GroupBox[] _gameDealerBox = new GroupBox[4];
 

@@ -47,7 +47,7 @@ namespace CSEuchre4
 
         #region "AboutData Provider"
         #region "Member data"
-        private XmlDocument xmlDoc = null;
+        private XmlDocument xmlDoc = null!;
 
         private const string propertyNameTitle = "Title";
         private const string propertyNameDescription = "Description";
@@ -92,7 +92,7 @@ namespace CSEuchre4
             {
                 string result = string.Empty;
                 // first, try to get the version string from the assembly.
-                Version ver = Assembly.GetExecutingAssembly().GetName().Version;
+                Version? ver = Assembly.GetExecutingAssembly().GetName().Version;
                 if (ver != null)
                 {
                     result = ver.ToString();
@@ -190,10 +190,10 @@ namespace CSEuchre4
             if (attributes.Length > 0)
             {
                 T attrib = (T)attributes[0];
-                PropertyInfo property = attrib.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
+                PropertyInfo? property = attrib.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
                 if (property != null)
                 {
-                    result = property.GetValue(attributes[0], null) as string;
+                    result = property.GetValue(attributes[0], null) as string ?? string.Empty;
                 }
             }
 
@@ -201,7 +201,7 @@ namespace CSEuchre4
             if (result == string.Empty)
             {
                 // if that fails, try to get it from a resource.
-                result = GetLogicalResourceString(xpathQuery);
+                result = GetLogicalResourceString(xpathQuery) ?? string.Empty;
             }
             return result;
         }
@@ -216,14 +216,14 @@ namespace CSEuchre4
                 if (xmlDoc != null)
                 {
                     // if we haven't already found the resource XmlDocument, then try to find it.
-                    XmlDataProvider provider = this.TryFindResource("aboutProvider") as XmlDataProvider;
+                    XmlDataProvider? provider = this.TryFindResource("aboutProvider") as XmlDataProvider;
                     if (provider != null)
                     {
                         // save away the XmlDocument, so we don't have to get it multiple times.
                         xmlDoc = provider.Document;
                     }
                 }
-                return xmlDoc;
+                return xmlDoc!;
             }
         }
 
@@ -237,17 +237,17 @@ namespace CSEuchre4
         {
             string result = String.Empty;
             // get the About xml information from the resources.
-            XmlDocument doc = this.ResourceXmlDocument;
+            XmlDocument? doc = this.ResourceXmlDocument;
             if (doc != null)
             {
                 // if we found the XmlDocument, then look for the specified data. 
-                XmlNode node = doc.SelectSingleNode(xpathQuery);
+                XmlNode? node = doc.SelectSingleNode(xpathQuery);
                 if (node != null)
                 {
                     if (node is XmlAttribute)
                     {
                         // only an XmlAttribute has a Value set.
-                        result = node.Value;
+                        result = node.Value ?? string.Empty;
                     }
                     else
                     {
@@ -256,7 +256,7 @@ namespace CSEuchre4
                     }
                 }
             }
-            return result;
+            return result ?? string.Empty;
         }
         #endregion
         #endregion
