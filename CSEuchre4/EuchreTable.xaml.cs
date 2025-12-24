@@ -1354,6 +1354,8 @@ namespace CSEuchre4
 
         private async Task SwapCardWithKitty(EuchrePlayer player, int index)
         {
+            await Task.CompletedTask;  // Intentionally async for call chain consistency
+            
             EuchreCard card = handKitty[0];
             handKitty[0] = player.handCardsHeld[index];
             player.handCardsHeld[index] = card;
