@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -164,7 +165,7 @@ namespace CSEuchre4
             _stateCurrent = state;
             _stateDesiredStateAfterHumanClick = EuchreState.NoState;
 
-            Dispatcher.BeginInvoke(new NextTableAction(MasterStateDirector));
+            _ = Dispatcher.InvokeAsync(async () => await MasterStateDirector());
         }
 
         public void RevertEuchreState()
@@ -173,9 +174,9 @@ namespace CSEuchre4
             _stateLast = EuchreState.NoState;
         }
 
-        public delegate void NextTableAction();
+        public delegate Task NextTableAction();
 
-        public void MasterStateDirector()
+        public async Task MasterStateDirector()
         {
             switch (_stateCurrent)
             {
@@ -206,11 +207,11 @@ namespace CSEuchre4
                 break;
 
             case EuchreState.StartNewGameConfirmed:
-                PreDealerSelection();
+                await PreDealerSelection();
                 UpdateEuchreState(EuchreState.StillSelectingDealer);
                 break;
             case EuchreState.StillSelectingDealer:
-                TrySelectDealer();
+                await TrySelectDealer();
                 break;
             case EuchreState.DealerSelected:
                 PostDealerSelection(EuchreState.DealerAcknowledged);
@@ -228,7 +229,7 @@ namespace CSEuchre4
                 UpdateEuchreState(EuchreState.DealCards);
                 break;
             case EuchreState.DealCards:
-                DealCards();
+                await DealCards();
                 trickLeaderIndex = EuchrePlayer.NextPlayer(handDealer);
                 UpdateEuchreState(EuchreState.Bid1Starts);
                 break;
@@ -250,10 +251,10 @@ namespace CSEuchre4
                 Bid1(EuchreState.Bid2Starts); // We don't current show a continue dialog after the first round of failed bidding
                 break;
             case EuchreState.Bid1PickUp:
-                Bid1PickUp();
+                await Bid1PickUp();
                 break;
             case EuchreState.Bid1PickedUp:
-                Bid1PickedUp();
+                await Bid1PickedUp();
                 UpdateEuchreState(EuchreState.Bid1Succeeded);
                 break;
             case EuchreState.Bid1Succeeded:
@@ -314,28 +315,28 @@ namespace CSEuchre4
                 SelectCardForTrick(EuchreState.Trick0_PlayCard0);
                 break;
             case EuchreState.Trick0_PlayCard0:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 UpdateEuchreState(EuchreState.Trick0_SelectCard1);
                 break;
             case EuchreState.Trick0_SelectCard1:
                 SelectCardForTrick(EuchreState.Trick0_PlayCard1);
                 break;
             case EuchreState.Trick0_PlayCard1:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 UpdateEuchreState(EuchreState.Trick0_SelectCard2);
                 break;
             case EuchreState.Trick0_SelectCard2:
                 SelectCardForTrick(EuchreState.Trick0_PlayCard2);
                 break;
             case EuchreState.Trick0_PlayCard2:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 UpdateEuchreState(EuchreState.Trick0_SelectCard3);
                 break;
             case EuchreState.Trick0_SelectCard3:
                 SelectCardForTrick(EuchreState.Trick0_PlayCard3);
                 break;
             case EuchreState.Trick0_PlayCard3:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 PostTrick();
                 ShowAndEnableContinueButton(EuchreState.Trick0EndingAcknowledged);
                 break;
@@ -355,28 +356,28 @@ namespace CSEuchre4
                 SelectCardForTrick(EuchreState.Trick1_PlayCard0);
                 break;
             case EuchreState.Trick1_PlayCard0:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 UpdateEuchreState(EuchreState.Trick1_SelectCard1);
                 break;
             case EuchreState.Trick1_SelectCard1:
                 SelectCardForTrick(EuchreState.Trick1_PlayCard1);
                 break;
             case EuchreState.Trick1_PlayCard1:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 UpdateEuchreState(EuchreState.Trick1_SelectCard2);
                 break;
             case EuchreState.Trick1_SelectCard2:
                 SelectCardForTrick(EuchreState.Trick1_PlayCard2);
                 break;
             case EuchreState.Trick1_PlayCard2:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 UpdateEuchreState(EuchreState.Trick1_SelectCard3);
                 break;
             case EuchreState.Trick1_SelectCard3:
                 SelectCardForTrick(EuchreState.Trick1_PlayCard3);
                 break;
             case EuchreState.Trick1_PlayCard3:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 PostTrick();
                 ShowAndEnableContinueButton(EuchreState.Trick1EndingAcknowledged);
                 break;
@@ -396,28 +397,28 @@ namespace CSEuchre4
                 SelectCardForTrick(EuchreState.Trick2_PlayCard0);
                 break;
             case EuchreState.Trick2_PlayCard0:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 UpdateEuchreState(EuchreState.Trick2_SelectCard1);
                 break;
             case EuchreState.Trick2_SelectCard1:
                 SelectCardForTrick(EuchreState.Trick2_PlayCard1);
                 break;
             case EuchreState.Trick2_PlayCard1:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 UpdateEuchreState(EuchreState.Trick2_SelectCard2);
                 break;
             case EuchreState.Trick2_SelectCard2:
                 SelectCardForTrick(EuchreState.Trick2_PlayCard2);
                 break;
             case EuchreState.Trick2_PlayCard2:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 UpdateEuchreState(EuchreState.Trick2_SelectCard3);
                 break;
             case EuchreState.Trick2_SelectCard3:
                 SelectCardForTrick(EuchreState.Trick2_PlayCard3);
                 break;
             case EuchreState.Trick2_PlayCard3:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 PostTrick();
                 ShowAndEnableContinueButton(EuchreState.Trick2EndingAcknowledged);
                 break;
@@ -437,28 +438,28 @@ namespace CSEuchre4
                 SelectCardForTrick(EuchreState.Trick3_PlayCard0);
                 break;
             case EuchreState.Trick3_PlayCard0:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 UpdateEuchreState(EuchreState.Trick3_SelectCard1);
                 break;
             case EuchreState.Trick3_SelectCard1:
                 SelectCardForTrick(EuchreState.Trick3_PlayCard1);
                 break;
             case EuchreState.Trick3_PlayCard1:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 UpdateEuchreState(EuchreState.Trick3_SelectCard2);
                 break;
             case EuchreState.Trick3_SelectCard2:
                 SelectCardForTrick(EuchreState.Trick3_PlayCard2);
                 break;
             case EuchreState.Trick3_PlayCard2:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 UpdateEuchreState(EuchreState.Trick3_SelectCard3);
                 break;
             case EuchreState.Trick3_SelectCard3:
                 SelectCardForTrick(EuchreState.Trick3_PlayCard3);
                 break;
             case EuchreState.Trick3_PlayCard3:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 PostTrick();
                 ShowAndEnableContinueButton(EuchreState.Trick3EndingAcknowledged);
                 break;
@@ -478,28 +479,28 @@ namespace CSEuchre4
                 SelectCardForTrick(EuchreState.Trick4_PlayCard0);
                 break;
             case EuchreState.Trick4_PlayCard0:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 UpdateEuchreState(EuchreState.Trick4_SelectCard1);
                 break;
             case EuchreState.Trick4_SelectCard1:
                 SelectCardForTrick(EuchreState.Trick4_PlayCard1);
                 break;
             case EuchreState.Trick4_PlayCard1:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 UpdateEuchreState(EuchreState.Trick4_SelectCard2);
                 break;
             case EuchreState.Trick4_SelectCard2:
                 SelectCardForTrick(EuchreState.Trick4_PlayCard2);
                 break;
             case EuchreState.Trick4_PlayCard2:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 UpdateEuchreState(EuchreState.Trick4_SelectCard3);
                 break;
             case EuchreState.Trick4_SelectCard3:
                 SelectCardForTrick(EuchreState.Trick4_PlayCard3);
                 break;
             case EuchreState.Trick4_PlayCard3:
-                PlayCardForTrick();
+                await PlayCardForTrick();
                 PostTrick();
                 ShowAndEnableContinueButton(EuchreState.Trick4EndingAcknowledged);
                 break;
@@ -511,7 +512,7 @@ namespace CSEuchre4
                 break;
 
             case EuchreState.HandCompleted:
-                UpdateAllScores(EuchreState.HandCompletedAcknowledged);
+                await UpdateAllScores(EuchreState.HandCompletedAcknowledged);
                 break;
 
             case EuchreState.HandCompletedAcknowledged:
@@ -858,34 +859,33 @@ namespace CSEuchre4
             }
         }
 
-        private void PlayResourceSound(System.IO.UnmanagedMemoryStream res)
+        private async Task PlayResourceSound(System.IO.UnmanagedMemoryStream res)
         {
-            using (var player = new System.Media.SoundPlayer(res))
-            {
-                player.PlaySync();
-            }
+            _currentPlayer?.Stop();
+            _currentPlayer = new System.Media.SoundPlayer(res);
+            await Task.Run(() => _currentPlayer.PlaySync());
         }
 
-        private void PlayCardSound()
+        private async Task PlayCardSound()
         {
             if (_modeSoundOn)
-                PlayResourceSound(Properties.Resources.SoundPlayCard);
+                await PlayResourceSound(Properties.Resources.SoundPlayCard);
         }
 
-        private void PlayApplause(int level)
+        private async Task PlayApplause(int level)
         {
             if (_modeSoundOn)
             {
                 switch (level)
                 {
-                case 1: PlayResourceSound(Properties.Resources.SoundApplauseSoft); break;
-                case 2: PlayResourceSound(Properties.Resources.SoundApplauseLoud); break;
-                case 3: PlayResourceSound(Properties.Resources.SoundApplauseWild); break;
+                case 1: await PlayResourceSound(Properties.Resources.SoundApplauseSoft); break;
+                case 2: await PlayResourceSound(Properties.Resources.SoundApplauseLoud); break;
+                case 3: await PlayResourceSound(Properties.Resources.SoundApplauseWild); break;
                 }
             }
         }
 
-        private void PlayShuffleSound()
+        private async Task PlayShuffleSound()
         {
             UpdateLayout();
             UpdateStatus(Properties.Resources.Notice_ShufflingCards);
@@ -894,7 +894,7 @@ namespace CSEuchre4
                 int numShuffle = EuchreTable.GenRandomNumber(2) + 1;
                 for (int i = 0; i <= numShuffle; i++)
                 {
-                    PlayResourceSound(Properties.Resources.SoundShuffleDeck);
+                    await PlayResourceSound(Properties.Resources.SoundShuffleDeck);
                 }
             }
             UpdateStatus(Properties.Resources.Notice_DealingCards);
@@ -955,7 +955,7 @@ namespace CSEuchre4
             return (gamePlayers[(int)EuchrePlayer.Seats.Player].handSittingOut || gamePlayers[(int)EuchrePlayer.Seats.Partner].handSittingOut);
         }
 
-        private void UpdateAllScores(EuchreState nextState)
+        private async Task UpdateAllScores(EuchreState nextState)
         {
             int TheirTotalTricks = gamePlayers[(int)EuchrePlayer.Seats.LeftOpponent].handTricksWon + gamePlayers[(int)EuchrePlayer.Seats.RightOpponent].handTricksWon;
             int YourTotalTricks = gamePlayers[(int)EuchrePlayer.Seats.Player].handTricksWon + gamePlayers[(int)EuchrePlayer.Seats.Partner].handTricksWon;
@@ -967,14 +967,14 @@ namespace CSEuchre4
                 {
                     _gameYourScore = _gameYourScore + 4; // SuperEuchred!
                     UpdateStatus(Properties.Resources.Notice_YouSuperEuchredThem);
-                    PlayApplause(3);
+                    await PlayApplause(3);
                     SpeakWeSuperEuchredThem(EuchrePlayer.Seats.Player);
                 }
                 else if (TheirTotalTricks < 3)
                 {
                     _gameYourScore = _gameYourScore + 2; // Euchred!
                     UpdateStatus(Properties.Resources.Notice_YouEuchredThem);
-                    PlayApplause(2);
+                    await PlayApplause(2);
                     SpeakWeEuchredThem(EuchrePlayer.Seats.Player);
                 }
                 else if (TheirTotalTricks == 5)
@@ -1031,7 +1031,7 @@ namespace CSEuchre4
                     {
                         _gameYourScore = _gameYourScore + 4;
                         UpdateStatus(Properties.Resources.Notice_YouWonTheHandAllTricksAlone);
-                        PlayApplause(3);
+                        await PlayApplause(3);
                         if (handPickedTrump == EuchrePlayer.Seats.Player)
                             SpeakWeGotFour(handPickedTrump);
                         else
@@ -1041,7 +1041,7 @@ namespace CSEuchre4
                     {
                         _gameYourScore = _gameYourScore + 2;
                         UpdateStatus(Properties.Resources.Notice_YouWonTheHandAllTricks);
-                        PlayApplause(2);
+                        await PlayApplause(2);
                         if (handPickedTrump == EuchrePlayer.Seats.Player)
                             SpeakWeGotTwo(handPickedTrump);
                         else
@@ -1052,7 +1052,7 @@ namespace CSEuchre4
                 {
                     _gameYourScore = _gameYourScore + 1;
                     UpdateStatus(Properties.Resources.Notice_YouWonTheHand);
-                    PlayApplause(1);
+                    await PlayApplause(1);
                     if (handPickedTrump == EuchrePlayer.Seats.Player)
                         SpeakWeGotOne(handPickedTrump);
                     else
@@ -1217,7 +1217,7 @@ namespace CSEuchre4
             }
         }
 
-        private void DealACard(EuchrePlayer.Seats player, int slot)
+        private async Task DealACard(EuchrePlayer.Seats player, int slot)
         {
             gamePlayers[(int)player].handCardsHeld[slot] = _gameDeck.GetNextCard();
             if (player != EuchrePlayer.Seats.Player)
@@ -1233,17 +1233,17 @@ namespace CSEuchre4
             SetImage(gameTableTopCards[(int)player, slot], EuchreCard.imagesCardBack[(int)player]);
             SetUIElementVisibility(gameTableTopCards[(int)player, slot], Visibility.Visible);
             SetTooltip(gameTableTopCards[(int)player, slot], Properties.Resources.CARDNAME_BACK);
-            PlayCardSound();
+            await PlayCardSound();
             RefreshAndSleep(gameTableTopCards[(int)player, slot]);
         }
 
-        private void DealCards()
+        private async Task DealCards()
         {
             ShowAllCards(false);
             HideAllPlayedCards();
 
             _gameDeck.Shuffle();
-            PlayShuffleSound();
+            await PlayShuffleSound();
 
             EuchrePlayer.Seats i;
 
@@ -1276,7 +1276,7 @@ namespace CSEuchre4
 
                 i = EuchrePlayer.NextPlayer(i);
                 for (int j = m; j <= n; j++)
-                    DealACard(i, j);
+                    await DealACard(i, j);
                 if (i == handDealer)
                 {
                     k = k + 1;
@@ -1316,7 +1316,7 @@ namespace CSEuchre4
             UpdateTricksText();
         }
 
-        private void PlaySelectedCard(EuchrePlayer player, int index)
+        private async Task PlaySelectedCard(EuchrePlayer player, int index)
         {
             // TODO:  AnimateACard call goes here.
 
@@ -1347,12 +1347,12 @@ namespace CSEuchre4
 
             UpdateLayout();
 
-            PlayCardSound();
+            await PlayCardSound();
             Refresh(gameTableTopCards[(int)player.Seat, index]);
             RefreshAndSleep(gameTableTopCards[(int)player.Seat, 5]);
         }
 
-        private void SwapCardWithKitty(EuchrePlayer player, int index)
+        private async Task SwapCardWithKitty(EuchrePlayer player, int index)
         {
             EuchreCard card = handKitty[0];
             handKitty[0] = player.handCardsHeld[index];
@@ -1449,7 +1449,7 @@ namespace CSEuchre4
 
         }
 
-        private void PlayCardForTrick()
+        private async Task PlayCardForTrick()
         {
             if (!trickPlayer.handSittingOut)
             {
@@ -1468,7 +1468,7 @@ namespace CSEuchre4
                 {
                     trickSuitLed = trickPlayer.handCardsHeld[trickSelectedCardIndex].GetCurrentSuit(handTrumpSuit);
                 }
-                PlaySelectedCard(trickPlayer, trickSelectedCardIndex);
+                await PlaySelectedCard(trickPlayer, trickSelectedCardIndex);
 
                 EuchreCard.Values thisValue = handPlayedCards[(int)trickPlayer.Seat].GetCurrentValue(handTrumpSuit, handPlayedCards[(int)trickLeaderIndex].GetCurrentSuit(handTrumpSuit));
                 if (thisValue > trickHighestCardSoFar)
@@ -1551,7 +1551,7 @@ namespace CSEuchre4
             }
         }
 
-        private void Bid1PickUp()
+        private async Task Bid1PickUp()
         {
             if (gamePlayers[(int)handDealer].Seat == EuchrePlayer.Seats.Player)
             {
@@ -1560,7 +1560,7 @@ namespace CSEuchre4
             else
             {
                 int index = gamePlayers[(int)handDealer].LowestCardOnReplace(handTrumpSuit);
-                SwapCardWithKitty(gamePlayers[(int)handDealer], index);
+                await SwapCardWithKitty(gamePlayers[(int)handDealer], index);
                 UpdateEuchreState(EuchreState.Bid1PickedUp);
             }
         }
@@ -1574,12 +1574,12 @@ namespace CSEuchre4
             _stateDesiredStateAfterHumanClick = EuchreState.Bid1PickedUp;
         }
 
-        private void Bid1PickedUp()
+        private async Task Bid1PickedUp()
         {
             if (gamePlayers[(int)handDealer].Seat == EuchrePlayer.Seats.Player)
             {
                 SetUIElementVisibility(SelectLabel, Visibility.Hidden);
-                SwapCardWithKitty(gamePlayers[(int)handDealer], trickSelectedCardIndex);
+                await SwapCardWithKitty(gamePlayers[(int)handDealer], trickSelectedCardIndex);
             }
 
             handPickedTrump = _handCurrentBidder.Seat;
@@ -1719,7 +1719,7 @@ namespace CSEuchre4
             _gameDealerBox[(int)handDealer].Visibility = Visibility.Visible;
         }
 
-        private EuchreCard DealACardForDeal(EuchrePlayer.Seats player, int slot)
+        private async Task<EuchreCard> DealACardForDeal(EuchrePlayer.Seats player, int slot)
         {
             EuchreCard card = _gameDeck.GetNextCard();
             card.Perspective = player;
@@ -1735,25 +1735,25 @@ namespace CSEuchre4
             sDealt.AppendFormat(Properties.Resources.Notice_DealtACard, gamePlayers[(int)player].GetDisplayName(), Properties.Resources.ResourceManager.GetString(card.GetDisplayStringResourceName()));
             UpdateStatus(sDealt.ToString());
 
-            PlayCardSound();
+            await PlayCardSound();
 
             RefreshAndSleep(gameTableTopCards[(int)player, slot]);
             return card;
         }
 
-        private void PreDealerSelection()
+        private async Task PreDealerSelection()
         {
             stateSelectingDealer = true;
             _gameDeck.Shuffle();
-            PlayShuffleSound();
+            await PlayShuffleSound();
             UpdateStatus(Properties.Resources.Notice_ChoosingDealer);
             _handPotentialDealer = EuchrePlayer.Seats.Player;
             potentialDealerCardIndex = 0;
         }
 
-        private void TrySelectDealer()
+        private async Task TrySelectDealer()
         {
-            EuchreCard card = DealACardForDeal(_handPotentialDealer, potentialDealerCardIndex);
+            EuchreCard card = await DealACardForDeal(_handPotentialDealer, potentialDealerCardIndex);
             if (card.Rank == EuchreCard.Ranks.Jack)
             {
                 UpdateEuchreState(EuchreState.DealerSelected);
@@ -1987,6 +1987,11 @@ namespace CSEuchre4
 
         private void EuchreTable_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
+            // Stop any currently playing sound
+            _currentPlayer?.Stop();
+            _currentPlayer?.Dispose();
+            _currentPlayer = null;
+
             if ((bool)!(e.Cancel = QueryCancelClose()))
             {
                 // We are closing for cure -- dispose the voices
@@ -2185,6 +2190,7 @@ namespace CSEuchre4
         private int _gameYourTricks;
         private bool _modeSoundOn = true;
         private bool _stateGameStarted = false;
+        private System.Media.SoundPlayer? _currentPlayer = null;
 
         private EuchreCardDeck _gameDeck = null!;
         private EuchreOptions _gameOptionsDialog = null!;
