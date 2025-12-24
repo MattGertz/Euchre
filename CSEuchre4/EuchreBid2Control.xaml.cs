@@ -108,7 +108,7 @@ namespace CSEuchre4
         #endregion
 
         #region "Public members"
-        public EuchreTable gameTable;
+        public EuchreTable gameTable = null!;
         #endregion
 
         #region "Private members"

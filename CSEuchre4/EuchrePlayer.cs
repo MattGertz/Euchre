@@ -698,7 +698,7 @@ namespace CSEuchre4
 
         #region "Public variables"
         public Seats Seat;
-        public EuchreCard trickBuriedCard;
+        public EuchreCard trickBuriedCard = null!;
         public int handTricksWon;
         public EuchreCard[] handCardsHeld = new EuchreCard[5];
         public bool handSittingOut;

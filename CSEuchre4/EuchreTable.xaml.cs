@@ -2186,7 +2186,7 @@ namespace CSEuchre4
         private bool _modeSoundOn = true;
         private bool _stateGameStarted = false;
 
-        private EuchreCardDeck _gameDeck;
+        private EuchreCardDeck _gameDeck = null!;
         private EuchreOptions _gameOptionsDialog = null;
 
         private GroupBox[] _gameDealerBox = new GroupBox[4];
@@ -2197,12 +2197,12 @@ namespace CSEuchre4
         private EuchreState _stateDesiredStateAfterHumanClick;
         private EuchreState _stateLast;
         private EuchreState _stateCurrent;
-        private EuchrePlayer _handCurrentBidder;
+        private EuchrePlayer _handCurrentBidder = null!;
         private EuchrePlayer.Seats _handPotentialDealer;
         private int potentialDealerCardIndex;
 
         private const int _timerSleepDuration = 250;
-        private System.Windows.Input.Cursor _cursorCached;
+        private System.Windows.Input.Cursor _cursorCached = null!;
 
         #endregion
 
@@ -2235,8 +2235,8 @@ namespace CSEuchre4
         public EuchrePlayer.Seats trickLeaderIndex;
         public EuchreCard.Suits trickSuitLed;
         public int trickSelectedCardIndex = 0;
-        public EuchrePlayer trickLeader;
-        public EuchrePlayer trickPlayer;
+        public EuchrePlayer trickLeader = null!;
+        public EuchrePlayer trickPlayer = null!;
         public EuchreCard.Values trickHighestCardSoFar;
         public EuchrePlayer.Seats trickPlayerWhoPlayedHighestCardSoFar;
         #endregion

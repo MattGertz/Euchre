@@ -265,7 +265,7 @@ namespace CSEuchre4
         public States stateCurrent;
         public Suits Suit;
         public Ranks Rank;
-        public Image imageCurrent;
+        public Image imageCurrent = null!;
         public EuchrePlayer.Seats orientationCurrent;
         public static Image[] imagesCardBack = new Image[4];
         public static Image[] imagesSuit = new Image[4];
