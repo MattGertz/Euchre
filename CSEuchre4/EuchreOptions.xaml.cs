@@ -196,30 +196,30 @@ namespace CSEuchre4
             Properties.Settings.Default.PartnerVoice = PartnerVoiceCombo.SelectedIndex;
             Properties.Settings.Default.RightOpponentVoice = RightVoiceCombo.SelectedIndex;
 
-            Properties.Settings.Default.StickTheDealer = (bool)StickTheDealer.IsChecked;
-            Properties.Settings.Default.NineOfHearts = (bool)NineOfHearts.IsChecked;
-            Properties.Settings.Default.SuperEuchre = (bool)SuperEuchre.IsChecked;
-            Properties.Settings.Default.QuietDealer = (bool)QuietDealer.IsChecked;
-            Properties.Settings.Default.PeekAtOtherCards = (bool)PeekAtOtherCards.IsChecked;
-            Properties.Settings.Default.SoundOn = (bool)SoundOn.IsChecked;
+            Properties.Settings.Default.StickTheDealer = StickTheDealer.IsChecked == true;
+            Properties.Settings.Default.NineOfHearts = NineOfHearts.IsChecked == true;
+            Properties.Settings.Default.SuperEuchre = SuperEuchre.IsChecked == true;
+            Properties.Settings.Default.QuietDealer = QuietDealer.IsChecked == true;
+            Properties.Settings.Default.PeekAtOtherCards = PeekAtOtherCards.IsChecked == true;
+            Properties.Settings.Default.SoundOn = SoundOn.IsChecked == true;
 
-            if ((bool)LeftOpponentCrazy.IsChecked)
+            if (LeftOpponentCrazy.IsChecked == true)
                 Properties.Settings.Default.LeftOpponentPlay = 1;
-            else if ((bool)LeftOpponentNormal.IsChecked)
+            else if (LeftOpponentNormal.IsChecked == true)
                 Properties.Settings.Default.LeftOpponentPlay = 2;
             else
                 Properties.Settings.Default.LeftOpponentPlay = 3;
 
-            if ((bool)PartnerCrazy.IsChecked)
+            if (PartnerCrazy.IsChecked == true)
                 Properties.Settings.Default.PartnerPlay = 1;
-            else if ((bool)PartnerNormal.IsChecked)
+            else if (PartnerNormal.IsChecked == true)
                 Properties.Settings.Default.PartnerPlay = 2;
             else
                 Properties.Settings.Default.PartnerPlay = 3;
 
-            if ((bool)RightOpponentCrazy.IsChecked)
+            if (RightOpponentCrazy.IsChecked == true)
                 Properties.Settings.Default.RightOpponentPlay = 1;
-            else if ((bool)RightOpponentNormal.IsChecked)
+            else if (RightOpponentNormal.IsChecked == true)
                 Properties.Settings.Default.RightOpponentPlay = 2;
             else
                 Properties.Settings.Default.RightOpponentPlay = 3;

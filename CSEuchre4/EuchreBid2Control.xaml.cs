@@ -65,7 +65,7 @@ namespace CSEuchre4
         #region "Event handlers"
         private void Pass_Checked(object sender, RoutedEventArgs e)
         {
-            if (_modeQuietDealer && !(bool)Pass.IsChecked)
+            if (_modeQuietDealer && Pass.IsChecked != true)
             {
                 GoingAlone.IsEnabled = false;
                 GoingAlone.Opacity = 0.25;
@@ -73,8 +73,8 @@ namespace CSEuchre4
             }
             else
             {
-                GoingAlone.IsEnabled = !(bool)Pass.IsChecked;
-                GoingAlone.Opacity = (bool)Pass.IsChecked ? 0.25 : 1.0;
+                GoingAlone.IsEnabled = Pass.IsChecked != true;
+                GoingAlone.Opacity = Pass.IsChecked == true ? 0.25 : 1.0;
                 GoingAlone.IsChecked = false;
             }
         }
