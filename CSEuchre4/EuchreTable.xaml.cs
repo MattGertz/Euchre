@@ -24,8 +24,7 @@ namespace CSEuchre4
         static public int GenRandomNumber(int NumSides)
         {
             byte[] randomNumber = new byte[1];
-            System.Security.Cryptography.RNGCryptoServiceProvider Gen = new System.Security.Cryptography.RNGCryptoServiceProvider();
-            Gen.GetBytes(randomNumber);
+            System.Security.Cryptography.RandomNumberGenerator.Fill(randomNumber);
             int rand = Convert.ToInt32(randomNumber[0]);
             return rand % NumSides;
         }
