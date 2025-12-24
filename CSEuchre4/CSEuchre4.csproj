@@ -1,216 +1,50 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{45601F87-5F3E-46C3-872D-B1EAF6DBA6B4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
     <RootNamespace>CSEuchre4</RootNamespace>
     <AssemblyName>CSEuchre4</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <TargetFrameworkProfile />
+    <ApplicationIcon>Images\Euchre.ico</ApplicationIcon>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    
+    <!-- Suppress Windows-only API warnings (this is a Windows-only WPF app) -->
+    <NoWarn>CA1416</NoWarn>
+    
+    <!-- Assembly metadata -->
+    <AssemblyTitle>C# Euchre</AssemblyTitle>
+    <Product>CSEuchre4</Product>
+    <Description>A Euchre game written in C# by Matthew Gertz</Description>
+    <Company>Where's That Cat? software</Company>
+    <Copyright>Copyright © Matthew Gertz. All rights reserved.</Copyright>
+    <Version>1.0.0.0</Version>
+    
+    <!-- Suppress auto-generated assembly attributes since we have AssemblyInfo.cs -->
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Accessibility" />
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Speech" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.0" />
+    <PackageReference Include="System.Speech" Version="9.0.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="EuchreAboutBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="EuchreBid2Control.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="EuchreBidControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="EuchreOptions.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="EuchreRules.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="EuchreTable.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="EuchreAboutBox.xaml.cs">
-      <DependentUpon>EuchreAboutBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="EuchreBid2Control.xaml.cs">
-      <DependentUpon>EuchreBid2Control.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="EuchreBidControl.xaml.cs">
-      <DependentUpon>EuchreBidControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="EuchreCard.cs" />
-    <Compile Include="EuchreOptions.xaml.cs">
-      <DependentUpon>EuchreOptions.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="EuchrePlayer.cs" />
-    <Compile Include="EuchreRules.xaml.cs">
-      <DependentUpon>EuchreRules.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="EuchreSpeech.cs" />
-    <Compile Include="EuchreTable.xaml.cs">
-      <DependentUpon>EuchreTable.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    <!-- Copy text files to output directory -->
+    <None Update="text\CSEuchreRules.rtf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <AppDesigner Include="Properties\" />
-    <None Include="text\CSEuchreRules.rtf">
+    
+    <!-- Copy sound files to output directory -->
+    <None Update="sounds\*.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="App.config" />
+    <!-- All image resources are automatically included as Resource -->
+    <Resource Include="Images\**\*" />
+    <Resource Include="Resources\**\*" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Resource Include="Images\SPADESIMAGE.bmp" />
-    <Resource Include="Images\SCOREUsZero.bmp" />
-    <Resource Include="Images\SCOREUsTwo.bmp" />
-    <Resource Include="Images\SCOREUsThree.bmp" />
-    <Resource Include="Images\SCOREUsTen.bmp" />
-    <Resource Include="Images\SCOREUsSix.bmp" />
-    <Resource Include="Images\SCOREUsSeven.bmp" />
-    <Resource Include="Images\SCOREUsOne.bmp" />
-    <Resource Include="Images\SCOREUsNine.bmp" />
-    <Resource Include="Images\SCOREUsFour.bmp" />
-    <Resource Include="Images\SCOREUsFive.bmp" />
-    <Resource Include="Images\SCOREUsEight.bmp" />
-    <Resource Include="Images\SCOREThemZero.bmp" />
-    <Resource Include="Images\SCOREThemTwo.bmp" />
-    <Resource Include="Images\SCOREThemThree.bmp" />
-    <Resource Include="Images\SCOREThemTen.bmp" />
-    <Resource Include="Images\SCOREThemSix.bmp" />
-    <Resource Include="Images\SCOREThemSeven.bmp" />
-    <Resource Include="Images\SCOREThemOne.bmp" />
-    <Resource Include="Images\SCOREThemNine.bmp" />
-    <Resource Include="Images\SCOREThemFour.bmp" />
-    <Resource Include="Images\SCOREThemFive.bmp" />
-    <Resource Include="Images\SCOREThemEight.bmp" />
-    <Resource Include="Images\NOSUITIMAGE.bmp" />
-    <Resource Include="Images\logo.bmp" />
-    <Resource Include="Images\HEARTSIMAGE.bmp" />
-    <Resource Include="Images\Euchre.ico" />
-    <Resource Include="Images\DIAMONDSIMAGE.bmp" />
-    <Resource Include="Images\CLUBSIMAGE.bmp" />
-    <Resource Include="Images\CARDFACETenOfSpades.bmp" />
-    <Resource Include="Images\CARDFACETenOfHearts.bmp" />
-    <Resource Include="Images\CARDFACETenOfDiamonds.bmp" />
-    <Resource Include="Images\CARDFACETenOfClubs.bmp" />
-    <Resource Include="Images\CARDFACEQueenOfSpades.bmp" />
-    <Resource Include="Images\CARDFACEQueenOfHearts.bmp" />
-    <Resource Include="Images\CARDFACEQueenOfDiamonds.bmp" />
-    <Resource Include="Images\CARDFACEQueenOfClubs.bmp" />
-    <Resource Include="Images\CARDFACENineOfSpades.bmp" />
-    <Resource Include="Images\CARDFACENineOfHearts.bmp" />
-    <Resource Include="Images\CARDFACENineOfDiamonds.bmp" />
-    <Resource Include="Images\CARDFACENineOfClubs.bmp" />
-    <Resource Include="Images\CARDFACEKingOfSpades.bmp" />
-    <Resource Include="Images\CARDFACEKingOfHearts.bmp" />
-    <Resource Include="Images\CARDFACEKingOfDiamonds.bmp" />
-    <Resource Include="Images\CARDFACEKingOfClubs.bmp" />
-    <Resource Include="Images\CARDFACEJackOfSpades.bmp" />
-    <Resource Include="Images\CARDFACEJackOfHearts.bmp" />
-    <Resource Include="Images\CARDFACEJackOfDiamonds.bmp" />
-    <Resource Include="Images\CARDFACEJackOfClubs.bmp" />
-    <Resource Include="Images\CARDFACEFiveOfSpades.bmp" />
-    <Resource Include="Images\CARDFACEFiveOfHearts.bmp" />
-    <Resource Include="Images\CARDFACEFiveOfDiamonds.bmp" />
-    <Resource Include="Images\CARDFACEFiveOfClubs.bmp" />
-    <Resource Include="Images\CARDFACEAceOfSpades.bmp" />
-    <Resource Include="Images\CARDFACEAceOfHearts.bmp" />
-    <Resource Include="Images\CARDFACEAceOfDiamonds.bmp" />
-    <Resource Include="Images\CARDFACEAceOfClubs.bmp" />
-    <Resource Include="Images\CARDBACK.bmp" />
-    <Resource Include="Resources\Euchre.ico" />
-    <Content Include="sounds\loudapplause.wav" />
-    <Content Include="sounds\playcard.wav" />
-    <Content Include="sounds\shuffle.wav" />
-    <Content Include="sounds\softapplause.wav" />
-    <Content Include="sounds\wildapplause.wav" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
