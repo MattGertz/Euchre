@@ -1985,7 +1985,7 @@ namespace CSEuchre4
             }
         }
 
-        private void EuchreTable_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void EuchreTable_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
             if ((bool)!(e.Cancel = QueryCancelClose()))
             {

@@ -129,7 +129,7 @@ namespace CSEuchre4
 
         #region "Event Handlers"
 
-        private void EuchreOptions_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void EuchreOptions_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
             if (LocalDialogResult)
             {
@@ -241,17 +241,17 @@ namespace CSEuchre4
             UpdateLayout();
         }
 
-        private void LeftVoiceCombo_DropDownClosed(object sender, EventArgs e)
+        private void LeftVoiceCombo_DropDownClosed(object? sender, EventArgs e)
         {
             Speak(LeftVoiceCombo.Text);
         }
 
-        private void PartnerVoiceCombo_DropDownClosed(object sender, EventArgs e)
+        private void PartnerVoiceCombo_DropDownClosed(object? sender, EventArgs e)
         {
             Speak(PartnerVoiceCombo.Text);
         }
 
-        private void RightVoiceCombo_DropDownClosed(object sender, EventArgs e)
+        private void RightVoiceCombo_DropDownClosed(object? sender, EventArgs e)
         {
             Speak(RightVoiceCombo.Text);
         }
