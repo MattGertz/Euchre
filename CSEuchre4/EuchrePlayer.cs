@@ -446,8 +446,8 @@ namespace CSEuchre4
             {
             case Seats.LeftOpponent: return _gameTable.gameLeftOpponentName;
             case Seats.RightOpponent: return _gameTable.gameRightOpponentName;
-            case Seats.Player: return _gameTable.gamePartnerName;
-            case Seats.Partner: return _gameTable.gamePlayerName;
+            case Seats.Player: return _gameTable.gamePlayerName;
+            case Seats.Partner: return _gameTable.gamePartnerName;
             default: throw new Exception("Unknown seat type in OppositeSeat");
             }
         }

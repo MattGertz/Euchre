@@ -861,9 +861,19 @@ namespace CSEuchre4
 
         private async Task PlayResourceSound(System.IO.UnmanagedMemoryStream res)
         {
-            _currentPlayer?.Stop();
-            _currentPlayer = new System.Media.SoundPlayer(res);
-            await Task.Run(() => _currentPlayer.PlaySync());
+            try
+            {
+                _currentPlayer?.Stop();
+                _currentPlayer?.Dispose();
+                _currentPlayer = new System.Media.SoundPlayer(res);
+                await Task.Run(() => _currentPlayer.PlaySync());
+            }
+            catch
+            {
+                // If sound playback fails, ensure the player is disposed
+                _currentPlayer?.Dispose();
+                _currentPlayer = null;
+            }
         }
 
         private async Task PlayCardSound()
