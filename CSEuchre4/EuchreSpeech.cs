@@ -48,7 +48,17 @@ namespace CSEuchre4
                 }
                 catch
                 {
-
+                    // If speech fails, dispose and recreate the synthesizer to recover
+                    try
+                    {
+                        VoiceSynthesizer.Dispose();
+                        VoiceSynthesizer = new SpeechSynthesizer();
+                    }
+                    catch
+                    {
+                        // If we can't recover, set to null to prevent further attempts
+                        VoiceSynthesizer = null!;
+                    }
                 }
             }
         }
