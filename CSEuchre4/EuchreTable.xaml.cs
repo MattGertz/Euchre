@@ -1999,22 +1999,42 @@ namespace CSEuchre4
 
         private void EuchreTable_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
-            // Stop any currently playing sound
-            _currentPlayer?.Stop();
-            _currentPlayer?.Dispose();
-            _currentPlayer = null;
+            // Stop and dispose any currently playing sound
+            try
+            {
+                _currentPlayer?.Stop();
+                _currentPlayer?.Dispose();
+                _currentPlayer = null;
+            }
+            catch
+            {
+                // Ignore errors during shutdown cleanup
+            }
 
             if ((bool)!(e.Cancel = QueryCancelClose()))
             {
-                // We are closing for cure -- dispose the voices
-                for (EuchrePlayer.Seats i = EuchrePlayer.Seats.LeftOpponent; i <= EuchrePlayer.Seats.Player; i++)
+                // We are closing for sure -- dispose all speech synthesizers
+                try
                 {
-                    gamePlayers[(int)i].DisposeVoice();
+                    for (EuchrePlayer.Seats i = EuchrePlayer.Seats.LeftOpponent; i <= EuchrePlayer.Seats.Player; i++)
+                    {
+                        gamePlayers[(int)i]?.DisposeVoice();
+                    }
                 }
-                if (_gameOptionsDialog != null)
+                catch
                 {
-                    _gameOptionsDialog.DisposeVoice();
+                    // Ignore errors during shutdown cleanup
                 }
+
+                try
+                {
+                    _gameOptionsDialog?.DisposeVoice();
+                }
+                catch
+                {
+                    // Ignore errors during shutdown cleanup
+                }
+
                 Dispatcher.InvokeShutdown(); // Clear out any remaining commands
             }
         }
