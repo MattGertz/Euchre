@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUIEuchre.EuchreTable"
+             Shell.NavBarIsVisible="False"
+             Title="C#Euchre">
+    <Grid BackgroundColor="Maroon" x:Name="OuterGrid" SizeChanged="OnOuterGridSizeChanged">
+        <AbsoluteLayout WidthRequest="855" HeightRequest="828" HorizontalOptions="Start" VerticalOptions="Start" AnchorX="0" AnchorY="0" x:Name="EuchreGrid">
+        <Label Text="Your Score: 0" AbsoluteLayout.LayoutBounds="12,39,128,40" AbsoluteLayout.LayoutFlags="None" x:Name="YourScore" FontFamily="Microsoft Sans Serif" BackgroundColor="#FFEA88AF" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+        <Label BackgroundColor="#FFEA88AF" Text="Their Score: 0" FontFamily="Microsoft Sans Serif" AbsoluteLayout.LayoutBounds="713,39,128,40" AbsoluteLayout.LayoutFlags="None" x:Name="TheirScore" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+        <Label BackgroundColor="#FFEA88AF" Text="Your Tricks Taken: 0" FontFamily="Microsoft Sans Serif" AbsoluteLayout.LayoutBounds="12,641,144,72" AbsoluteLayout.LayoutFlags="None" x:Name="YourTricks" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+        <Label BackgroundColor="#FFEA88AF" Text="Their Tricks Taken: 0" FontFamily="Microsoft Sans Serif" AbsoluteLayout.LayoutBounds="697,641,144,72" AbsoluteLayout.LayoutFlags="None" x:Name="TheirTricks" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+        <Editor AbsoluteLayout.LayoutBounds="12,737,829,81" AbsoluteLayout.LayoutFlags="None" x:Name="StatusArea" BackgroundColor="Yellow" FontFamily="Microsoft Sans Serif" IsReadOnly="True" />
+        <Image AbsoluteLayout.LayoutBounds="202,212,450,325" AbsoluteLayout.LayoutFlags="None" x:Name="Logo" Aspect="Fill" InputTransparent="True" />
+
+        <!-- Dealer boxes -->
+        <Border Stroke="Yellow" AbsoluteLayout.LayoutBounds="12,130,128,450" AbsoluteLayout.LayoutFlags="None" x:Name="DealerLeftOpponent" IsVisible="False" BackgroundColor="Transparent" Padding="0">
+            <Label Text="Dealer" FontFamily="Impact" TextColor="Yellow" />
+        </Border>
+        <Border Stroke="Yellow" AbsoluteLayout.LayoutBounds="721,130,128,450" AbsoluteLayout.LayoutFlags="None" x:Name="DealerRightOpponent" IsVisible="False" BackgroundColor="Transparent" Padding="0">
+            <Label Text="Dealer" FontFamily="Impact" TextColor="Yellow" />
+        </Border>
+        <Border Stroke="Yellow" AbsoluteLayout.LayoutBounds="202,28,450,128" AbsoluteLayout.LayoutFlags="None" x:Name="DealerPartner" IsVisible="False" BackgroundColor="Transparent" Padding="0">
+            <Label Text="Dealer" FontFamily="Impact" TextColor="Yellow" />
+        </Border>
+        <Border Stroke="Yellow" AbsoluteLayout.LayoutBounds="202,604,450,128" AbsoluteLayout.LayoutFlags="None" x:Name="DealerPlayer" IsVisible="False" BackgroundColor="Transparent" Padding="0">
+            <Label Text="Dealer" FontFamily="Impact" TextColor="Yellow" />
+        </Border>
+
+        <!-- Left Opponent cards (portrait containers, rotated 90° visually) -->
+        <Image AbsoluteLayout.LayoutBounds="38,136,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="LeftOpponentCard1" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="38,222,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="LeftOpponentCard2" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="38,308,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="LeftOpponentCard3" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="38,394,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="LeftOpponentCard4" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="38,478,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="LeftOpponentCard5" IsVisible="False" />
+
+        <!-- Right Opponent cards (portrait containers, rotated 270° visually) -->
+        <Image AbsoluteLayout.LayoutBounds="747,136,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="RightOpponentCard5" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="747,222,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="RightOpponentCard4" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="747,308,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="RightOpponentCard3" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="747,394,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="RightOpponentCard2" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="747,478,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="RightOpponentCard1" IsVisible="False" />
+
+        <!-- Partner cards -->
+        <Image AbsoluteLayout.LayoutBounds="213,43,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerCard5" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="299,43,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerCard4" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="385,43,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerCard3" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="471,43,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerCard2" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="557,43,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerCard1" IsVisible="False" />
+
+        <!-- Player cards -->
+        <Image AbsoluteLayout.LayoutBounds="217,620,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PlayerCard1" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="303,620,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PlayerCard2" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="389,620,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PlayerCard3" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="475,620,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PlayerCard4" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="561,620,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PlayerCard5" IsVisible="False" />
+
+        <!-- Name labels -->
+        <Label Text="Left Opponent" AbsoluteLayout.LayoutBounds="14,585,126,28" AbsoluteLayout.LayoutFlags="None" x:Name="LeftOpponentNameLabel" FontFamily="Microsoft Sans Serif" FontSize="12" FontAttributes="Italic" TextColor="White" />
+        <Label Text="Right Opponent" AbsoluteLayout.LayoutBounds="713,585,128,28" AbsoluteLayout.LayoutFlags="None" x:Name="RightOpponentNameLabel" FontFamily="Microsoft Sans Serif" FontSize="12" FontAttributes="Italic" TextColor="White" />
+        <Label Text="Player's Partner" AbsoluteLayout.LayoutBounds="202,162,97,28" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerNameLabel" FontFamily="Microsoft Sans Serif" FontSize="12" FontAttributes="Italic" TextColor="White" />
+        <Label Text="Player" AbsoluteLayout.LayoutBounds="202,576,97,28" AbsoluteLayout.LayoutFlags="None" x:Name="PlayerNameLabel" FontFamily="Microsoft Sans Serif" FontSize="12" FontAttributes="Italic" TextColor="White" />
+
+        <!-- Played cards (center of table) -->
+        <Image AbsoluteLayout.LayoutBounds="158,312,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="LeftOpponentCard" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="623,312,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="RightOpponentCard" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="390,162,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerCard" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="390,476,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PlayerCard" IsVisible="False" />
+
+        <!-- Kitty cards -->
+        <Image AbsoluteLayout.LayoutBounds="635,476,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="KittyCard4" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="626,476,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="KittyCard3" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="611,476,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="KittyCard2" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="600,476,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="KittyCard1" IsVisible="False" />
+
+        <!-- Trump suit indicators -->
+        <Image AbsoluteLayout.LayoutBounds="146,410,70,70" AbsoluteLayout.LayoutFlags="None" x:Name="TrumpLeft" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="476,510,70,70" AbsoluteLayout.LayoutFlags="None" x:Name="TrumpPlayer" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="645,248,70,70" AbsoluteLayout.LayoutFlags="None" x:Name="TrumpRight" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="314,162,70,70" AbsoluteLayout.LayoutFlags="None" x:Name="TrumpPartner" IsVisible="False" />
+
+        <!-- Score images -->
+        <Image AbsoluteLayout.LayoutBounds="492,162,150,160" AbsoluteLayout.LayoutFlags="None" x:Name="ThemScore" Aspect="Center" />
+        <Image AbsoluteLayout.LayoutBounds="218,410,150,160" AbsoluteLayout.LayoutFlags="None" x:Name="UsScore" Aspect="Center" />
+
+        <!-- Select label -->
+        <Label Text="Please select a card to play" AbsoluteLayout.LayoutBounds="359,575,200,28" AbsoluteLayout.LayoutFlags="None" x:Name="SelectLabel" FontFamily="Impact" TextColor="White" IsVisible="False" />
+
+        <!-- Continue button -->
+        <Button Text="Continue" AbsoluteLayout.LayoutBounds="370,324,120,80" AbsoluteLayout.LayoutFlags="None" x:Name="ContinueButton" IsVisible="False" BackgroundColor="Yellow" FontFamily="Impact" FontSize="16" TextColor="Black" />
+
+        </AbsoluteLayout>
+    </Grid>
+</ContentPage>

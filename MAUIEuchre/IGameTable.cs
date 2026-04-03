@@ -23,7 +23,7 @@ namespace MAUIEuchre
         string gamePartnerName { get; }
 
         // Methods used by EuchrePlayer
-        void UpdateStatus(string message);
+        void UpdateStatus(string message, int whiteSpace = 1);
         void SpeakPass(EuchrePlayer.Seats seat);
         void SpeakIPickItUp(EuchrePlayer.Seats seat);
         void SpeakPickItUp(EuchrePlayer.Seats seat);

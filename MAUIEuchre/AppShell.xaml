@@ -7,8 +7,8 @@
     Title="MAUIEuchre">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Title="C#Euchre"
+        ContentTemplate="{DataTemplate local:EuchreTable}"
+        Route="EuchreTable" />
 
 </Shell>
