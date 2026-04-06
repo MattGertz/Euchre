@@ -9,11 +9,10 @@
         <VerticalStackLayout Padding="12" Spacing="10">
 
             <!-- Title and buttons row -->
-            <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="8">
+            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                 <Label Text="Matt's Euchre" FontSize="36" FontAttributes="Bold,Italic" TextColor="#FFD700" BackgroundColor="Transparent" VerticalTextAlignment="Center" Padding="8,0" />
                 <Button Text="OK" Grid.Column="1" WidthRequest="75" HeightRequest="36" x:Name="OKBtn" Clicked="OKBtn_Click" BackgroundColor="#2E7D32" TextColor="White" CornerRadius="6" />
-                <Button Text="Quit" Grid.Column="2" WidthRequest="75" HeightRequest="36" x:Name="CancelBtn" Clicked="CancelBtn_Click" BackgroundColor="#C62828" TextColor="White" CornerRadius="6" />
-                <Button Text="Reset" Grid.Column="3" WidthRequest="75" HeightRequest="36" x:Name="ResetBtn" Clicked="ResetBtn_Click" BackgroundColor="#455A64" TextColor="White" CornerRadius="6" />
+                <Button Text="Reset" Grid.Column="2" WidthRequest="75" HeightRequest="36" x:Name="ResetBtn" Clicked="ResetBtn_Click" BackgroundColor="#455A64" TextColor="White" CornerRadius="6" />
             </Grid>
 
             <!-- Player name -->

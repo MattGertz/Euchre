@@ -24,6 +24,7 @@ namespace MAUIEuchre
 
         // Methods used by EuchrePlayer
         void UpdateStatus(string message, int whiteSpace = 1);
+        void UpdateStatusBoldName(string format, string boldArg, params string[] otherArgs);
         void SpeakPass(EuchrePlayer.Seats seat);
         void SpeakIPickItUp(EuchrePlayer.Seats seat);
         void SpeakPickItUp(EuchrePlayer.Seats seat);

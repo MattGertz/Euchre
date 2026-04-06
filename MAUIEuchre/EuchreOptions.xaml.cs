@@ -81,12 +81,6 @@ namespace MAUIEuchre
             await Navigation.PopModalAsync();
         }
 
-        private async void CancelBtn_Click(object sender, EventArgs e)
-        {
-            LocalDialogResult = false;
-            await Navigation.PopModalAsync();
-        }
-
         private void ResetBtn_Click(object sender, EventArgs e)
         {
             GameSettings.Reset();

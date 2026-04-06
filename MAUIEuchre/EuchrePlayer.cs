@@ -1,5 +1,4 @@
 using System;
-using System.Text;
 
 namespace MAUIEuchre
 {
@@ -485,15 +484,12 @@ namespace MAUIEuchre
 
         public void ProcessBidFirstRoundPassed()
         {
-            StringBuilder s = new StringBuilder();
-            s.AppendFormat(AppResources.GetString("Notice_Pass"), GetDisplayName());
-            _gameTable.UpdateStatus(s.ToString());
+            _gameTable.UpdateStatusBoldName(AppResources.GetString("Notice_Pass"), GetDisplayName());
             _gameTable.SpeakPass(Seat);
         }
 
         public void ProcessBidFirstRoundCalled(bool GoingAlone)
         {
-            StringBuilder s = new StringBuilder();
             _gameTable.handTrumpSuit = _gameTable.handKitty[0].Suit;
 
             if (GoingAlone)
@@ -505,14 +501,12 @@ namespace MAUIEuchre
                 }
                 if (Seat == _gameTable.handDealer)
                 {
-                    s.AppendFormat(AppResources.GetString("Notice_IPickItUpAlone"), GetDisplayName(), AppResources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(_gameTable.handTrumpSuit)));
-                    _gameTable.UpdateStatus(s.ToString());
+                    _gameTable.UpdateStatusBoldName(AppResources.GetString("Notice_IPickItUpAlone"), GetDisplayName(), AppResources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(_gameTable.handTrumpSuit))!);
                     _gameTable.SpeakIPickItUp(Seat);
                 }
                 else
                 {
-                    s.AppendFormat(AppResources.GetString("Notice_PickItUpAlone"), GetDisplayName(), AppResources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(_gameTable.handTrumpSuit)));
-                    _gameTable.UpdateStatus(s.ToString());
+                    _gameTable.UpdateStatusBoldName(AppResources.GetString("Notice_PickItUpAlone"), GetDisplayName(), AppResources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(_gameTable.handTrumpSuit))!);
                     _gameTable.SpeakPickItUp(Seat);
                 }
                 _gameTable.SpeakSuit(Seat);
@@ -522,14 +516,12 @@ namespace MAUIEuchre
             {
                 if (Seat == _gameTable.handDealer)
                 {
-                    s.AppendFormat(AppResources.GetString("Notice_IPickItUp"), GetDisplayName(), AppResources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(_gameTable.handTrumpSuit)));
-                    _gameTable.UpdateStatus(s.ToString());
+                    _gameTable.UpdateStatusBoldName(AppResources.GetString("Notice_IPickItUp"), GetDisplayName(), AppResources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(_gameTable.handTrumpSuit))!);
                     _gameTable.SpeakIPickItUp(Seat);
                 }
                 else
                 {
-                    s.AppendFormat(AppResources.GetString("Notice_PickItUp"), GetDisplayName(), AppResources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(_gameTable.handTrumpSuit)));
-                    _gameTable.UpdateStatus(s.ToString());
+                    _gameTable.UpdateStatusBoldName(AppResources.GetString("Notice_PickItUp"), GetDisplayName(), AppResources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(_gameTable.handTrumpSuit))!);
                     _gameTable.SpeakPickItUp(Seat);
                 }
                 _gameTable.SpeakSuit(Seat);
@@ -608,15 +600,12 @@ namespace MAUIEuchre
 
         public void ProcessBidSecondRoundPassed()
         {
-            StringBuilder s = new StringBuilder();
-            s.AppendFormat(AppResources.GetString("Notice_Pass"), GetDisplayName());
-            _gameTable.UpdateStatus(s.ToString());
+            _gameTable.UpdateStatusBoldName(AppResources.GetString("Notice_Pass"), GetDisplayName());
             _gameTable.SpeakPass(Seat);
         }
 
         public void ProcessBidSecondRoundCalled(bool GoingAlone)
         {
-            StringBuilder s = new StringBuilder();
             if (GoingAlone)
             {
                 _gameTable.gamePlayers[(int)OppositeSeat()].handSittingOut = true;
@@ -626,15 +615,13 @@ namespace MAUIEuchre
                 {
                     _gameTable.trickLeaderIndex = NextPlayer(_gameTable.trickLeaderIndex);
                 }
-                s.AppendFormat(AppResources.GetString("Notice_ChoseTrumpAlone"), GetDisplayName(), AppResources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(_gameTable.handTrumpSuit)));
-                _gameTable.UpdateStatus(s.ToString());
+                _gameTable.UpdateStatusBoldName(AppResources.GetString("Notice_ChoseTrumpAlone"), GetDisplayName(), AppResources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(_gameTable.handTrumpSuit))!);
                 _gameTable.SpeakSuit(Seat);
                 _gameTable.SpeakAlone(Seat);
             }
             else
             {
-                s.AppendFormat(AppResources.GetString("Notice_ChoseTrump"), GetDisplayName(), AppResources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(_gameTable.handTrumpSuit)));
-                _gameTable.UpdateStatus(s.ToString());
+                _gameTable.UpdateStatusBoldName(AppResources.GetString("Notice_ChoseTrump"), GetDisplayName(), AppResources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(_gameTable.handTrumpSuit))!);
                 _gameTable.SpeakSuit(Seat);
             }
             _gameTable.handPickedTrump = Seat;

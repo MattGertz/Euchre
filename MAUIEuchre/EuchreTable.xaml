@@ -53,11 +53,11 @@
         <Image AbsoluteLayout.LayoutBounds="747,478,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="RightOpponentCard1" IsVisible="False" />
 
         <!-- Partner cards -->
-        <Image AbsoluteLayout.LayoutBounds="213,43,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerCard5" IsVisible="False" />
-        <Image AbsoluteLayout.LayoutBounds="299,43,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerCard4" IsVisible="False" />
-        <Image AbsoluteLayout.LayoutBounds="385,43,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerCard3" IsVisible="False" />
-        <Image AbsoluteLayout.LayoutBounds="471,43,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerCard2" IsVisible="False" />
-        <Image AbsoluteLayout.LayoutBounds="557,43,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerCard1" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="217,43,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerCard5" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="303,43,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerCard4" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="389,43,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerCard3" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="475,43,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerCard2" IsVisible="False" />
+        <Image AbsoluteLayout.LayoutBounds="561,43,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerCard1" IsVisible="False" />
 
         <!-- Player cards -->
         <Image AbsoluteLayout.LayoutBounds="217,620,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PlayerCard1" IsVisible="False" />
@@ -67,10 +67,10 @@
         <Image AbsoluteLayout.LayoutBounds="561,620,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PlayerCard5" IsVisible="False" />
 
         <!-- Name labels -->
-        <Label Text="Left Opponent" AbsoluteLayout.LayoutBounds="14,585,126,28" AbsoluteLayout.LayoutFlags="None" x:Name="LeftOpponentNameLabel" FontSize="13" FontAttributes="Italic" TextColor="#E0E0E0" />
-        <Label Text="Right Opponent" AbsoluteLayout.LayoutBounds="713,585,128,28" AbsoluteLayout.LayoutFlags="None" x:Name="RightOpponentNameLabel" FontSize="13" FontAttributes="Italic" TextColor="#E0E0E0" />
-        <Label Text="Player's Partner" AbsoluteLayout.LayoutBounds="202,162,97,28" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerNameLabel" FontSize="13" FontAttributes="Italic" TextColor="#E0E0E0" />
-        <Label Text="Player" AbsoluteLayout.LayoutBounds="202,576,97,28" AbsoluteLayout.LayoutFlags="None" x:Name="PlayerNameLabel" FontSize="13" FontAttributes="Italic" TextColor="#E0E0E0" />
+        <Label Text="Left Opponent" AbsoluteLayout.LayoutBounds="38,585,126,28" AbsoluteLayout.LayoutFlags="None" x:Name="LeftOpponentNameLabel" FontSize="13" FontAttributes="Italic" TextColor="#E0E0E0" />
+        <Label Text="Right Opponent" AbsoluteLayout.LayoutBounds="747,585,128,28" AbsoluteLayout.LayoutFlags="None" x:Name="RightOpponentNameLabel" FontSize="13" FontAttributes="Italic" TextColor="#E0E0E0" />
+        <Label Text="Player's Partner" AbsoluteLayout.LayoutBounds="213,162,97,28" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerNameLabel" FontSize="13" FontAttributes="Italic" TextColor="#E0E0E0" />
+        <Label Text="Player" AbsoluteLayout.LayoutBounds="217,576,97,28" AbsoluteLayout.LayoutFlags="None" x:Name="PlayerNameLabel" FontSize="13" FontAttributes="Italic" TextColor="#E0E0E0" />
 
         <!-- Played cards (center of table) -->
         <Image AbsoluteLayout.LayoutBounds="158,312,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="LeftOpponentCard" IsVisible="False" />

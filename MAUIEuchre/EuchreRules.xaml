@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUIEuchre.EuchreRules"
+             Title="Rules of Euchre"
+             BackgroundColor="#1B5E20">
+    <Grid RowDefinitions="*,Auto" Padding="10">
+        <WebView x:Name="RulesWebView" Grid.Row="0" />
+        <Button Grid.Row="1" Text="Close" Clicked="CloseBtn_Click"
+                BackgroundColor="#FFD700" TextColor="#1A1A2E"
+                FontAttributes="Bold" FontSize="16"
+                HeightRequest="44" Margin="0,10,0,0"
+                HorizontalOptions="End" WidthRequest="120" />
+    </Grid>
+</ContentPage>

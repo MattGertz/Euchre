@@ -495,4 +495,137 @@
   <data name="SPADES" xml:space="preserve">
     <value>Spades</value>
   </data>
+  <data name="About_Text" xml:space="preserve">
+    <value>Matt's Euchre for Android
+
+&#169; 2006, 2013, 2026 Matthew Gertz
+All rights reserved.</value>
+  </data>
+  <data name="Rules_Html" xml:space="preserve">
+    <value>&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+body { font-family: sans-serif; font-size: 14px; background-color: #FFFDE7; color: #1A1A2E; padding: 12px; }
+h1 { font-size: 22px; color: #1B5E20; }
+h2 { font-size: 18px; color: #1B5E20; }
+h3 { font-size: 16px; color: #333; margin-bottom: 4px; }
+ul { margin-top: 4px; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Matt's Euchre&lt;/h1&gt;
+&lt;p&gt;Written by Matthew Gertz as a programming exercise.&lt;/p&gt;
+
+&lt;h2&gt;History of Euchre and Overview of Variations&lt;/h2&gt;
+&lt;p&gt;Euchre (pronounced &amp;quot;YOO-ker&amp;quot;) is a game which probably originated in Germany, with the original
+name &amp;quot;Jukerspiel&amp;quot; (literally, &amp;quot;peasant's game&amp;quot;). It is classified as a trick-taking game with
+trumps, and has similarities to Bridge, Whist, and Rook.&lt;/p&gt;
+
+&lt;p&gt;There are many variations of Euchre played all over the world. This software version of Euchre uses the
+rules common in the Midwest:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;24 card deck&lt;/li&gt;
+&lt;li&gt;No &amp;quot;railroading&amp;quot;&lt;/li&gt;
+&lt;li&gt;Defenders don't play alone&lt;/li&gt;
+&lt;li&gt;Dealer need not play alone&lt;/li&gt;
+&lt;li&gt;No player need have potential trump in hand in order to call trump.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Additionally, there are other supported optional rules in this software version:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;b&gt;Stick the Dealer&lt;/b&gt; &amp;mdash; the dealer is forced to call trump if the bid makes it back to
+him/her on the second round of bidding.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Nine of Hearts Rule&lt;/b&gt; &amp;mdash; this is a rule from northern West Virginia. In this variation,
+a 21-card deck is used &amp;mdash; all 9's are thrown out except the Nine of Hearts. This means that there's
+only one card buried, and there are fewer trumps in three of the suits. This variation therefore favors
+the defenders, as they are less likely to have &amp;quot;junk&amp;quot; in their attempt to euchre the makers.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;SuperEuchre rule&lt;/b&gt; &amp;mdash; in this variation, if the defending team (the team not calling trump)
+takes all of the tricks, then they get four points.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Quiet Dealer rule&lt;/b&gt; &amp;mdash; in this variation, if dealer's partner chooses trump, he/she must
+play alone.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Furthermore, you can set the computer-driven players' names and personalities. However, the personalities
+only affect bidding currently.&lt;/p&gt;
+
+&lt;p&gt;If you're just learning the game, I suggest that you use the &amp;quot;Peek&amp;quot; rule for the first couple
+of games, until you get the hang of it.&lt;/p&gt;
+
+&lt;h2&gt;Rules of Euchre&lt;/h2&gt;
+
+&lt;h3&gt;The set-up:&lt;/h3&gt;
+&lt;p&gt;A Euchre game consists of four players (in teams of two, with partners sitting opposite each other) and
+a deck of 24 cards. Each of the four suits in the deck contains (in descending value) an Ace, King, Queen,
+Jack, Ten, and Nine. (In the &amp;quot;Nine of Hearts&amp;quot; variation, only the Heart suit has a Nine.) For the
+trump suit, however, the ordering of the cards is Jack (same suit), Jack (other suit of same color), Ace,
+King, Queen, Ten, Nine. The Jacks are referred to as the &lt;i&gt;right bower&lt;/i&gt; and &lt;i&gt;left bower&lt;/i&gt;,
+respectively. (&lt;i&gt;Bauer&lt;/i&gt; is the German word for farmer, and is also the name of their &amp;quot;Jack&amp;quot;
+card.) Any trump card defeats any non-trump card.&lt;/p&gt;
+
+&lt;h3&gt;The goal:&lt;/h3&gt;
+&lt;p&gt;The goal is for the team calling trump to take at least three of the five tricks in order to score points.
+The first team to reach 10 points wins the game.&lt;/p&gt;
+
+&lt;h3&gt;The bid:&lt;/h3&gt;
+&lt;p&gt;The dealer is chosen by passing out shuffled cards, one by one, to each player until a jack is turned up.
+Five cards are dealt to each player, face down, with the remaining four cards (or one card, depending on
+the variation used) placed near the middle in the &lt;i&gt;kitty&lt;/i&gt;. The topmost card in the kitty is turned
+face up. Starting with the player to the left of the dealer, a player has the opportunity to make the suit
+of the face-up card to become trump (by saying &amp;quot;Pick it up&amp;quot;) or to pass. If the card is ordered
+up, then the dealer must pick up the card and discard some other card (face down) onto the kitty.
+Furthermore, the suit of the picked-up card becomes trump. This is referred to as &amp;quot;calling trump.&amp;quot;&lt;/p&gt;
+
+&lt;p&gt;If all players pass in the first round of bidding, then the kitty card is turned face-down, and each
+player in order is given an opportunity to pick the trump suit, which may be any suit except the one under
+consideration during the first round.&lt;/p&gt;
+
+&lt;p&gt;If all players pass on the second round, then the cards are thrown in and the deal passes to the person
+on the left of the current dealer. The cards are shuffled and redealt, and the process begins again.
+However, in the &amp;quot;Stick the Dealer&amp;quot; variation, the dealer must call trump on the second round
+if no one else has called trump.&lt;/p&gt;
+
+&lt;p&gt;Whenever trump is called, either on the first or second rounds, the person who called the trump suit
+has the option of &amp;quot;going alone,&amp;quot; in which case his/her partner discards his hand, face down,
+and sits out the hand.&lt;/p&gt;
+
+&lt;p&gt;The team which picks the trump suit is referred to as the &amp;quot;making&amp;quot; team. The other team is
+the &amp;quot;defending&amp;quot; team. The &amp;quot;making team&amp;quot; must take three of the five tricks in the hand
+in order to &amp;quot;make their point.&amp;quot;&lt;/p&gt;
+
+&lt;h3&gt;The play:&lt;/h3&gt;
+&lt;p&gt;Play begins with the player on the dealer's left. He/she leads a card, and the other players must
+follow suit (i.e., play a card of the same suit). (Note that the left bower counts as the same suit as the
+trump, &lt;i&gt;not&lt;/i&gt; the suit pictured on it &amp;mdash; e.g., if the trump is Spades, then the Jack of Clubs
+(the left bower) is also a Spade, not a Club.) If they cannot follow suit, then they can play any card.
+The person who plays the highest value card during the round wins the trick for his team.&lt;/p&gt;
+
+&lt;h3&gt;The scoring:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;If the making team took 3 or 4 tricks, then they get one point.&lt;/li&gt;
+&lt;li&gt;If the making team took all 5 tricks, then they get 2 points. However, if the caller decided to
+&amp;quot;go alone,&amp;quot; then they get 4 points instead.&lt;/li&gt;
+&lt;li&gt;If the making team took less than 3 tricks, then the defending team is said to have &amp;quot;euchred&amp;quot;
+or &amp;quot;set&amp;quot; them, and the defenders thereby get 2 points.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;After the hand is completed and scored, the deal passes to the player on the dealer's left, and the
+whole process is repeated.&lt;/p&gt;
+
+&lt;p&gt;The first team to reach 10 points is the winning team. (A team with 9 points is said to be &amp;quot;in
+the barn.&amp;quot;)&lt;/p&gt;
+
+&lt;h2&gt;Version History&lt;/h2&gt;
+&lt;p&gt;Version 1.0 &amp;mdash; 11/12/2001 (written in VB).&lt;/p&gt;
+&lt;p&gt;Version 2.0 &amp;mdash; 10/18/2005. Rewrote code (still VB) for .NET 2.0 &amp;amp; VB 2005, added sound
+effects and speech, better window handling, menus, and better resource handling.&lt;/p&gt;
+&lt;p&gt;Version 3.0 &amp;mdash; 12/2/2009. Rewrote code (still VB) to use WPF instead of WinForms.&lt;/p&gt;
+&lt;p&gt;Version 4.0 &amp;mdash; 6/3/2013. Rewrote code (still VB) to use a state model.&lt;/p&gt;
+&lt;p&gt;Version 4.1 &amp;mdash; 12/29/2014. Ported code to C#.&lt;/p&gt;
+&lt;p&gt;Version 5.0 &amp;mdash; 2026. Ported to .NET MAUI for Android.&lt;/p&gt;
+
+&lt;p&gt;I hope you enjoy this game!&lt;/p&gt;
+&lt;p&gt;&amp;mdash;Matt&amp;mdash;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</value>
+  </data>
 </root>

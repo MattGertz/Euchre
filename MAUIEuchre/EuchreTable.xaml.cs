@@ -402,6 +402,19 @@ namespace MAUIEuchre
             ScrollStatusToBottom();
         }
 
+        public void UpdateStatusBoldName(string format, string boldArg, params string[] otherArgs)
+        {
+            string encodedBold = "<b>" + System.Net.WebUtility.HtmlEncode(boldArg) + "</b>";
+            object[] allArgs = new object[otherArgs.Length + 1];
+            allArgs[0] = encodedBold;
+            for (int i = 0; i < otherArgs.Length; i++)
+            {
+                allArgs[i + 1] = System.Net.WebUtility.HtmlEncode(otherArgs[i]);
+            }
+            StatusArea.Text += string.Format(format, allArgs) + "<br>";
+            ScrollStatusToBottom();
+        }
+
         private void ClearStatus()
         {
             StatusArea.Text = "";
@@ -411,8 +424,8 @@ namespace MAUIEuchre
         {
             MainThread.BeginInvokeOnMainThread(async () =>
             {
-                await Task.Delay(50);
-                await StatusScrollView.ScrollToAsync(0, double.MaxValue, false);
+                await Task.Delay(150);
+                await StatusScrollView.ScrollToAsync(StatusArea, ScrollToPosition.End, false);
             });
         }
 
@@ -1102,9 +1115,7 @@ namespace MAUIEuchre
             string? s = AppResources.ResourceManager.GetString(player.handCardsHeld[index].GetDisplayStringResourceName(handTrumpSuit));
             if (string.IsNullOrEmpty(s)) throw new Exception("Invalid value");
 
-            StringBuilder sPlayed = new StringBuilder();
-            sPlayed.AppendFormat(AppResources.GetString("Notice_PlayedACard"), player.GetDisplayName(), s);
-            UpdateStatus(sPlayed.ToString());
+            UpdateStatusBoldName(AppResources.GetString("Notice_PlayedACard"), player.GetDisplayName(), s);
 
             handPlayedCards[(int)player.Seat] = player.handCardsHeld[index];
 
@@ -1460,9 +1471,7 @@ namespace MAUIEuchre
             SetCardImage(card, player, gameTableTopCards[(int)player, slot]);
             gameTableTopCards[(int)player, slot].IsVisible = true;
 
-            StringBuilder sDealt = new StringBuilder();
-            sDealt.AppendFormat(AppResources.GetString("Notice_DealtACard"), gamePlayers[(int)player].GetDisplayName(), AppResources.ResourceManager.GetString(card.GetDisplayStringResourceName()));
-            UpdateStatus(sDealt.ToString());
+            UpdateStatusBoldName(AppResources.GetString("Notice_DealtACard"), gamePlayers[(int)player].GetDisplayName(), AppResources.ResourceManager.GetString(card.GetDisplayStringResourceName())!);
 
             await PlayCardSound();
             await Task.Delay(_timerSleepDuration);
@@ -1500,9 +1509,7 @@ namespace MAUIEuchre
 
         private void PostDealerSelection(EuchreState nextState)
         {
-            StringBuilder sDealer = new StringBuilder();
-            sDealer.AppendFormat(AppResources.GetString("Notice_IAmTheDealer"), gamePlayers[(int)_handPotentialDealer].GetDisplayName());
-            UpdateStatus(sDealer.ToString());
+            UpdateStatusBoldName(AppResources.GetString("Notice_IAmTheDealer"), gamePlayers[(int)_handPotentialDealer].GetDisplayName());
             ShowAndEnableContinueButton(nextState);
         }
 
@@ -1678,12 +1685,12 @@ namespace MAUIEuchre
 
         private async void AboutButton_Click(object? sender, EventArgs e)
         {
-            await DisplayAlert("Matt's Euchre", "Matt's Euchre for Android", "OK");
+            await DisplayAlert("Matt's Euchre", AppResources.GetString("About_Text"), "OK");
         }
 
         private async void RulesButton_Click(object? sender, EventArgs e)
         {
-            await DisplayAlert("Rules", "Rules display is not yet implemented.", "OK");
+            await Navigation.PushModalAsync(new EuchreRules());
         }
 
         #endregion
