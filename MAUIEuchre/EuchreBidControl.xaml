@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUIEuchre.EuchreBidControl"
+             WidthRequest="300" HeightRequest="190" BackgroundColor="#1A1A2E">
+    <Grid RowDefinitions="Auto,*" Padding="10,10,10,4">
+        <!-- Title -->
+        <Label Text="Bidding (first round)" Grid.Row="0"
+               x:Name="BidTitle" FontFamily="Impact" FontSize="16"
+               BackgroundColor="#FFD700" TextColor="#1A1A2E"
+               HeightRequest="28" Padding="6,0"
+               VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
+        <!-- Radio buttons -->
+        <VerticalStackLayout Grid.Row="1" Spacing="0" Padding="0,4,0,0">
+            <RadioButton Content="Pass" x:Name="Pass" x:FieldModifier="public" GroupName="Bid1" TextColor="White" />
+            <RadioButton Content="Pick It Up" x:Name="PickItUp" x:FieldModifier="public" GroupName="Bid1" TextColor="White" />
+            <HorizontalStackLayout Spacing="0" Padding="20,0,0,0">
+                <CheckBox x:Name="GoingAlone" x:FieldModifier="public" Color="White" VerticalOptions="Center" />
+                <Label Text="And I'm Going Alone!" x:Name="GoingAloneLabel" TextColor="White" FontSize="14" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+        <!-- OK button -->
+        <Button x:Name="OkButton" Text="OK" Grid.Row="0" Grid.RowSpan="2"
+                WidthRequest="75" HeightRequest="36"
+                HorizontalOptions="End" VerticalOptions="Center"
+                Clicked="OkButton_Click" />
+    </Grid>
+</ContentView>

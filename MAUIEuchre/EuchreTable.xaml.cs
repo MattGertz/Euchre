@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Plugin.Maui.Audio;
 
 namespace MAUIEuchre
 {
@@ -47,6 +48,9 @@ namespace MAUIEuchre
             }
 
             ContinueButton.Clicked += ContinueButton_Click;
+
+            BidControl.gameTable = this;
+            BidControl2.gameTable = this;
 
             var playerCardTap1 = new TapGestureRecognizer(); playerCardTap1.Tapped += PlayerCard_Click; PlayerCard1.GestureRecognizers.Add(playerCardTap1);
             var playerCardTap2 = new TapGestureRecognizer(); playerCardTap2.Tapped += PlayerCard_Click; PlayerCard2.GestureRecognizers.Add(playerCardTap2);
@@ -148,7 +152,7 @@ namespace MAUIEuchre
                         return;
                     }
                 }
-                if (NewGame())
+                if (await NewGame())
                 {
                     UpdateEuchreState(EuchreState.StartNewGameConfirmed);
                 }
@@ -191,16 +195,16 @@ namespace MAUIEuchre
                 UpdateEuchreState(EuchreState.Bid1Player0);
                 break;
             case EuchreState.Bid1Player0:
-                Bid1(EuchreState.Bid1Player1);
+                await Bid1(EuchreState.Bid1Player1);
                 break;
             case EuchreState.Bid1Player1:
-                Bid1(EuchreState.Bid1Player2);
+                await Bid1(EuchreState.Bid1Player2);
                 break;
             case EuchreState.Bid1Player2:
-                Bid1(EuchreState.Bid1Player3);
+                await Bid1(EuchreState.Bid1Player3);
                 break;
             case EuchreState.Bid1Player3:
-                Bid1(EuchreState.Bid2Starts);
+                await Bid1(EuchreState.Bid2Starts);
                 break;
             case EuchreState.Bid1PickUp:
                 await Bid1PickUp();
@@ -222,16 +226,16 @@ namespace MAUIEuchre
                 UpdateEuchreState(EuchreState.Bid2Player0);
                 break;
             case EuchreState.Bid2Player0:
-                Bid2(EuchreState.Bid2Player1);
+                await Bid2(EuchreState.Bid2Player1);
                 break;
             case EuchreState.Bid2Player1:
-                Bid2(EuchreState.Bid2Player2);
+                await Bid2(EuchreState.Bid2Player2);
                 break;
             case EuchreState.Bid2Player2:
-                Bid2(EuchreState.Bid2Player3);
+                await Bid2(EuchreState.Bid2Player3);
                 break;
             case EuchreState.Bid2Player3:
-                Bid2(EuchreState.Bid2Failed);
+                await Bid2(EuchreState.Bid2Failed);
                 break;
             case EuchreState.Bid2Succeeded:
                 ShowAndEnableContinueButton(EuchreState.Bid2SucceededAcknowledged);
@@ -241,7 +245,7 @@ namespace MAUIEuchre
                 UpdateEuchreState(EuchreState.Trick0Started);
                 break;
             case EuchreState.Bid2Failed:
-                UpdateStatus(AppResources.GetString("Notice_AllPassedTwice"));
+                UpdateStatusBold(AppResources.GetString("Notice_AllPassedTwice"));
                 ShowAndEnableContinueButton(EuchreState.Bid2FailedAcknowledged);
                 break;
             case EuchreState.Bid2FailedAcknowledged:
@@ -368,14 +372,48 @@ namespace MAUIEuchre
 
         public void UpdateStatus(string s, int WhiteSpace = 1)
         {
-            StatusArea.Text += s;
+            StatusArea.Text += System.Net.WebUtility.HtmlEncode(s);
             if (WhiteSpace > 0)
             {
                 for (int i = 1; i <= WhiteSpace; i++)
                 {
-                    StatusArea.Text += "\n";
+                    StatusArea.Text += "<br>";
                 }
             }
+            ScrollStatusToBottom();
+        }
+
+        public void UpdateStatusBold(string s, int WhiteSpace = 1)
+        {
+            StatusArea.Text += "<b>" + System.Net.WebUtility.HtmlEncode(s) + "</b>";
+            if (WhiteSpace > 0)
+            {
+                for (int i = 1; i <= WhiteSpace; i++)
+                {
+                    StatusArea.Text += "<br>";
+                }
+            }
+            ScrollStatusToBottom();
+        }
+
+        public void UpdateStatusSeparator()
+        {
+            StatusArea.Text += "<br>";
+            ScrollStatusToBottom();
+        }
+
+        private void ClearStatus()
+        {
+            StatusArea.Text = "";
+        }
+
+        private void ScrollStatusToBottom()
+        {
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await Task.Delay(50);
+                await StatusScrollView.ScrollToAsync(0, double.MaxValue, false);
+            });
         }
 
         public void EnableCards(EuchrePlayer.Seats player, bool EnableIt)
@@ -389,19 +427,98 @@ namespace MAUIEuchre
 
         public void ShowBidFirstRound(bool forceGoAlone)
         {
-            // TODO: Implement bid UI for first round
-            // For now, auto-pass
-            _handCurrentBidder.ProcessBidFirstRound(false, false);
-            UpdateEuchreState(_stateDesiredBidPass);
+            BidControl.Reset();
+            BidControl.GoingAlone.IsEnabled = false;
+            BidControl.ForceGoAlone(forceGoAlone);
+            BidControl.IsVisible = true;
+            BidControl.IsEnabled = true;
+            BidControl.InputTransparent = false;
         }
 
         public void ShowBidSecondRound(EuchreCard.Suits kittyCardSuit, EuchrePlayer.Seats dealer,
             bool stickTheDealer, bool forceGoAlone)
         {
-            // TODO: Implement bid UI for second round
-            // For now, auto-pass
-            _handCurrentBidder.ProcessBidSecondRound(false, false);
-            UpdateEuchreState(_stateDesiredBidPass);
+            BidControl2.Reset();
+
+            if (stickTheDealer)
+            {
+                BidControl2.Pass.IsChecked = false;
+                BidControl2.Pass.IsEnabled = false;
+                BidControl2.Pass.Opacity = 0.25;
+                BidControl2.GoingAlone.IsEnabled = true;
+                if (kittyCardSuit != EuchreCard.Suits.Hearts)
+                    BidControl2.Hearts.IsChecked = true;
+                else if (kittyCardSuit != EuchreCard.Suits.Diamonds)
+                    BidControl2.Diamonds.IsChecked = true;
+                else if (kittyCardSuit != EuchreCard.Suits.Clubs)
+                    BidControl2.Clubs.IsChecked = true;
+                else
+                    BidControl2.Spades.IsChecked = true;
+            }
+
+            switch (kittyCardSuit)
+            {
+                case EuchreCard.Suits.Hearts:
+                    BidControl2.Hearts.IsEnabled = false;
+                    BidControl2.Hearts.Opacity = 0.25;
+                    break;
+                case EuchreCard.Suits.Diamonds:
+                    BidControl2.Diamonds.IsEnabled = false;
+                    BidControl2.Diamonds.Opacity = 0.25;
+                    break;
+                case EuchreCard.Suits.Clubs:
+                    BidControl2.Clubs.IsEnabled = false;
+                    BidControl2.Clubs.Opacity = 0.25;
+                    break;
+                case EuchreCard.Suits.Spades:
+                    BidControl2.Spades.IsEnabled = false;
+                    BidControl2.Spades.Opacity = 0.25;
+                    break;
+            }
+
+            BidControl2.ForceGoAlone(forceGoAlone);
+            BidControl2.IsVisible = true;
+            BidControl2.IsEnabled = true;
+            BidControl2.InputTransparent = false;
+        }
+
+        public void PostHumanBidFirstRound()
+        {
+            bool rv = BidControl.PickItUp.IsChecked;
+            _handCurrentBidder.ProcessBidFirstRound(BidControl.GoingAlone.IsChecked, rv);
+            if (rv)
+            {
+                UpdateEuchreState(EuchreState.Bid1PickUp);
+            }
+            else
+            {
+                UpdateEuchreState(_stateDesiredBidPass);
+            }
+        }
+
+        public void PostHumanBidSecondRound()
+        {
+            bool calledIt = !BidControl2.Pass.IsChecked;
+            if (calledIt)
+            {
+                if (BidControl2.Hearts.IsChecked)
+                    handTrumpSuit = EuchreCard.Suits.Hearts;
+                else if (BidControl2.Diamonds.IsChecked)
+                    handTrumpSuit = EuchreCard.Suits.Diamonds;
+                else if (BidControl2.Clubs.IsChecked)
+                    handTrumpSuit = EuchreCard.Suits.Clubs;
+                else if (BidControl2.Spades.IsChecked)
+                    handTrumpSuit = EuchreCard.Suits.Spades;
+            }
+            _handCurrentBidder.ProcessBidSecondRound(BidControl2.GoingAlone.IsChecked, calledIt);
+            if (calledIt)
+            {
+                UpdateEuchreState(EuchreState.Bid2Succeeded);
+            }
+            else
+            {
+                UpdateEuchreState(_stateDesiredBidPass);
+            }
         }
 
         public void MarkCardAsPlayed(EuchreCard card)
@@ -423,24 +540,18 @@ namespace MAUIEuchre
 
         #region "Private methods"
 
-        private void OnOuterGridSizeChanged(object sender, EventArgs e)
+        private void OnCenterContainerSizeChanged(object sender, EventArgs e)
         {
-            if (OuterGrid.Width <= 0 || OuterGrid.Height <= 0) return;
+            if (CenterContainer.Width <= 0 || CenterContainer.Height <= 0) return;
 
             const double designWidth = 855.0;
-            const double designHeight = 828.0;
+            const double designHeight = 735.0;
 
-            double scaleX = OuterGrid.Width / designWidth;
-            double scaleY = OuterGrid.Height / designHeight;
+            double scaleX = CenterContainer.Width / designWidth;
+            double scaleY = CenterContainer.Height / designHeight;
             double scale = Math.Min(scaleX, scaleY);
 
             EuchreGrid.Scale = scale;
-
-            // Center the scaled layout (anchor is 0,0 so scaling is from top-left)
-            double scaledWidth = designWidth * scale;
-            double scaledHeight = designHeight * scale;
-            EuchreGrid.TranslationX = (OuterGrid.Width - scaledWidth) / 2;
-            EuchreGrid.TranslationY = (OuterGrid.Height - scaledHeight) / 2;
         }
 
         private void InitializeLabelArray()
@@ -577,8 +688,20 @@ namespace MAUIEuchre
 
         private async Task PlayResourceSound(string resourceName)
         {
-            // TODO: Implement MAUI audio playback (Plugin.Maui.Audio or similar)
-            await Task.Delay(100);
+            try
+            {
+                var stream = await FileSystem.OpenAppPackageFileAsync(resourceName);
+                var player = AudioManager.Current.CreatePlayer(stream);
+                player.Play();
+                // Wait for playback to complete so sounds don't overlap
+                while (player.IsPlaying)
+                    await Task.Delay(50);
+                player.Dispose();
+            }
+            catch
+            {
+                // If audio fails, silently continue
+            }
         }
 
         private async Task PlayCardSound()
@@ -602,6 +725,7 @@ namespace MAUIEuchre
 
         private async Task PlayShuffleSound()
         {
+            UpdateStatusSeparator();
             UpdateStatus(AppResources.GetString("Notice_ShufflingCards"));
             if (_modeSoundOn)
             {
@@ -673,14 +797,14 @@ namespace MAUIEuchre
                 if (TheirTotalTricks == 0 && ruleUseSuperEuchre)
                 {
                     _gameYourScore += 4;
-                    UpdateStatus(AppResources.GetString("Notice_YouSuperEuchredThem"));
+                    UpdateStatusBold(AppResources.GetString("Notice_YouSuperEuchredThem"));
                     await PlayApplause(3);
                     SpeakWeSuperEuchredThem(EuchrePlayer.Seats.Player);
                 }
                 else if (TheirTotalTricks < 3)
                 {
                     _gameYourScore += 2;
-                    UpdateStatus(AppResources.GetString("Notice_YouEuchredThem"));
+                    UpdateStatusBold(AppResources.GetString("Notice_YouEuchredThem"));
                     await PlayApplause(2);
                     SpeakWeEuchredThem(EuchrePlayer.Seats.Player);
                 }
@@ -689,20 +813,20 @@ namespace MAUIEuchre
                     if (TheirTeamWentAloneThisHand())
                     {
                         _gameTheirScore += 4;
-                        UpdateStatus(AppResources.GetString("Notice_TheyWonTheHandAllTricksAlone"));
+                        UpdateStatusBold(AppResources.GetString("Notice_TheyWonTheHandAllTricksAlone"));
                         SpeakTheyGotFour(EuchrePlayer.Seats.Partner);
                     }
                     else
                     {
                         _gameTheirScore += 2;
-                        UpdateStatus(AppResources.GetString("Notice_TheyWonTheHandAllTricks"));
+                        UpdateStatusBold(AppResources.GetString("Notice_TheyWonTheHandAllTricks"));
                         SpeakTheyGotTwo(EuchrePlayer.Seats.Partner);
                     }
                 }
                 else
                 {
                     _gameTheirScore += 1;
-                    UpdateStatus(AppResources.GetString("Notice_TheyWonTheHand"));
+                    UpdateStatusBold(AppResources.GetString("Notice_TheyWonTheHand"));
                     SpeakTheyGotOne(EuchrePlayer.Seats.Partner);
                 }
                 break;
@@ -712,7 +836,7 @@ namespace MAUIEuchre
                 if (YourTotalTricks == 0 && ruleUseSuperEuchre)
                 {
                     _gameTheirScore += 4;
-                    UpdateStatus(AppResources.GetString("Notice_TheySuperEuchredYou"));
+                    UpdateStatusBold(AppResources.GetString("Notice_TheySuperEuchredYou"));
                     if (handPickedTrump == EuchrePlayer.Seats.Partner)
                         SpeakWeGotEuchredMyFault(handPickedTrump);
                     else if (!YourTeamWentAloneThisHand())
@@ -723,7 +847,7 @@ namespace MAUIEuchre
                 else if (YourTotalTricks < 3)
                 {
                     _gameTheirScore += 2;
-                    UpdateStatus(AppResources.GetString("Notice_TheyEuchredYou"));
+                    UpdateStatusBold(AppResources.GetString("Notice_TheyEuchredYou"));
                     if (handPickedTrump == EuchrePlayer.Seats.Partner)
                         SpeakWeGotEuchredMyFault(handPickedTrump);
                     else if (!YourTeamWentAloneThisHand())
@@ -736,7 +860,7 @@ namespace MAUIEuchre
                     if (YourTeamWentAloneThisHand())
                     {
                         _gameYourScore += 4;
-                        UpdateStatus(AppResources.GetString("Notice_YouWonTheHandAllTricksAlone"));
+                        UpdateStatusBold(AppResources.GetString("Notice_YouWonTheHandAllTricksAlone"));
                         await PlayApplause(3);
                         if (handPickedTrump == EuchrePlayer.Seats.Player)
                             SpeakWeGotFour(handPickedTrump);
@@ -746,7 +870,7 @@ namespace MAUIEuchre
                     else
                     {
                         _gameYourScore += 2;
-                        UpdateStatus(AppResources.GetString("Notice_YouWonTheHandAllTricks"));
+                        UpdateStatusBold(AppResources.GetString("Notice_YouWonTheHandAllTricks"));
                         await PlayApplause(2);
                         if (handPickedTrump == EuchrePlayer.Seats.Player)
                             SpeakWeGotTwo(handPickedTrump);
@@ -757,7 +881,7 @@ namespace MAUIEuchre
                 else
                 {
                     _gameYourScore += 1;
-                    UpdateStatus(AppResources.GetString("Notice_YouWonTheHand"));
+                    UpdateStatusBold(AppResources.GetString("Notice_YouWonTheHand"));
                     await PlayApplause(1);
                     if (handPickedTrump == EuchrePlayer.Seats.Player)
                         SpeakWeGotOne(handPickedTrump);
@@ -818,6 +942,13 @@ namespace MAUIEuchre
             }
             ContinueButton.IsVisible = false;
             ContinueButton.IsEnabled = false;
+
+            BidControl.IsVisible = false;
+            BidControl.IsEnabled = false;
+            BidControl.InputTransparent = true;
+            BidControl2.IsVisible = false;
+            BidControl2.IsEnabled = false;
+            BidControl2.InputTransparent = true;
 
             statePlayerIsDroppingACard = false;
             statePlayerIsPlayingACard = false;
@@ -1008,6 +1139,7 @@ namespace MAUIEuchre
 
         private void PrepTrick()
         {
+            UpdateStatusSeparator();
             HideAllPlayedCards();
 
             trickLeader = gamePlayers[(int)trickLeaderIndex];
@@ -1119,11 +1251,11 @@ namespace MAUIEuchre
             {
             case EuchrePlayer.Seats.LeftOpponent:
             case EuchrePlayer.Seats.RightOpponent:
-                UpdateStatus(AppResources.GetString("Notice_TheirTeamWonTrick"));
+                UpdateStatusBold(AppResources.GetString("Notice_TheirTeamWonTrick"));
                 break;
             case EuchrePlayer.Seats.Player:
             case EuchrePlayer.Seats.Partner:
-                UpdateStatus(AppResources.GetString("Notice_YourTeamWonTrick"));
+                UpdateStatusBold(AppResources.GetString("Notice_YourTeamWonTrick"));
                 break;
             }
 
@@ -1147,10 +1279,11 @@ namespace MAUIEuchre
 
         private void PreBid1()
         {
+            UpdateStatusSeparator();
             _handCurrentBidder = gamePlayers[(int)handDealer];
         }
 
-        private void Bid1(EuchreState passedState)
+        private async Task Bid1(EuchreState passedState)
         {
             _handCurrentBidder = gamePlayers[(int)EuchrePlayer.NextPlayer(_handCurrentBidder.Seat)];
             _handCurrentBidder.trickBuriedCard = null!;
@@ -1165,6 +1298,7 @@ namespace MAUIEuchre
             {
                 bool rv = _handCurrentBidder.AutoBidFirstRound(GoingAlone);
                 _handCurrentBidder.ProcessBidFirstRound(GoingAlone, rv);
+                await Task.Delay(_timerBidSpeechDuration);
                 if (rv)
                     UpdateEuchreState(EuchreState.Bid1PickUp);
                 else
@@ -1223,7 +1357,7 @@ namespace MAUIEuchre
             SetAllCardImages();
         }
 
-        private void Bid2(EuchreState passedState)
+        private async Task Bid2(EuchreState passedState)
         {
             _handCurrentBidder = gamePlayers[(int)EuchrePlayer.NextPlayer(_handCurrentBidder.Seat)];
 
@@ -1237,6 +1371,7 @@ namespace MAUIEuchre
             {
                 bool rv = _handCurrentBidder.AutoBidSecondRound(GoingAlone);
                 _handCurrentBidder.ProcessBidSecondRound(GoingAlone, rv);
+                await Task.Delay(_timerBidSpeechDuration);
                 if (rv)
                     UpdateEuchreState(EuchreState.Bid2Succeeded);
                 else
@@ -1289,12 +1424,12 @@ namespace MAUIEuchre
         {
             if (_gameTheirScore > _gameYourScore)
             {
-                UpdateStatus(AppResources.GetString("Notice_TheyWonTheGame"), 2);
+                UpdateStatusBold(AppResources.GetString("Notice_TheyWonTheGame"), 2);
                 SpeakTheyWon(EuchrePlayer.Seats.Player);
             }
             else
             {
-                UpdateStatus(AppResources.GetString("Notice_YouWonTheGame"), 2);
+                UpdateStatusBold(AppResources.GetString("Notice_YouWonTheGame"), 2);
                 SpeakWeWon(EuchrePlayer.Seats.Player);
             }
             _stateGameStarted = false;
@@ -1320,6 +1455,7 @@ namespace MAUIEuchre
         {
             EuchreCard card = _gameDeck.GetNextCard();
             card.Perspective = player;
+            card.stateCurrent = EuchreCard.States.FaceUp;
 
             SetCardImage(card, player, gameTableTopCards[(int)player, slot]);
             gameTableTopCards[(int)player, slot].IsVisible = true;
@@ -1338,6 +1474,7 @@ namespace MAUIEuchre
             stateSelectingDealer = true;
             _gameDeck.Shuffle();
             await PlayShuffleSound();
+            UpdateStatusSeparator();
             UpdateStatus(AppResources.GetString("Notice_ChoosingDealer"));
             _handPotentialDealer = EuchrePlayer.Seats.Player;
             potentialDealerCardIndex = 0;
@@ -1392,8 +1529,9 @@ namespace MAUIEuchre
             _stateDesiredStateAfterHumanClick = nextState;
         }
 
-        private bool NewGame()
+        private async Task<bool> NewGame()
         {
+            ClearStatus();
             UpdateStatus(AppResources.GetString("Notice_StartingNewGame"));
             ResetScores();
             ResetUserInputStates();
@@ -1402,23 +1540,74 @@ namespace MAUIEuchre
             ShowAllNameLabels(false);
             HideAllDealerAndTrumpLabels();
 
-            // For now, use default options (no options dialog yet)
-            _stateGameStarted = true;
-            gamePlayerName = "You";
-            gameLeftOpponentName = "Left Opponent";
-            gameRightOpponentName = "Right Opponent";
-            gamePartnerName = "Your Partner";
+            // Launch options dialog modally and wait for result
+            var tcs = new TaskCompletionSource<bool>();
+            var optionsPage = new EuchreOptions();
+            optionsPage.Disappearing += (s, e) =>
+            {
+                tcs.TrySetResult(optionsPage.LocalDialogResult);
+            };
+            await Navigation.PushModalAsync(optionsPage);
+            bool result = await tcs.Task;
 
-            PlayerNameLabel.Text = gamePlayerName;
-            PartnerNameLabel.Text = gamePartnerName;
-            LeftOpponentNameLabel.Text = gameLeftOpponentName;
-            RightOpponentNameLabel.Text = gameRightOpponentName;
-            ShowAllNameLabels(true);
+            if (result)
+            {
+                ruleStickTheDealer = GameSettings.StickTheDealer;
+                ruleUseNineOfHearts = GameSettings.NineOfHearts;
+                modePeekAtOtherCards = GameSettings.PeekAtOtherCards;
+                ruleUseSuperEuchre = GameSettings.SuperEuchre;
+                ruleUseQuietDealer = GameSettings.QuietDealer;
+                _modeSoundOn = GameSettings.SoundOn;
 
-            _gameDeck = new EuchreCardDeck(ruleUseNineOfHearts, this);
-            _gameDeck.Initialize();
+                gamePlayerName = string.IsNullOrEmpty(GameSettings.PlayerName) ? AppResources.GetString("Player_Player") : GameSettings.PlayerName;
+                gameLeftOpponentName = string.IsNullOrEmpty(GameSettings.LeftOpponentName) ? AppResources.GetString("Player_LeftOpponent") : GameSettings.LeftOpponentName;
+                gameRightOpponentName = string.IsNullOrEmpty(GameSettings.RightOpponentName) ? AppResources.GetString("Player_RightOpponent") : GameSettings.RightOpponentName;
 
-            return true;
+                gamePartnerName = GameSettings.PartnerName;
+                if (string.IsNullOrEmpty(gamePartnerName))
+                {
+                    StringBuilder s = new StringBuilder();
+                    s.AppendFormat(AppResources.GetString("Player_Partner"), gamePlayerName);
+                    gamePartnerName = s.ToString();
+                }
+
+                if (GameSettings.LeftOpponentPlay == 1)
+                    gamePlayers[(int)EuchrePlayer.Seats.LeftOpponent].gamePersonality = EuchrePlayer.Personalities.Crazy;
+                else if (GameSettings.LeftOpponentPlay == 2)
+                    gamePlayers[(int)EuchrePlayer.Seats.LeftOpponent].gamePersonality = EuchrePlayer.Personalities.Normal;
+                else
+                    gamePlayers[(int)EuchrePlayer.Seats.LeftOpponent].gamePersonality = EuchrePlayer.Personalities.Conservative;
+
+                if (GameSettings.RightOpponentPlay == 1)
+                    gamePlayers[(int)EuchrePlayer.Seats.RightOpponent].gamePersonality = EuchrePlayer.Personalities.Crazy;
+                else if (GameSettings.RightOpponentPlay == 2)
+                    gamePlayers[(int)EuchrePlayer.Seats.RightOpponent].gamePersonality = EuchrePlayer.Personalities.Normal;
+                else
+                    gamePlayers[(int)EuchrePlayer.Seats.RightOpponent].gamePersonality = EuchrePlayer.Personalities.Conservative;
+
+                if (GameSettings.PartnerPlay == 1)
+                    gamePlayers[(int)EuchrePlayer.Seats.Partner].gamePersonality = EuchrePlayer.Personalities.Crazy;
+                else if (GameSettings.PartnerPlay == 2)
+                    gamePlayers[(int)EuchrePlayer.Seats.Partner].gamePersonality = EuchrePlayer.Personalities.Normal;
+                else
+                    gamePlayers[(int)EuchrePlayer.Seats.Partner].gamePersonality = EuchrePlayer.Personalities.Conservative;
+
+                PlayerNameLabel.Text = gamePlayerName;
+                PartnerNameLabel.Text = gamePartnerName;
+                LeftOpponentNameLabel.Text = gameLeftOpponentName;
+                RightOpponentNameLabel.Text = gameRightOpponentName;
+                ShowAllNameLabels(true);
+
+                _gameDeck = new EuchreCardDeck(ruleUseNineOfHearts, this);
+                _gameDeck.Initialize();
+
+                _stateGameStarted = true;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void CleanUpGame()
@@ -1480,6 +1669,21 @@ namespace MAUIEuchre
             ContinueButton.IsVisible = false;
             ContinueButton.IsEnabled = false;
             UpdateEuchreState(_stateDesiredStateAfterHumanClick);
+        }
+
+        private void NewGameButton_Click(object? sender, EventArgs e)
+        {
+            UpdateEuchreState(EuchreState.StartNewGameRequested);
+        }
+
+        private async void AboutButton_Click(object? sender, EventArgs e)
+        {
+            await DisplayAlert("Matt's Euchre", "Matt's Euchre for Android", "OK");
+        }
+
+        private async void RulesButton_Click(object? sender, EventArgs e)
+        {
+            await DisplayAlert("Rules", "Rules display is not yet implemented.", "OK");
         }
 
         #endregion
@@ -1607,6 +1811,7 @@ namespace MAUIEuchre
         private int potentialDealerCardIndex;
 
         private const int _timerSleepDuration = 250;
+        private const int _timerBidSpeechDuration = 1000;
 
         #endregion
 

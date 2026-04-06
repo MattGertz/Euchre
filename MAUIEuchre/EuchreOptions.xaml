@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUIEuchre.EuchreOptions"
+             Shell.NavBarIsVisible="False"
+             Title="Matt's Euchre Options"
+             BackgroundColor="#1A1A2E">
+    <ScrollView>
+        <VerticalStackLayout Padding="12" Spacing="10">
+
+            <!-- Title and buttons row -->
+            <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="8">
+                <Label Text="Matt's Euchre" FontSize="36" FontAttributes="Bold,Italic" TextColor="#FFD700" BackgroundColor="Transparent" VerticalTextAlignment="Center" Padding="8,0" />
+                <Button Text="OK" Grid.Column="1" WidthRequest="75" HeightRequest="36" x:Name="OKBtn" Clicked="OKBtn_Click" BackgroundColor="#2E7D32" TextColor="White" CornerRadius="6" />
+                <Button Text="Quit" Grid.Column="2" WidthRequest="75" HeightRequest="36" x:Name="CancelBtn" Clicked="CancelBtn_Click" BackgroundColor="#C62828" TextColor="White" CornerRadius="6" />
+                <Button Text="Reset" Grid.Column="3" WidthRequest="75" HeightRequest="36" x:Name="ResetBtn" Clicked="ResetBtn_Click" BackgroundColor="#455A64" TextColor="White" CornerRadius="6" />
+            </Grid>
+
+            <!-- Player name -->
+            <Grid ColumnDefinitions="74,*" ColumnSpacing="8">
+                <Label Text="Name:" TextColor="White" VerticalTextAlignment="Center" />
+                <Entry Grid.Column="1" x:Name="PlayerName" Text="Player" WidthRequest="160" HorizontalOptions="Start" />
+            </Grid>
+
+            <!-- Rule options and Gameplay options side by side -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <!-- Rule options -->
+                <Border Stroke="#FFD700" Padding="8" StrokeShape="RoundRectangle 6" Grid.Column="0" BackgroundColor="#2A2A4A">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Rule options:" TextColor="#FFD700" FontAttributes="Bold" />
+                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="6" ColumnSpacing="6">
+                            <CheckBox x:Name="StickTheDealer" Grid.Row="0" Grid.Column="0" Color="#FFD700" />
+                            <Label Text="Stick the Dealer" TextColor="#E0E0E0" VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="1" />
+                            <CheckBox x:Name="NineOfHearts" Grid.Row="1" Grid.Column="0" Color="#FFD700" />
+                            <Label Text="Nine of Hearts" TextColor="#E0E0E0" VerticalTextAlignment="Center" Grid.Row="1" Grid.Column="1" />
+                            <CheckBox x:Name="SuperEuchre" Grid.Row="2" Grid.Column="0" Color="#FFD700" />
+                            <Label Text="SuperEuchre" TextColor="#E0E0E0" VerticalTextAlignment="Center" Grid.Row="2" Grid.Column="1" />
+                            <CheckBox x:Name="QuietDealer" Grid.Row="3" Grid.Column="0" Color="#FFD700" />
+                            <Label Text="Quiet Dealer" TextColor="#E0E0E0" VerticalTextAlignment="Center" Grid.Row="3" Grid.Column="1" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Gameplay options -->
+                <Border Stroke="#FFD700" Padding="8" StrokeShape="RoundRectangle 6" Grid.Column="1" BackgroundColor="#2A2A4A">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Gameplay options:" TextColor="#FFD700" FontAttributes="Bold" />
+                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" RowSpacing="6" ColumnSpacing="6">
+                            <CheckBox x:Name="PeekAtOtherCards" Grid.Row="0" Grid.Column="0" Color="#FFD700" />
+                            <Label Text="Peek at other cards" TextColor="#E0E0E0" VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="1" />
+                            <CheckBox x:Name="SoundOn" Grid.Row="1" Grid.Column="0" Color="#FFD700" />
+                            <Label Text="Sound Effects" TextColor="#E0E0E0" VerticalTextAlignment="Center" Grid.Row="1" Grid.Column="1" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Players section -->
+            <Border Stroke="#FFD700" Padding="8" StrokeShape="RoundRectangle 6" BackgroundColor="#2A2A4A">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Players:" TextColor="#FFD700" FontAttributes="Bold" />
+
+                    <!-- Column headers -->
+                    <Grid ColumnDefinitions="90,*,*,*" ColumnSpacing="8">
+                        <Label Grid.Column="1" Text="Left Opponent:" TextColor="#E0E0E0" />
+                        <Label Grid.Column="2" Text="Your Partner:" TextColor="#E0E0E0" />
+                        <Label Grid.Column="3" Text="Right Opponent:" TextColor="#E0E0E0" />
+                    </Grid>
+
+                    <!-- Names row -->
+                    <Grid ColumnDefinitions="90,*,*,*" ColumnSpacing="8">
+                        <Label Text="Name:" TextColor="#E0E0E0" VerticalTextAlignment="Center" />
+                        <Entry Grid.Column="1" x:Name="LeftOpponentName" />
+                        <Entry Grid.Column="2" x:Name="PartnerName" />
+                        <Entry Grid.Column="3" x:Name="RightOpponentName" />
+                    </Grid>
+
+                    <!-- Play style label -->
+                    <Grid ColumnDefinitions="90,*,*,*" ColumnSpacing="8">
+                        <Label Text="Play style:" TextColor="#E0E0E0" VerticalTextAlignment="Center" />
+
+                        <!-- Left Opponent play style -->
+                        <VerticalStackLayout Grid.Column="1" RadioButtonGroup.GroupName="LeftPlay">
+                            <RadioButton x:Name="LeftOpponentCrazy" Content="Crazy" TextColor="#E0E0E0" />
+                            <RadioButton x:Name="LeftOpponentNormal" Content="Normal" TextColor="#E0E0E0" IsChecked="True" />
+                            <RadioButton x:Name="LeftOpponentConservative" Content="Conservative" TextColor="#E0E0E0" />
+                        </VerticalStackLayout>
+
+                        <!-- Partner play style -->
+                        <VerticalStackLayout Grid.Column="2" RadioButtonGroup.GroupName="PartnerPlay">
+                            <RadioButton x:Name="PartnerCrazy" Content="Crazy" TextColor="#E0E0E0" />
+                            <RadioButton x:Name="PartnerNormal" Content="Normal" TextColor="#E0E0E0" IsChecked="True" />
+                            <RadioButton x:Name="PartnerConservative" Content="Conservative" TextColor="#E0E0E0" />
+                        </VerticalStackLayout>
+
+                        <!-- Right Opponent play style -->
+                        <VerticalStackLayout Grid.Column="3" RadioButtonGroup.GroupName="RightPlay">
+                            <RadioButton x:Name="RightOpponentCrazy" Content="Crazy" TextColor="#E0E0E0" />
+                            <RadioButton x:Name="RightOpponentNormal" Content="Normal" TextColor="#E0E0E0" IsChecked="True" />
+                            <RadioButton x:Name="RightOpponentConservative" Content="Conservative" TextColor="#E0E0E0" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -229,7 +229,7 @@
     <value>Are you sure you want to exit?</value>
   </data>
   <data name="Command_ExitTitle" xml:space="preserve">
-    <value>Exit C#Euchre</value>
+    <value>Exit Matt's Euchre</value>
   </data>
   <data name="Command_New" xml:space="preserve">
     <value>Are you sure you want to start a new game?</value>
@@ -334,7 +334,7 @@
     <value>Their team took all of the tricks, going alone, for four points!</value>
   </data>
   <data name="Notice_Welcome" xml:space="preserve">
-    <value>Welcome to C#Euchre! Choose "New Game" from the C#Euchre menu (or press F2) to start a new game.</value>
+    <value>Welcome to Matt's Euchre! Tap "New Game" to start a new game.</value>
   </data>
   <data name="Notice_YouEuchredThem" xml:space="preserve">
     <value>Your team euchred their team for two points!</value>

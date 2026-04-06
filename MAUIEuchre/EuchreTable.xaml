@@ -1,30 +1,41 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MAUIEuchre"
              x:Class="MAUIEuchre.EuchreTable"
              Shell.NavBarIsVisible="False"
-             Title="C#Euchre">
-    <Grid BackgroundColor="Maroon" x:Name="OuterGrid" SizeChanged="OnOuterGridSizeChanged">
-        <AbsoluteLayout WidthRequest="855" HeightRequest="828" HorizontalOptions="Start" VerticalOptions="Start" AnchorX="0" AnchorY="0" x:Name="EuchreGrid">
-        <Label Text="Your Score: 0" AbsoluteLayout.LayoutBounds="12,39,128,40" AbsoluteLayout.LayoutFlags="None" x:Name="YourScore" FontFamily="Microsoft Sans Serif" BackgroundColor="#FFEA88AF" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
-        <Label BackgroundColor="#FFEA88AF" Text="Their Score: 0" FontFamily="Microsoft Sans Serif" AbsoluteLayout.LayoutBounds="713,39,128,40" AbsoluteLayout.LayoutFlags="None" x:Name="TheirScore" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
-        <Label BackgroundColor="#FFEA88AF" Text="Your Tricks Taken: 0" FontFamily="Microsoft Sans Serif" AbsoluteLayout.LayoutBounds="12,641,144,72" AbsoluteLayout.LayoutFlags="None" x:Name="YourTricks" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
-        <Label BackgroundColor="#FFEA88AF" Text="Their Tricks Taken: 0" FontFamily="Microsoft Sans Serif" AbsoluteLayout.LayoutBounds="697,641,144,72" AbsoluteLayout.LayoutFlags="None" x:Name="TheirTricks" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
-        <Editor AbsoluteLayout.LayoutBounds="12,737,829,81" AbsoluteLayout.LayoutFlags="None" x:Name="StatusArea" BackgroundColor="Yellow" FontFamily="Microsoft Sans Serif" IsReadOnly="True" />
+             Title="Matt's Euchre">
+
+    <Grid BackgroundColor="#1B5E20" ColumnDefinitions="Auto,*,200">
+
+        <!-- Left side buttons -->
+        <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" Spacing="10" Padding="8">
+            <Button Text="New Game" x:Name="NewGameButton" Clicked="NewGameButton_Click" BackgroundColor="#2E7D32" TextColor="White" CornerRadius="8" FontSize="12" WidthRequest="90" />
+            <Button Text="Rules" x:Name="RulesButton" Clicked="RulesButton_Click" BackgroundColor="#2E7D32" TextColor="White" CornerRadius="8" FontSize="12" WidthRequest="90" />
+            <Button Text="About" x:Name="AboutButton" Clicked="AboutButton_Click" BackgroundColor="#2E7D32" TextColor="White" CornerRadius="8" FontSize="12" WidthRequest="90" />
+        </VerticalStackLayout>
+
+        <Grid Grid.Column="1" x:Name="CenterContainer" SizeChanged="OnCenterContainerSizeChanged">
+            <AbsoluteLayout WidthRequest="855" HeightRequest="735" HorizontalOptions="Center" VerticalOptions="Center" AnchorX="0.5" AnchorY="0.5" x:Name="EuchreGrid">
+        <Label Text="Your Score: 0" AbsoluteLayout.LayoutBounds="12,39,128,40" AbsoluteLayout.LayoutFlags="None" x:Name="YourScore" BackgroundColor="#CC1A1A2E" TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="13" />
+        <Label BackgroundColor="#CC1A1A2E" Text="Their Score: 0" TextColor="White" AbsoluteLayout.LayoutBounds="713,39,128,40" AbsoluteLayout.LayoutFlags="None" x:Name="TheirScore" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="13" />
+        <Label BackgroundColor="#CC1A1A2E" Text="Your Tricks Taken: 0" TextColor="White" AbsoluteLayout.LayoutBounds="12,641,144,72" AbsoluteLayout.LayoutFlags="None" x:Name="YourTricks" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="13" />
+        <Label BackgroundColor="#CC1A1A2E" Text="Their Tricks Taken: 0" TextColor="White" AbsoluteLayout.LayoutBounds="697,641,144,72" AbsoluteLayout.LayoutFlags="None" x:Name="TheirTricks" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="13" />
+        <Editor AbsoluteLayout.LayoutBounds="12,737,829,81" AbsoluteLayout.LayoutFlags="None" x:Name="StatusAreaHidden" BackgroundColor="#FFF8E1" TextColor="#1A1A2E" IsReadOnly="True" FontSize="13" IsVisible="False" />
         <Image AbsoluteLayout.LayoutBounds="202,212,450,325" AbsoluteLayout.LayoutFlags="None" x:Name="Logo" Aspect="Fill" InputTransparent="True" />
 
         <!-- Dealer boxes -->
-        <Border Stroke="Yellow" AbsoluteLayout.LayoutBounds="12,130,128,450" AbsoluteLayout.LayoutFlags="None" x:Name="DealerLeftOpponent" IsVisible="False" BackgroundColor="Transparent" Padding="0">
-            <Label Text="Dealer" FontFamily="Impact" TextColor="Yellow" />
+        <Border Stroke="#FFD700" StrokeThickness="2" AbsoluteLayout.LayoutBounds="12,120,128,460" AbsoluteLayout.LayoutFlags="None" x:Name="DealerLeftOpponent" IsVisible="False" BackgroundColor="Transparent" Padding="2,2,0,0" StrokeShape="RoundRectangle 6">
+            <Label Text="Dealer" FontAttributes="Bold" TextColor="#FFD700" FontSize="11" VerticalOptions="Start" />
         </Border>
-        <Border Stroke="Yellow" AbsoluteLayout.LayoutBounds="721,130,128,450" AbsoluteLayout.LayoutFlags="None" x:Name="DealerRightOpponent" IsVisible="False" BackgroundColor="Transparent" Padding="0">
-            <Label Text="Dealer" FontFamily="Impact" TextColor="Yellow" />
+        <Border Stroke="#FFD700" StrokeThickness="2" AbsoluteLayout.LayoutBounds="721,120,128,460" AbsoluteLayout.LayoutFlags="None" x:Name="DealerRightOpponent" IsVisible="False" BackgroundColor="Transparent" Padding="2,2,0,0" StrokeShape="RoundRectangle 6">
+            <Label Text="Dealer" FontAttributes="Bold" TextColor="#FFD700" FontSize="11" VerticalOptions="Start" />
         </Border>
-        <Border Stroke="Yellow" AbsoluteLayout.LayoutBounds="202,28,450,128" AbsoluteLayout.LayoutFlags="None" x:Name="DealerPartner" IsVisible="False" BackgroundColor="Transparent" Padding="0">
-            <Label Text="Dealer" FontFamily="Impact" TextColor="Yellow" />
+        <Border Stroke="#FFD700" StrokeThickness="2" AbsoluteLayout.LayoutBounds="202,18,450,138" AbsoluteLayout.LayoutFlags="None" x:Name="DealerPartner" IsVisible="False" BackgroundColor="Transparent" Padding="2,2,0,0" StrokeShape="RoundRectangle 6">
+            <Label Text="Dealer" FontAttributes="Bold" TextColor="#FFD700" FontSize="11" VerticalOptions="Start" />
         </Border>
-        <Border Stroke="Yellow" AbsoluteLayout.LayoutBounds="202,604,450,128" AbsoluteLayout.LayoutFlags="None" x:Name="DealerPlayer" IsVisible="False" BackgroundColor="Transparent" Padding="0">
-            <Label Text="Dealer" FontFamily="Impact" TextColor="Yellow" />
+        <Border Stroke="#FFD700" StrokeThickness="2" AbsoluteLayout.LayoutBounds="202,594,450,138" AbsoluteLayout.LayoutFlags="None" x:Name="DealerPlayer" IsVisible="False" BackgroundColor="Transparent" Padding="2,2,0,0" StrokeShape="RoundRectangle 6">
+            <Label Text="Dealer" FontAttributes="Bold" TextColor="#FFD700" FontSize="11" VerticalOptions="Start" />
         </Border>
 
         <!-- Left Opponent cards (portrait containers, rotated 90° visually) -->
@@ -56,10 +67,10 @@
         <Image AbsoluteLayout.LayoutBounds="561,620,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="PlayerCard5" IsVisible="False" />
 
         <!-- Name labels -->
-        <Label Text="Left Opponent" AbsoluteLayout.LayoutBounds="14,585,126,28" AbsoluteLayout.LayoutFlags="None" x:Name="LeftOpponentNameLabel" FontFamily="Microsoft Sans Serif" FontSize="12" FontAttributes="Italic" TextColor="White" />
-        <Label Text="Right Opponent" AbsoluteLayout.LayoutBounds="713,585,128,28" AbsoluteLayout.LayoutFlags="None" x:Name="RightOpponentNameLabel" FontFamily="Microsoft Sans Serif" FontSize="12" FontAttributes="Italic" TextColor="White" />
-        <Label Text="Player's Partner" AbsoluteLayout.LayoutBounds="202,162,97,28" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerNameLabel" FontFamily="Microsoft Sans Serif" FontSize="12" FontAttributes="Italic" TextColor="White" />
-        <Label Text="Player" AbsoluteLayout.LayoutBounds="202,576,97,28" AbsoluteLayout.LayoutFlags="None" x:Name="PlayerNameLabel" FontFamily="Microsoft Sans Serif" FontSize="12" FontAttributes="Italic" TextColor="White" />
+        <Label Text="Left Opponent" AbsoluteLayout.LayoutBounds="14,585,126,28" AbsoluteLayout.LayoutFlags="None" x:Name="LeftOpponentNameLabel" FontSize="13" FontAttributes="Italic" TextColor="#E0E0E0" />
+        <Label Text="Right Opponent" AbsoluteLayout.LayoutBounds="713,585,128,28" AbsoluteLayout.LayoutFlags="None" x:Name="RightOpponentNameLabel" FontSize="13" FontAttributes="Italic" TextColor="#E0E0E0" />
+        <Label Text="Player's Partner" AbsoluteLayout.LayoutBounds="202,162,97,28" AbsoluteLayout.LayoutFlags="None" x:Name="PartnerNameLabel" FontSize="13" FontAttributes="Italic" TextColor="#E0E0E0" />
+        <Label Text="Player" AbsoluteLayout.LayoutBounds="202,576,97,28" AbsoluteLayout.LayoutFlags="None" x:Name="PlayerNameLabel" FontSize="13" FontAttributes="Italic" TextColor="#E0E0E0" />
 
         <!-- Played cards (center of table) -->
         <Image AbsoluteLayout.LayoutBounds="158,312,80,104" AbsoluteLayout.LayoutFlags="None" x:Name="LeftOpponentCard" IsVisible="False" />
@@ -84,11 +95,24 @@
         <Image AbsoluteLayout.LayoutBounds="218,410,150,160" AbsoluteLayout.LayoutFlags="None" x:Name="UsScore" Aspect="Center" />
 
         <!-- Select label -->
-        <Label Text="Please select a card to play" AbsoluteLayout.LayoutBounds="359,575,200,28" AbsoluteLayout.LayoutFlags="None" x:Name="SelectLabel" FontFamily="Impact" TextColor="White" IsVisible="False" />
+        <Label Text="Please select a card to play" AbsoluteLayout.LayoutBounds="359,575,200,28" AbsoluteLayout.LayoutFlags="None" x:Name="SelectLabel" FontAttributes="Bold" TextColor="#FFD700" IsVisible="False" />
+
+        <!-- Bid controls -->
+        <local:EuchreBidControl AbsoluteLayout.LayoutBounds="278,273,300,190" AbsoluteLayout.LayoutFlags="None" x:Name="BidControl" IsVisible="False" IsEnabled="False" InputTransparent="True" />
+        <local:EuchreBid2Control AbsoluteLayout.LayoutBounds="278,193,300,350" AbsoluteLayout.LayoutFlags="None" x:Name="BidControl2" IsVisible="False" IsEnabled="False" InputTransparent="True" />
 
         <!-- Continue button -->
-        <Button Text="Continue" AbsoluteLayout.LayoutBounds="370,324,120,80" AbsoluteLayout.LayoutFlags="None" x:Name="ContinueButton" IsVisible="False" BackgroundColor="Yellow" FontFamily="Impact" FontSize="16" TextColor="Black" />
+        <Button Text="Continue" AbsoluteLayout.LayoutBounds="370,324,120,50" AbsoluteLayout.LayoutFlags="None" x:Name="ContinueButton" IsVisible="False" BackgroundColor="#FFD700" TextColor="#1A1A2E" CornerRadius="10" FontSize="16" FontAttributes="Bold" />
 
-        </AbsoluteLayout>
+            </AbsoluteLayout>
+        </Grid>
+
+        <!-- Right side: feedback area -->
+        <Border Grid.Column="2" BackgroundColor="#FFF8E1" Margin="2,4,4,4" StrokeShape="RoundRectangle 6" Stroke="#C8B560" StrokeThickness="1" Padding="0">
+            <ScrollView x:Name="StatusScrollView">
+                <Label x:Name="StatusArea" TextColor="#1A1A2E" FontSize="12" Padding="6" LineBreakMode="WordWrap" TextType="Html" />
+            </ScrollView>
+        </Border>
+
     </Grid>
 </ContentPage>

@@ -11,7 +11,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>C# Euchre</ApplicationTitle>
+		<ApplicationTitle>Matt's Euchre</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.wheresthatcat.euchre</ApplicationId>
@@ -47,6 +47,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.9" />
+		<PackageReference Include="Plugin.Maui.Audio" Version="4.0.0" />
 	</ItemGroup>
 
 </Project>

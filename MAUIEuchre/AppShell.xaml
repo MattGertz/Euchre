@@ -7,7 +7,7 @@
     Title="MAUIEuchre">
 
     <ShellContent
-        Title="C#Euchre"
+        Title="Matt's Euchre"
         ContentTemplate="{DataTemplate local:EuchreTable}"
         Route="EuchreTable" />
 
