@@ -63,6 +63,7 @@ namespace MAUIEuchre
 
         private void EuchreTable_Loaded(object? sender, EventArgs e)
         {
+            Logo.Source = ImageSource.FromFile("logo.png");
             UpdateStatus(AppResources.GetString("Notice_Welcome"));
             UpdateEuchreState(EuchreState.StartNewGameRequested);
         }
