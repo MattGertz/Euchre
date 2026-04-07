@@ -44,11 +44,13 @@
                 <Border Stroke="#FFD700" Padding="8" StrokeShape="RoundRectangle 6" Grid.Column="1" BackgroundColor="#2A2A4A">
                     <VerticalStackLayout Spacing="6">
                         <Label Text="Gameplay options:" TextColor="#FFD700" FontAttributes="Bold" />
-                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" RowSpacing="6" ColumnSpacing="6">
+                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="6" ColumnSpacing="6">
                             <CheckBox x:Name="PeekAtOtherCards" Grid.Row="0" Grid.Column="0" Color="#FFD700" />
                             <Label Text="Peek at other cards" TextColor="#E0E0E0" VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="1" />
                             <CheckBox x:Name="SoundOn" Grid.Row="1" Grid.Column="0" Color="#FFD700" />
                             <Label Text="Sound Effects" TextColor="#E0E0E0" VerticalTextAlignment="Center" Grid.Row="1" Grid.Column="1" />
+                            <CheckBox x:Name="SpeechOn" Grid.Row="2" Grid.Column="0" Color="#FFD700" />
+                            <Label Text="Speech" TextColor="#E0E0E0" VerticalTextAlignment="Center" Grid.Row="2" Grid.Column="1" />
                         </Grid>
                     </VerticalStackLayout>
                 </Border>

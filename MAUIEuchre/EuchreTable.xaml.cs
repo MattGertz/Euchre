@@ -70,7 +70,7 @@ namespace MAUIEuchre
 
         public void SpeakSuit(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
             {
                 switch (handTrumpSuit)
                 {
@@ -92,7 +92,7 @@ namespace MAUIEuchre
 
         public void SpeakPass(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
             {
                 gamePlayers[(int)seat].gameVoice.SayPass();
             }
@@ -100,7 +100,7 @@ namespace MAUIEuchre
 
         public void SpeakAlone(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
             {
                 gamePlayers[(int)seat].gameVoice.SayAlone();
             }
@@ -108,7 +108,7 @@ namespace MAUIEuchre
 
         public void SpeakPickItUp(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
             {
                 gamePlayers[(int)seat].gameVoice.SayPickItUp();
             }
@@ -116,7 +116,7 @@ namespace MAUIEuchre
 
         public void SpeakIPickItUp(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
             {
                 gamePlayers[(int)seat].gameVoice.SayIPickItUp();
             }
@@ -360,7 +360,7 @@ namespace MAUIEuchre
                 }
                 break;
             case EuchreState.GameOver:
-                DetermineWinnerAndEndGame();
+                await DetermineWinnerAndEndGame();
                 UpdateEuchreState(EuchreState.NoState);
                 break;
             }
@@ -606,97 +606,97 @@ namespace MAUIEuchre
 
         private void SpeakWeGotEuchredMyFault(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
                 gamePlayers[(int)seat].gameVoice.SayWeGotEuchredMyFault(gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].GetDisplayName());
         }
 
         private void SpeakWeGotEuchredOurFault(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
                 gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayWeGotEuchredOurFault(gamePlayers[(int)seat].GetDisplayName());
         }
 
         private void SpeakWeGotEuchredYourFault(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
                 gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayWeGotEuchredYourFault(gamePlayers[(int)seat].GetDisplayName());
         }
 
         private void SpeakWeGotOne(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
                 gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayWeGotOne(gamePlayers[(int)seat].GetDisplayName());
         }
 
         private void SpeakWeGotTwo(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
                 gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayWeGotTwo(gamePlayers[(int)seat].GetDisplayName());
         }
 
         private void SpeakWeGotFour(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
                 gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayWeGotFour(gamePlayers[(int)seat].GetDisplayName());
         }
 
         private void SpeakMeGotOne(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Partner && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Partner && _modeSpeechOn)
                 gamePlayers[(int)seat].gameVoice.SayMeGotOne(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
         }
 
         private void SpeakMeGotTwo(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Partner && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Partner && _modeSpeechOn)
                 gamePlayers[(int)seat].gameVoice.SayMeGotTwo(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
         }
 
         private void SpeakMeGotFour(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Partner && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Partner && _modeSpeechOn)
                 gamePlayers[(int)seat].gameVoice.SayMeGotFour(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
         }
 
         private void SpeakWeWon(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
                 gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayWeWon(gamePlayers[(int)seat].GetDisplayName());
         }
 
         private void SpeakTheyWon(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
                 gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayTheyWon(gamePlayers[(int)seat].GetDisplayName());
         }
 
         private void SpeakWeEuchredThem(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
                 gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayWeEuchredThem(gamePlayers[(int)seat].GetDisplayName());
         }
 
         private void SpeakWeSuperEuchredThem(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
                 gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayWeSuperEuchredThem(gamePlayers[(int)seat].GetDisplayName());
         }
 
         private void SpeakTheyGotOne(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Partner && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Partner && _modeSpeechOn)
                 gamePlayers[(int)seat].gameVoice.SayTheyGotOne();
         }
 
         private void SpeakTheyGotTwo(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Partner && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Partner && _modeSpeechOn)
                 gamePlayers[(int)seat].gameVoice.SayTheyGotTwo();
         }
 
         private void SpeakTheyGotFour(EuchrePlayer.Seats seat)
         {
-            if (seat != EuchrePlayer.Seats.Partner && _modeSoundOn)
+            if (seat != EuchrePlayer.Seats.Partner && _modeSpeechOn)
                 gamePlayers[(int)seat].gameVoice.SayTheyGotFour();
         }
 
@@ -735,6 +735,12 @@ namespace MAUIEuchre
                 case 3: await PlayResourceSound("wildapplause.wav"); break;
                 }
             }
+        }
+
+        private async Task PlaySadTrombone()
+        {
+            if (_modeSoundOn)
+                await PlayResourceSound("wah-wah-sad-trombone-6347.wav");
         }
 
         private async Task PlayShuffleSound()
@@ -851,6 +857,7 @@ namespace MAUIEuchre
                 {
                     _gameTheirScore += 4;
                     UpdateStatusBold(AppResources.GetString("Notice_TheySuperEuchredYou"));
+                    await PlaySadTrombone();
                     if (handPickedTrump == EuchrePlayer.Seats.Partner)
                         SpeakWeGotEuchredMyFault(handPickedTrump);
                     else if (!YourTeamWentAloneThisHand())
@@ -862,6 +869,7 @@ namespace MAUIEuchre
                 {
                     _gameTheirScore += 2;
                     UpdateStatusBold(AppResources.GetString("Notice_TheyEuchredYou"));
+                    await PlaySadTrombone();
                     if (handPickedTrump == EuchrePlayer.Seats.Partner)
                         SpeakWeGotEuchredMyFault(handPickedTrump);
                     else if (!YourTeamWentAloneThisHand())
@@ -1432,11 +1440,12 @@ namespace MAUIEuchre
             }
         }
 
-        private void DetermineWinnerAndEndGame()
+        private async Task DetermineWinnerAndEndGame()
         {
             if (_gameTheirScore > _gameYourScore)
             {
                 UpdateStatusBold(AppResources.GetString("Notice_TheyWonTheGame"), 2);
+                await PlaySadTrombone();
                 SpeakTheyWon(EuchrePlayer.Seats.Player);
             }
             else
@@ -1566,6 +1575,7 @@ namespace MAUIEuchre
                 ruleUseSuperEuchre = GameSettings.SuperEuchre;
                 ruleUseQuietDealer = GameSettings.QuietDealer;
                 _modeSoundOn = GameSettings.SoundOn;
+                _modeSpeechOn = GameSettings.SpeechOn;
 
                 gamePlayerName = string.IsNullOrEmpty(GameSettings.PlayerName) ? AppResources.GetString("Player_Player") : GameSettings.PlayerName;
                 gameLeftOpponentName = string.IsNullOrEmpty(GameSettings.LeftOpponentName) ? AppResources.GetString("Player_LeftOpponent") : GameSettings.LeftOpponentName;
@@ -1802,6 +1812,7 @@ namespace MAUIEuchre
         private int _gameTheirTricks;
         private int _gameYourTricks;
         private bool _modeSoundOn = true;
+        private bool _modeSpeechOn = true;
         private bool _stateGameStarted = false;
 
         private EuchreCardDeck _gameDeck = null!;

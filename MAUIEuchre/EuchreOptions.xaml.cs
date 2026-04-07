@@ -26,6 +26,7 @@ namespace MAUIEuchre
             QuietDealer.IsChecked = GameSettings.QuietDealer;
             PeekAtOtherCards.IsChecked = GameSettings.PeekAtOtherCards;
             SoundOn.IsChecked = GameSettings.SoundOn;
+            SpeechOn.IsChecked = GameSettings.SpeechOn;
 
             LeftOpponentCrazy.IsChecked = (GameSettings.LeftOpponentPlay == 1);
             LeftOpponentNormal.IsChecked = (GameSettings.LeftOpponentPlay != 1 && GameSettings.LeftOpponentPlay != 3);
@@ -55,6 +56,7 @@ namespace MAUIEuchre
             GameSettings.QuietDealer = QuietDealer.IsChecked;
             GameSettings.PeekAtOtherCards = PeekAtOtherCards.IsChecked;
             GameSettings.SoundOn = SoundOn.IsChecked;
+            GameSettings.SpeechOn = SpeechOn.IsChecked;
 
             if (LeftOpponentCrazy.IsChecked)
                 GameSettings.LeftOpponentPlay = 1;
