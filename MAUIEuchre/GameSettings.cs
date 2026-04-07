@@ -68,6 +68,12 @@ namespace MAUIEuchre
             set => Preferences.Default.Set("SpeechOn", value);
         }
 
+        public static bool ShowAnimations
+        {
+            get => Preferences.Default.Get("ShowAnimations", false);
+            set => Preferences.Default.Set("ShowAnimations", value);
+        }
+
         public static int LeftOpponentPlay
         {
             get => Preferences.Default.Get("LeftOpponentPlay", 2);

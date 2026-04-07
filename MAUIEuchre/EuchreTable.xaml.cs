@@ -260,7 +260,7 @@ namespace MAUIEuchre
             case EuchreState.Trick2Started:
             case EuchreState.Trick3Started:
             case EuchreState.Trick4Started:
-                PrepTrick();
+                await PrepTrick();
                 UpdateEuchreState(_stateCurrent + 1); // -> SelectCard0
                 break;
 
@@ -743,6 +743,88 @@ namespace MAUIEuchre
                 await PlayResourceSound("wah-wah-sad-trombone-6347.wav");
         }
 
+        private async Task AnimateCards(Image[]? sources, View destination)
+        {
+            if (!_modeShowAnimations)
+                return;
+
+            Rect destBounds = AbsoluteLayout.GetLayoutBounds(destination);
+            double destX = destBounds.X;
+            double destY = destBounds.Y;
+
+            double centerX = 427;
+            double centerY = 367;
+
+            double destRotation = (destination is Image destImg) ? destImg.Rotation : 0;
+            ImageSource? destSource = (destination is Image destImg2) ? destImg2.Source : null;
+            bool destIsLabel = destination is not Image;
+
+            var tasks = new List<Task>();
+
+            int count = sources?.Length ?? 1;
+            for (int idx = 0; idx < count; idx++)
+            {
+                Image? src = sources?[idx];
+
+                double startX = src != null ? AbsoluteLayout.GetLayoutBounds(src).X : centerX;
+                double startY = src != null ? AbsoluteLayout.GetLayoutBounds(src).Y : centerY;
+                double startRotation = src?.Rotation ?? 0;
+                ImageSource? startSource = src?.Source ?? ImageSource.FromFile(EuchreCard.CardBackImageName);
+
+                double srcW = src != null ? AbsoluteLayout.GetLayoutBounds(src).Width : 80;
+                double srcH = src != null ? AbsoluteLayout.GetLayoutBounds(src).Height : 104;
+
+                ImageSource? endSource = destSource;
+                bool needsFaceChange = (startSource?.ToString() != endSource?.ToString()) && endSource != null && !destIsLabel;
+
+                var tempImage = new Image
+                {
+                    Source = startSource,
+                    WidthRequest = srcW,
+                    HeightRequest = srcH,
+                    Rotation = startRotation
+                };
+                AbsoluteLayout.SetLayoutBounds(tempImage, new Rect(startX, startY, srcW, srcH));
+                AbsoluteLayout.SetLayoutFlags(tempImage, Microsoft.Maui.Layouts.AbsoluteLayoutFlags.None);
+                EuchreGrid.Children.Add(tempImage);
+
+                double dx = destX - startX;
+                double dy = destY - startY;
+
+                tasks.Add(Task.Run(async () =>
+                {
+                    await MainThread.InvokeOnMainThreadAsync(async () =>
+                    {
+                        if (needsFaceChange)
+                        {
+                            uint halfDuration = _animationDuration / 2;
+                            await Task.WhenAll(
+                                tempImage.TranslateTo(dx / 2, dy / 2, halfDuration, Easing.CubicIn),
+                                tempImage.RotateTo(startRotation + (destRotation - startRotation) / 2, halfDuration, Easing.CubicIn),
+                                destIsLabel ? tempImage.ScaleTo(0.65, halfDuration, Easing.CubicIn) : Task.CompletedTask
+                            );
+                            tempImage.Source = endSource;
+                            await Task.WhenAll(
+                                tempImage.TranslateTo(dx, dy, halfDuration, Easing.CubicOut),
+                                tempImage.RotateTo(destRotation, halfDuration, Easing.CubicOut),
+                                destIsLabel ? tempImage.ScaleTo(0.3, halfDuration, Easing.CubicOut) : Task.CompletedTask
+                            );
+                        }
+                        else
+                        {
+                            await Task.WhenAll(
+                                tempImage.TranslateTo(dx, dy, _animationDuration, Easing.CubicInOut),
+                                tempImage.RotateTo(destRotation, _animationDuration, Easing.CubicInOut),
+                                destIsLabel ? tempImage.ScaleTo(0.3, _animationDuration, Easing.CubicInOut) : Task.CompletedTask
+                            );
+                        }
+                        EuchreGrid.Children.Remove(tempImage);
+                    });
+                }));
+            }
+            await Task.WhenAll(tasks);
+        }
+
         private async Task PlayShuffleSound()
         {
             UpdateStatusSeparator();
@@ -1034,6 +1116,7 @@ namespace MAUIEuchre
             int angle = EuchreCard.GetSeatRotationAngle(player);
             SetImage(gameTableTopCards[(int)player, slot], EuchreCard.CardBackImageName);
             gameTableTopCards[(int)player, slot].Rotation = angle;
+            await AnimateCards(null, gameTableTopCards[(int)player, slot]);
             gameTableTopCards[(int)player, slot].IsVisible = true;
             await PlayCardSound();
             await Task.Delay(_timerSleepDuration);
@@ -1129,6 +1212,9 @@ namespace MAUIEuchre
             handPlayedCards[(int)player.Seat] = player.handCardsHeld[index];
 
             MarkCardAsPlayed(player.handCardsHeld[index]);
+            await AnimateCards(
+                new[] { gameTableTopCards[(int)player.Seat, index] },
+                gameTableTopCards[(int)player.Seat, 5]);
             player.handCardsHeld[index] = null!;
             gameTableTopCards[(int)player.Seat, index].Source = null;
             gameTableTopCards[(int)player.Seat, index].IsVisible = false;
@@ -1140,7 +1226,12 @@ namespace MAUIEuchre
 
         private async Task SwapCardWithKitty(EuchrePlayer player, int index)
         {
-            await Task.CompletedTask;
+            await AnimateCards(
+                new[] { KittyCard1 },
+                gameTableTopCards[(int)player.Seat, index]);
+            await AnimateCards(
+                new[] { gameTableTopCards[(int)player.Seat, index] },
+                KittyCard1);
 
             EuchreCard card = handKitty[0];
             handKitty[0] = player.handCardsHeld[index];
@@ -1157,9 +1248,26 @@ namespace MAUIEuchre
             player.trickBuriedCard = handKitty[0];
         }
 
-        private void PrepTrick()
+        private async Task PrepTrick()
         {
             UpdateStatusSeparator();
+
+            // Animate played cards to the winning team's tricks-taken label
+            var playedCards = new List<Image>();
+            for (var i = EuchrePlayer.Seats.LeftOpponent; i <= EuchrePlayer.Seats.Player; i++)
+            {
+                if (gameTableTopCards[(int)i, 5].IsVisible)
+                    playedCards.Add(gameTableTopCards[(int)i, 5]);
+            }
+            if (playedCards.Count > 0)
+            {
+                View tricksTarget = (trickPlayerWhoPlayedHighestCardSoFar == EuchrePlayer.Seats.Player ||
+                                     trickPlayerWhoPlayedHighestCardSoFar == EuchrePlayer.Seats.Partner)
+                                    ? YourTricks
+                                    : TheirTricks;
+                await AnimateCards(playedCards.ToArray(), tricksTarget);
+            }
+
             HideAllPlayedCards();
 
             trickLeader = gamePlayers[(int)trickLeaderIndex];
@@ -1479,6 +1587,7 @@ namespace MAUIEuchre
             card.stateCurrent = EuchreCard.States.FaceUp;
 
             SetCardImage(card, player, gameTableTopCards[(int)player, slot]);
+            await AnimateCards(null, gameTableTopCards[(int)player, slot]);
             gameTableTopCards[(int)player, slot].IsVisible = true;
 
             UpdateStatusBoldName(AppResources.GetString("Notice_DealtACard"), gamePlayers[(int)player].GetDisplayName(), AppResources.ResourceManager.GetString(card.GetDisplayStringResourceName())!);
@@ -1576,6 +1685,7 @@ namespace MAUIEuchre
                 ruleUseQuietDealer = GameSettings.QuietDealer;
                 _modeSoundOn = GameSettings.SoundOn;
                 _modeSpeechOn = GameSettings.SpeechOn;
+                _modeShowAnimations = GameSettings.ShowAnimations;
 
                 gamePlayerName = string.IsNullOrEmpty(GameSettings.PlayerName) ? AppResources.GetString("Player_Player") : GameSettings.PlayerName;
                 gameLeftOpponentName = string.IsNullOrEmpty(GameSettings.LeftOpponentName) ? AppResources.GetString("Player_LeftOpponent") : GameSettings.LeftOpponentName;
@@ -1813,7 +1923,9 @@ namespace MAUIEuchre
         private int _gameYourTricks;
         private bool _modeSoundOn = true;
         private bool _modeSpeechOn = true;
+        private bool _modeShowAnimations = false;
         private bool _stateGameStarted = false;
+        private uint _animationDuration = 500;
 
         private EuchreCardDeck _gameDeck = null!;
 

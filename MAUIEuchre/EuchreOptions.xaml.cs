@@ -27,6 +27,7 @@ namespace MAUIEuchre
             PeekAtOtherCards.IsChecked = GameSettings.PeekAtOtherCards;
             SoundOn.IsChecked = GameSettings.SoundOn;
             SpeechOn.IsChecked = GameSettings.SpeechOn;
+            ShowAnimations.IsChecked = GameSettings.ShowAnimations;
 
             LeftOpponentCrazy.IsChecked = (GameSettings.LeftOpponentPlay == 1);
             LeftOpponentNormal.IsChecked = (GameSettings.LeftOpponentPlay != 1 && GameSettings.LeftOpponentPlay != 3);
@@ -57,6 +58,7 @@ namespace MAUIEuchre
             GameSettings.PeekAtOtherCards = PeekAtOtherCards.IsChecked;
             GameSettings.SoundOn = SoundOn.IsChecked;
             GameSettings.SpeechOn = SpeechOn.IsChecked;
+            GameSettings.ShowAnimations = ShowAnimations.IsChecked;
 
             if (LeftOpponentCrazy.IsChecked)
                 GameSettings.LeftOpponentPlay = 1;

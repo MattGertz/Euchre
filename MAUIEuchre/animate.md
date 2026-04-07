@@ -2,162 +2,198 @@
 
 ## Overview
 
-Add card movement animations in five scenarios. MAUI provides `TranslateTo()` for smooth
-position-based animations on any `VisualElement`, which is the primary tool we'll use.
+Add card movement animations controlled by a "Show animations" gameplay option (persisted via
+`GameSettings.ShowAnimations` / `_modeShowAnimations`). All animations flow through one method:
 
-All animations use a temporary `Image` element added to the `AbsoluteLayout`, translated from
-source to destination, then removed. The permanent card Image at the destination is shown
-after the animation completes.
-
----
-
-## Scenarios
-
-### (a) Deal for Deal (face-up cards choosing dealer)
-
-**Current behavior:** Card appears instantly at destination, card sound plays.
-
-**Animated behavior:**
-1. Create a temp `Image` with the card's face image.
-2. Position it at the kitty/center location in the AbsoluteLayout.
-3. Animate (`TranslateTo`) from center to the destination card slot.
-4. On completion: show the real card image at the destination, remove temp image.
-5. Play card sound.
-
-**Duration:** ~150-200ms per card. This is rapid since there can be many cards dealt
-before a Jack appears.
-
-**Question:** Should cards overlap during animation, or wait for each to finish?
-Current code already has `await Task.Delay(_timerSleepDuration)` between cards,
-so sequential is natural.
-
----
-
-### (b) Dealing Hands (5 cards to each player)
-
-**Current behavior:** Cards appear instantly at destination.
-
-**Animated behavior:**
-1. Determine dealer position (the source of the deal).
-2. Create a temp `Image` with `cardback.png` (unless peek mode, then face image).
-3. Position at dealer's location.
-4. Animate from dealer to destination card slot.
-5. On completion: show real card at destination, remove temp image.
-6. Play card sound at end of each card.
-
-**Duration:** ~150ms per card. 20 cards dealt = ~3 seconds total with delays.
-
-**Question:** In the WPF version, are cards dealt one-at-a-time or in batches of 2-3
-as in real Euchre? Current code deals them one at a time in `DealACard`.
-
----
-
-### (c) Playing a Card (trick play)
-
-**Current behavior:** Card disappears from hand, appears at played position.
-
-**Animated behavior:**
-1. Hide the card at its hand position.
-2. Create a temp `Image` with the card's face image.
-3. Position at the card's hand slot location.
-4. Animate from hand slot to the played-card position (center area).
-5. On completion: show the played card image at center, remove temp image.
-
-**Duration:** ~200-250ms. This is a deliberate action, can be slightly slower.
-
-**Consideration:** The player's hand position may differ per seat:
-- Bottom (Player): cards are horizontal, played card goes up to center
-- Top (Partner): cards are horizontal, played card goes down to center
-- Left (LeftOpponent): cards may be rotated, played card goes right to center
-- Right (RightOpponent): cards may be rotated, played card goes left to center
-
-The temp image should NOT rotate during animation — it starts at the hand orientation
-and arrives at the played orientation (which is always vertical for center cards).
-
----
-
-### (d) Kitty Card Swap (dealer picks up, discards)
-
-**Current behavior:** Card images swap instantly.
-
-**Animated behavior:**
-Two sub-animations:
-1. **Pick up from kitty:** Animate kitty card from center to dealer's hand position.
-   Card may be face-up or face-down depending on peek mode and whether dealer is human.
-2. **Discard to kitty:** Animate discarded card from dealer's hand to kitty position.
-   Always face-down.
-
-**Consideration:** The arriving card must end up vertical from the player's perspective
-regardless of which seat the dealer is in. If the dealer is Left/Right opponent, the
-card in-hand is rotated 90°, but during animation it transitions to/from vertical.
-
-**Question:** Should these be two distinct visible animations, or can the swap happen
-as one combined visual? The WPF version does it instantly. A brief animation
-(150ms each) would add nice polish without being slow.
-
----
-
-### (e) Clearing Tricks (cards whisk away)
-
-**Current behavior:** Played cards disappear instantly.
-
-**Animated behavior:**
-1. Determine trick winner's seat (the direction cards fly toward).
-2. For each of the 4 (or 3) played cards, animate them simultaneously from their
-   played positions outward past the winner's seat edge, going offscreen.
-3. On completion: hide all played card images.
-
-**Direction mapping:**
-- Winner is Player (bottom): cards fly down off bottom edge
-- Winner is Partner (top): cards fly up off top edge
-- Winner is LeftOpponent: cards fly left off left edge
-- Winner is RightOpponent: cards fly right off right edge
-
-**Duration:** ~300-400ms. Simultaneous animation of all cards. "Whimsical" per user's
-request — could add slight rotation and/or stagger start times by 30-50ms each.
-
-**Also applies to:** End of hand clearing. Same animation, same direction.
-
----
-
-## Implementation Approach
-
-### Helper Method
 ```csharp
-private async Task AnimateCard(ImageSource imageSource, 
-    double fromX, double fromY, double toX, double toY,
-    uint duration = 200)
-{
-    var tempImage = new Image { Source = imageSource, WidthRequest = 80, HeightRequest = 104 };
-    AbsoluteLayout.SetLayoutBounds(tempImage, new Rect(fromX, fromY, 80, 104));
-    GameCanvas.Children.Add(tempImage);
-    
-    await tempImage.TranslateTo(toX - fromX, toY - fromY, duration, Easing.CubicOut);
-    
-    GameCanvas.Children.Remove(tempImage);
-}
+private async Task AnimateCards(Image[]? sources, Image destination, uint duration = 500)
 ```
 
-### Position Helpers
-Need a method to get the absolute position of a card slot within the AbsoluteLayout:
-```csharp
-private (double x, double y) GetCardPosition(Image cardImage)
-{
-    return (AbsoluteLayout.GetLayoutBounds(cardImage).X, 
-            AbsoluteLayout.GetLayoutBounds(cardImage).Y);
-}
+- If `_modeShowAnimations` is false, this is a no-op (returns immediately).
+- `sources` is an array of XAML Image elements to animate. If null, cards originate from
+  center of table (427, 367) — the midpoint of the 855×735 canvas.
+- `destination` is the target XAML Image element. The animation ends at its LayoutBounds position.
+- All cards in the array animate simultaneously (Task.WhenAll).
+- Default duration is 500ms but is stored in a field (`_animationDuration`) so it can be
+  tuned later without code changes.
+
+## The AnimateCards Method — Detailed Behavior
+
+For each source Image in the array (or a virtual center-of-table origin if sources is null):
+
+1. **Create a temp Image** in `EuchreGrid` (the AbsoluteLayout).
+   - Copy the source image's `Source`, `WidthRequest`, `HeightRequest`, `Rotation` from
+     the source Image (or use cardback.png at rotation 0 for null sources).
+2. **Position it** at the source's LayoutBounds (X, Y) — or center-of-table if null.
+3. **Compute deltas**: destination LayoutBounds minus starting position for TranslateTo,
+   and destination `Rotation` minus starting rotation for RotateTo.
+4. **Determine face change**: If the source shows cardback but destination shows a face
+   (or vice-versa), the image swap happens at the midpoint of animation (~250ms mark for
+   500ms animation). We run first-half, swap Source, then second-half. If no change needed,
+   run as one continuous animation.
+5. **Run the animation**: TranslateTo + RotateTo in parallel, with Easing.CubicInOut.
+6. **On completion**: Remove temp Image from EuchreGrid.
+
+The caller is responsible for making the destination Image visible (showing the final card)
+and hiding the source Image(s) — the animation method only handles the visual motion.
+
+## The Option
+
+- **GameSettings.cs**: Add `ShowAnimations` bool property (Preferences, default false).
+- **EuchreOptions.xaml**: Add "Show animations" checkbox to Gameplay options section.
+- **EuchreOptions.xaml.cs**: Wire up load/save like other options.
+- **EuchreTable.xaml.cs**: Add `_modeShowAnimations` field, load from GameSettings in NewGame.
+
+## Integration Points (Call Sites)
+
+### (a) Deal for Deal — `DealACardForDeal()`
+
+Cards fly from center-of-table to each player's card slot during dealer selection.
+
+```
+await AnimateCards(null, gameTableTopCards[(int)player, slot]);
 ```
 
-### Integration Points
+- sources = null → center of table
+- destination = the dealt card slot
+- Card starts as cardback at rotation 0, destination shows face-up card at seat rotation.
+  Face change + rotation change happen during animation.
 
-Each scenario modifies an existing async method:
-- (a): `DealACardForDeal()` — add animation before showing final card
-- (b): `DealACard()` — add animation before showing final card  
-- (c): `PlaySelectedCard()` — hide source, animate, then show at destination
-- (d): Pickup/discard in `Bid1PickUp` state handling
-- (e): `PrepTrick()` / hand-end cleanup — animate before hiding
+### (b) Dealing Hands — `DealACard()`
 
-### Questions for User
+Cards fly from center-of-table to each player's hand slot. All cards show cardback
+(face-down) at destination except the player's own cards (face-up but only if not peek mode —
+well, actually `DealACard` always sets face-down for non-Player).
+
+```
+await AnimateCards(null, gameTableTopCards[(int)player, slot]);
+```
+
+- sources = null → center of table
+- destination = the hand slot
+- Card starts as cardback at rotation 0, ends as cardback at seat rotation.
+  Rotation changes during animation; image stays cardback throughout.
+
+### (c) Playing a Card — `PlaySelectedCard()`
+
+Card flies from player's hand slot to their played-card position (center area).
+
+```
+await AnimateCards(
+    new[] { gameTableTopCards[(int)player.Seat, index] },
+    gameTableTopCards[(int)player.Seat, 5]);
+```
+
+- sources = the hand card Image (slot 0-4)
+- destination = the played card Image (slot 5 — LeftOpponentCard, RightOpponentCard, etc.)
+- For Player/Partner: card is face-up, no rotation change (both 0° or both 180°... actually
+  Player is 0° in hand and 0° when played; Partner is 180° in hand and 0° when played
+  per the played card positions — need to check). Actually the played card position is set
+  via `SetCardImage` which sets rotation from the card's perspective. The card perspective
+  changes to `player.Seat` and `rotationAngle` is calculated.
+- For Left/Right opponents: card transitions from 90°/270° (hand) to 0° (played center).
+  Also transitions from face-down (cardback) to face-up.
+- The animation handles both the rotation and face-change smoothly.
+
+### (d) Kitty Card Swap — `SwapCardWithKitty()`
+
+Two separate animations:
+1. **Kitty → dealer's hand**: The top kitty card (KittyCard1) flies to the replaced hand slot.
+   ```
+   await AnimateCards(new[] { KittyCard1 }, gameTableTopCards[(int)player.Seat, index]);
+   ```
+   - Face change at midpoint: kitty is face-up, hand card may be face-down (for AI dealers).
+   - Rotation change: kitty is 0° (Player perspective), hand slot is at seat rotation.
+
+2. **Dealer's hand → kitty**: The discarded card flies to kitty position.
+   ```
+   await AnimateCards(
+       new[] { gameTableTopCards[(int)player.Seat, index] },
+       KittyCard1);
+   ```
+   - Face change: hand card (face-up or face-down) to face-down kitty.
+   - Rotation change: seat rotation → 0°.
+
+### (e) Clearing Tricks — `PrepTrick()` (called on Continue click)
+
+All played cards (slot 5 for each seat) fly en masse to the winning team's tricks-taken
+label. The `trickPlayerWhoPlayedHighestCardSoFar` determines the destination:
+- Player or Partner won → fly to `YourTricks` label
+- LeftOpponent or RightOpponent won → fly to `TheirTricks` label
+
+```csharp
+// Collect visible played cards
+var playedCards = new List<Image>();
+for (var i = EuchrePlayer.Seats.LeftOpponent; i <= EuchrePlayer.Seats.Player; i++)
+{
+    if (gameTableTopCards[(int)i, 5].IsVisible)
+        playedCards.Add(gameTableTopCards[(int)i, 5]);
+}
+
+Image tricksLabel = (trickPlayerWhoPlayedHighestCardSoFar == EuchrePlayer.Seats.Player ||
+                     trickPlayerWhoPlayedHighestCardSoFar == EuchrePlayer.Seats.Partner)
+                    ? (Image)YourTricks   // Actually this is a Label — need a position proxy
+                    : (Image)TheirTricks;
+```
+
+**Issue**: YourTricks/TheirTricks are Labels, not Images. The AnimateCards method takes
+Image for destination. We need to handle this: either create a hidden proxy Image at the
+label's position, or extract position from the Label directly in AnimateCards (make the
+destination parameter `View` instead of `Image`).
+
+**Resolution**: Change the destination parameter type to `View` so it can accept Labels.
+The method only reads its LayoutBounds for position — it doesn't need Source/Rotation from
+the destination. When destination is not an Image, use rotation 0 and skip Source logic.
+
+**Updated signature**:
+```csharp
+private async Task AnimateCards(Image[]? sources, View destination, uint duration = 500)
+```
+
+Cards shrink (ScaleTo 0.3) as they approach the tricks label, giving a "collected" feel.
+
+## Key Constants / Positions
+
+| Element | LayoutBounds |
+|---------|-------------|
+| Center of table (virtual) | 427, 367 |
+| YourTricks label | 12, 641, 144, 72 |
+| TheirTricks label | 697, 641, 144, 72 |
+| Player played card | 390, 476 |
+| Partner played card | 390, 162 |
+| Left Opp played card | 158, 312 |
+| Right Opp played card | 623, 312 |
+| KittyCard1 | 600, 476 |
+
+## Rotation Angles by Seat
+
+| Seat | Hand rotation | Played card rotation |
+|------|--------------|---------------------|
+| Player | 0° | 0° (via Perspective) |
+| Partner | 180° | 0° (Perspective changes to Player) |
+| LeftOpponent | 90° | 0° |
+| RightOpponent | 270° | 0° |
+
+## Animation Details
+
+- **Easing**: CubicInOut for smooth acceleration/deceleration.
+- **Face-change midpoint**: At duration/2, swap the temp Image's Source. This avoids a
+  jarring instant flip — the card visually "turns over" at the halfway point.
+- **Rotation**: RotateTo runs in parallel with TranslateTo, both same duration.
+- **Scale for trick clearing**: ScaleTo(0.3) in parallel, applied only when destination
+  is a Label (the tricks-taken indicator).
+- **All array items animate simultaneously** via Task.WhenAll.
+
+## Implementation Order
+
+1. Add `ShowAnimations` to GameSettings, EuchreOptions, and EuchreTable field.
+2. Implement `AnimateCards` method.
+3. Wire into `DealACardForDeal` (scenario a).
+4. Wire into `DealACard` (scenario b).
+5. Wire into `PlaySelectedCard` (scenario c).
+6. Wire into `SwapCardWithKitty` (scenario d).
+7. Wire into `PrepTrick` (scenario e — trick clearing).
+8. Test each scenario, tune timing.
 
 1. Should the card sound play at the START or END of each animation? (Current: end)
 2. For trick clearing (e), should all 4 cards animate simultaneously, or stagger?
