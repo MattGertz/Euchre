@@ -18,7 +18,7 @@
             <!-- Player name -->
             <Grid ColumnDefinitions="74,*" ColumnSpacing="8">
                 <Label Text="Name:" TextColor="White" VerticalTextAlignment="Center" />
-                <Entry Grid.Column="1" x:Name="PlayerName" Text="Player" WidthRequest="160" HorizontalOptions="Start" />
+                <Entry Grid.Column="1" x:Name="PlayerName" Text="Player" WidthRequest="160" HorizontalOptions="Start" TextColor="White" />
             </Grid>
 
             <!-- Rule options and Gameplay options side by side -->
@@ -73,9 +73,9 @@
                     <!-- Names row -->
                     <Grid ColumnDefinitions="90,*,*,*" ColumnSpacing="8">
                         <Label Text="Name:" TextColor="#E0E0E0" VerticalTextAlignment="Center" />
-                        <Entry Grid.Column="1" x:Name="LeftOpponentName" />
-                        <Entry Grid.Column="2" x:Name="PartnerName" />
-                        <Entry Grid.Column="3" x:Name="RightOpponentName" />
+                        <Entry Grid.Column="1" x:Name="LeftOpponentName" TextColor="White" />
+                        <Entry Grid.Column="2" x:Name="PartnerName" TextColor="White" />
+                        <Entry Grid.Column="3" x:Name="RightOpponentName" TextColor="White" />
                     </Grid>
 
                     <!-- Play style label -->
