@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -139,12 +140,17 @@ namespace MAUIEuchre
 
         public async Task MasterStateDirector()
         {
+            try
+            {
             switch (_stateCurrent)
             {
             case EuchreState.NoState:
                 break;
 
             case EuchreState.StartNewGameRequested:
+                _gameCancel.Cancel();
+                _gameCancel = new CancellationTokenSource();
+                CleanUpGame();
                 if (_stateGameStarted)
                 {
                     if (!await RestartGame())
@@ -363,6 +369,11 @@ namespace MAUIEuchre
                 await DetermineWinnerAndEndGame();
                 UpdateEuchreState(EuchreState.NoState);
                 break;
+            }
+            }
+            catch (OperationCanceledException)
+            {
+                // New game was requested — stop current operations
             }
         }
 
@@ -704,13 +715,18 @@ namespace MAUIEuchre
         {
             try
             {
+                _gameCancel.Token.ThrowIfCancellationRequested();
                 var stream = await FileSystem.OpenAppPackageFileAsync(resourceName);
                 var player = AudioManager.Current.CreatePlayer(stream);
                 player.Play();
                 // Wait for playback to complete so sounds don't overlap
                 while (player.IsPlaying)
-                    await Task.Delay(50);
+                    await Task.Delay(50, _gameCancel.Token);
                 player.Dispose();
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
             }
             catch
             {
@@ -743,28 +759,42 @@ namespace MAUIEuchre
                 await PlayResourceSound("wah-wah-sad-trombone-6347.wav");
         }
 
-        private async Task AnimateCards(Image[]? sources, View destination)
+        private async Task AnimateCards(Image[]? sources, View[] destinations)
         {
             if (!_modeShowAnimations)
                 return;
 
-            Rect destBounds = AbsoluteLayout.GetLayoutBounds(destination);
-            double destX = destBounds.X;
-            double destY = destBounds.Y;
+            _gameCancel.Token.ThrowIfCancellationRequested();
+            var token = _gameCancel.Token;
+
+            int count = sources?.Length ?? 1;
+            if (destinations.Length > 1 && count > 0 && destinations.Length != count)
+                throw new ArgumentException("Source and destination array sizes must match when both have multiple elements.");
 
             double centerX = 427;
             double centerY = 367;
 
-            double destRotation = (destination is Image destImg) ? destImg.Rotation : 0;
-            ImageSource? destSource = (destination is Image destImg2) ? destImg2.Source : null;
-            bool destIsLabel = destination is not Image;
+            // Hide source images before animation starts
+            if (sources != null)
+            {
+                foreach (var src in sources)
+                    src.IsVisible = false;
+            }
 
+            var tempImages = new List<Image>();
             var tasks = new List<Task>();
 
-            int count = sources?.Length ?? 1;
             for (int idx = 0; idx < count; idx++)
             {
                 Image? src = sources?[idx];
+                View dest = destinations.Length > 1 ? destinations[idx] : destinations[0];
+
+                Rect destBounds = AbsoluteLayout.GetLayoutBounds(dest);
+                double destX = destBounds.X;
+                double destY = destBounds.Y;
+                double destRotation = (dest is Image destImg) ? destImg.Rotation : 0;
+                ImageSource? destSource = (dest is Image destImg2) ? destImg2.Source : null;
+                bool destIsLabel = dest is not Image;
 
                 double startX = src != null ? AbsoluteLayout.GetLayoutBounds(src).X : centerX;
                 double startY = src != null ? AbsoluteLayout.GetLayoutBounds(src).Y : centerY;
@@ -787,6 +817,7 @@ namespace MAUIEuchre
                 AbsoluteLayout.SetLayoutBounds(tempImage, new Rect(startX, startY, srcW, srcH));
                 AbsoluteLayout.SetLayoutFlags(tempImage, Microsoft.Maui.Layouts.AbsoluteLayoutFlags.None);
                 EuchreGrid.Children.Add(tempImage);
+                tempImages.Add(tempImage);
 
                 double dx = destX - startX;
                 double dy = destY - startY;
@@ -795,6 +826,8 @@ namespace MAUIEuchre
                 {
                     await MainThread.InvokeOnMainThreadAsync(async () =>
                     {
+                        if (token.IsCancellationRequested)
+                            return;
                         if (needsFaceChange)
                         {
                             uint halfDuration = _animationDuration / 2;
@@ -803,6 +836,8 @@ namespace MAUIEuchre
                                 tempImage.RotateTo(startRotation + (destRotation - startRotation) / 2, halfDuration, Easing.CubicIn),
                                 destIsLabel ? tempImage.ScaleTo(0.65, halfDuration, Easing.CubicIn) : Task.CompletedTask
                             );
+                            if (token.IsCancellationRequested)
+                                return;
                             tempImage.Source = endSource;
                             await Task.WhenAll(
                                 tempImage.TranslateTo(dx, dy, halfDuration, Easing.CubicOut),
@@ -818,11 +853,21 @@ namespace MAUIEuchre
                                 destIsLabel ? tempImage.ScaleTo(0.3, _animationDuration, Easing.CubicInOut) : Task.CompletedTask
                             );
                         }
-                        EuchreGrid.Children.Remove(tempImage);
                     });
                 }));
             }
             await Task.WhenAll(tasks);
+
+            // Clean up temp images (also handles cancellation leftovers)
+            foreach (var tmp in tempImages)
+                EuchreGrid.Children.Remove(tmp);
+
+            token.ThrowIfCancellationRequested();
+        }
+
+        private async Task AnimateCards(Image[]? sources, View destination)
+        {
+            await AnimateCards(sources, new[] { destination });
         }
 
         private async Task PlayShuffleSound()
@@ -1119,7 +1164,7 @@ namespace MAUIEuchre
             await AnimateCards(null, gameTableTopCards[(int)player, slot]);
             gameTableTopCards[(int)player, slot].IsVisible = true;
             await PlayCardSound();
-            await Task.Delay(_timerSleepDuration);
+            await Task.Delay(_timerSleepDuration, _gameCancel.Token);
         }
 
         private async Task DealCards()
@@ -1221,17 +1266,16 @@ namespace MAUIEuchre
             gameTableTopCards[(int)player.Seat, 5].IsVisible = true;
 
             await PlayCardSound();
-            await Task.Delay(_timerSleepDuration);
+            await Task.Delay(_timerSleepDuration, _gameCancel.Token);
         }
 
         private async Task SwapCardWithKitty(EuchrePlayer player, int index)
         {
             await AnimateCards(
-                new[] { KittyCard1 },
-                gameTableTopCards[(int)player.Seat, index]);
-            await AnimateCards(
-                new[] { gameTableTopCards[(int)player.Seat, index] },
-                KittyCard1);
+                new[] { KittyCard1, gameTableTopCards[(int)player.Seat, index] },
+                new View[] { gameTableTopCards[(int)player.Seat, index], KittyCard1 });
+            KittyCard1.IsVisible = true;
+            gameTableTopCards[(int)player.Seat, index].IsVisible = true;
 
             EuchreCard card = handKitty[0];
             handKitty[0] = player.handCardsHeld[index];
@@ -1426,7 +1470,7 @@ namespace MAUIEuchre
             {
                 bool rv = _handCurrentBidder.AutoBidFirstRound(GoingAlone);
                 _handCurrentBidder.ProcessBidFirstRound(GoingAlone, rv);
-                await Task.Delay(_timerBidSpeechDuration);
+                await Task.Delay(_timerBidSpeechDuration, _gameCancel.Token);
                 if (rv)
                     UpdateEuchreState(EuchreState.Bid1PickUp);
                 else
@@ -1499,7 +1543,7 @@ namespace MAUIEuchre
             {
                 bool rv = _handCurrentBidder.AutoBidSecondRound(GoingAlone);
                 _handCurrentBidder.ProcessBidSecondRound(GoingAlone, rv);
-                await Task.Delay(_timerBidSpeechDuration);
+                await Task.Delay(_timerBidSpeechDuration, _gameCancel.Token);
                 if (rv)
                     UpdateEuchreState(EuchreState.Bid2Succeeded);
                 else
@@ -1593,7 +1637,7 @@ namespace MAUIEuchre
             UpdateStatusBoldName(AppResources.GetString("Notice_DealtACard"), gamePlayers[(int)player].GetDisplayName(), AppResources.ResourceManager.GetString(card.GetDisplayStringResourceName())!);
 
             await PlayCardSound();
-            await Task.Delay(_timerSleepDuration);
+            await Task.Delay(_timerSleepDuration, _gameCancel.Token);
             return card;
         }
 
@@ -1740,10 +1784,39 @@ namespace MAUIEuchre
 
         private void CleanUpGame()
         {
+            // Cancel any running animations on all children
+            foreach (var child in EuchreGrid.Children.OfType<View>())
+                child.CancelAnimations();
+
+            // Remove any temp animation images (dynamically added, not named)
+            var tempImages = EuchreGrid.Children.OfType<Image>()
+                .Where(img => string.IsNullOrEmpty(img.StyleId) && img.Parent == EuchreGrid
+                    && !IsKnownImage(img))
+                .ToList();
+            foreach (var tmp in tempImages)
+                EuchreGrid.Children.Remove(tmp);
+
             ShowAllCards(false);
             HideAllPlayedCards();
             HideAllDealerAndTrumpLabels();
+            ContinueButton.IsVisible = false;
+            ContinueButton.IsEnabled = false;
+            SelectLabel.IsVisible = false;
+            BidControl.IsVisible = false;
+            BidControl2.IsVisible = false;
             _stateGameStarted = false;
+        }
+
+        private bool IsKnownImage(Image img)
+        {
+            // Check against all known named images
+            for (int i = 0; i <= 3; i++)
+                for (int j = 0; j <= 5; j++)
+                    if (img == gameTableTopCards[i, j]) return true;
+            if (img == KittyCard1 || img == KittyCard2 || img == KittyCard3 || img == KittyCard4) return true;
+            if (img == TrumpLeft || img == TrumpRight || img == TrumpPlayer || img == TrumpPartner) return true;
+            if (img == ThemScore || img == UsScore || img == Logo) return true;
+            return false;
         }
 
         private void ShowAllNameLabels(bool ShowAll)
@@ -1925,7 +1998,8 @@ namespace MAUIEuchre
         private bool _modeSpeechOn = true;
         private bool _modeShowAnimations = false;
         private bool _stateGameStarted = false;
-        private uint _animationDuration = 500;
+        private uint _animationDuration = 167;
+        private CancellationTokenSource _gameCancel = new();
 
         private EuchreCardDeck _gameDeck = null!;
 
