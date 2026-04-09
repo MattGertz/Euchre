@@ -8,6 +8,7 @@ namespace MAUIEuchre
         private readonly List<VoiceInformation> _voices = new();
         private float _pitch = 1.0f;
         private float _rate = 1.0f;
+        private readonly SemaphoreSlim _speakLock = new(1, 1);
 
         public Task InitializeAsync()
         {
@@ -57,18 +58,25 @@ namespace MAUIEuchre
 
         private async Task SpeakAsync(string text)
         {
+            await _speakLock.WaitAsync();
             try
             {
-                System.Diagnostics.Debug.WriteLine($"TTS: pitch={_synth!.Options.AudioPitch} rate={_synth.Options.SpeakingRate}");
-                var stream = await _synth.SynthesizeTextToStreamAsync(text);
+                var stream = await _synth!.SynthesizeTextToStreamAsync(text);
+                var tcs = new TaskCompletionSource();
                 var player = new Windows.Media.Playback.MediaPlayer();
                 player.Source = Windows.Media.Core.MediaSource.CreateFromStream(stream, stream.ContentType);
-                player.MediaEnded += (s, e) => player.Dispose();
+                player.MediaEnded += (s, e) => { player.Dispose(); tcs.TrySetResult(); };
+                player.MediaFailed += (s, e) => { player.Dispose(); tcs.TrySetResult(); };
                 player.Play();
+                await tcs.Task;
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"TTS ERROR: {ex.Message}");
+            }
+            finally
+            {
+                _speakLock.Release();
             }
         }
 

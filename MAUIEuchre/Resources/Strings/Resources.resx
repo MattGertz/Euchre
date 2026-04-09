@@ -387,11 +387,17 @@
   <data name="OPTION_RightOpponent" xml:space="preserve">
     <value>Specify a name for the player on your right here.</value>
   </data>
+  <data name="OPTION_ShowAnimations" xml:space="preserve">
+    <value>Checking this box means that card-dealing and trick-taking will be animated. (Game play is slightly quicker if this is turned off.)</value>
+  </data>
   <data name="OPTION_RightOpponentVoice" xml:space="preserve">
     <value>Specify a voice for your right opponent here.</value>
   </data>
   <data name="OPTION_SoundEffects" xml:space="preserve">
     <value>Checking this box means that you'll hear sound effects during the game. (Game play is slightly quicker if this is turned off.)</value>
+  </data>
+  <data name="OPTION_Speech" xml:space="preserve">
+    <value>Checking this box means that the computer players will speak during the game using text-to-speech.</value>
   </data>
   <data name="OPTION_StickTheDealer" xml:space="preserve">
     <value>Checking this box will force the dealer to select the trump suit on the second round if no one else has called trump.  The dealer's team will need to win three tricks or else be euchred, as usual.</value>

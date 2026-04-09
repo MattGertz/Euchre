@@ -364,6 +364,7 @@ namespace MAUIEuchre
                 break;
 
             case EuchreState.HandCompleted:
+                await AnimateTrickAway();
                 await UpdateAllScores(EuchreState.HandCompletedAcknowledged);
                 break;
             case EuchreState.HandCompletedAcknowledged:
@@ -626,100 +627,100 @@ namespace MAUIEuchre
             _gameDealerBox[(int)EuchrePlayer.Seats.Player] = DealerPlayer;
         }
 
-        private void SpeakWeGotEuchredMyFault(EuchrePlayer.Seats seat)
+        private void SpeakWeGotEuchredMyFault()
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
-                gamePlayers[(int)seat].gameVoice.SayWeGotEuchredMyFault(gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].GetDisplayName());
+            if (_modeSpeechOn)
+                gamePlayers[(int)EuchrePlayer.Seats.Partner].gameVoice.SayWeGotEuchredMyFault(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
         }
 
-        private void SpeakWeGotEuchredOurFault(EuchrePlayer.Seats seat)
+        private void SpeakWeGotEuchredOurFault()
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
-                gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayWeGotEuchredOurFault(gamePlayers[(int)seat].GetDisplayName());
+            if (_modeSpeechOn)
+                gamePlayers[(int)EuchrePlayer.Seats.Partner].gameVoice.SayWeGotEuchredOurFault(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
         }
 
-        private void SpeakWeGotEuchredYourFault(EuchrePlayer.Seats seat)
+        private void SpeakWeGotEuchredYourFault()
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
-                gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayWeGotEuchredYourFault(gamePlayers[(int)seat].GetDisplayName());
+            if (_modeSpeechOn)
+                gamePlayers[(int)EuchrePlayer.Seats.Partner].gameVoice.SayWeGotEuchredYourFault(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
         }
 
-        private void SpeakWeGotOne(EuchrePlayer.Seats seat)
+        private void SpeakWeGotOne()
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
-                gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayWeGotOne(gamePlayers[(int)seat].GetDisplayName());
+            if (_modeSpeechOn)
+                gamePlayers[(int)EuchrePlayer.Seats.Partner].gameVoice.SayWeGotOne(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
         }
 
-        private void SpeakWeGotTwo(EuchrePlayer.Seats seat)
+        private void SpeakWeGotTwo()
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
-                gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayWeGotTwo(gamePlayers[(int)seat].GetDisplayName());
+            if (_modeSpeechOn)
+                gamePlayers[(int)EuchrePlayer.Seats.Partner].gameVoice.SayWeGotTwo(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
         }
 
-        private void SpeakWeGotFour(EuchrePlayer.Seats seat)
+        private void SpeakWeGotFour()
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
-                gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayWeGotFour(gamePlayers[(int)seat].GetDisplayName());
+            if (_modeSpeechOn)
+                gamePlayers[(int)EuchrePlayer.Seats.Partner].gameVoice.SayWeGotFour(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
         }
 
-        private void SpeakMeGotOne(EuchrePlayer.Seats seat)
+        private void SpeakMeGotOne()
         {
-            if (seat != EuchrePlayer.Seats.Partner && _modeSpeechOn)
-                gamePlayers[(int)seat].gameVoice.SayMeGotOne(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
+            if (_modeSpeechOn)
+                gamePlayers[(int)EuchrePlayer.Seats.Partner].gameVoice.SayMeGotOne(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
         }
 
-        private void SpeakMeGotTwo(EuchrePlayer.Seats seat)
+        private void SpeakMeGotTwo()
         {
-            if (seat != EuchrePlayer.Seats.Partner && _modeSpeechOn)
-                gamePlayers[(int)seat].gameVoice.SayMeGotTwo(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
+            if (_modeSpeechOn)
+                gamePlayers[(int)EuchrePlayer.Seats.Partner].gameVoice.SayMeGotTwo(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
         }
 
-        private void SpeakMeGotFour(EuchrePlayer.Seats seat)
+        private void SpeakMeGotFour()
         {
-            if (seat != EuchrePlayer.Seats.Partner && _modeSpeechOn)
-                gamePlayers[(int)seat].gameVoice.SayMeGotFour(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
+            if (_modeSpeechOn)
+                gamePlayers[(int)EuchrePlayer.Seats.Partner].gameVoice.SayMeGotFour(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
         }
 
-        private void SpeakWeWon(EuchrePlayer.Seats seat)
+        private void SpeakWeWon()
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
-                gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayWeWon(gamePlayers[(int)seat].GetDisplayName());
+            if (_modeSpeechOn)
+                gamePlayers[(int)EuchrePlayer.Seats.Partner].gameVoice.SayWeWon(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
         }
 
-        private void SpeakTheyWon(EuchrePlayer.Seats seat)
+        private void SpeakTheyWon()
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
-                gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayTheyWon(gamePlayers[(int)seat].GetDisplayName());
+            if (_modeSpeechOn)
+                gamePlayers[(int)EuchrePlayer.Seats.Partner].gameVoice.SayTheyWon(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
         }
 
-        private void SpeakWeEuchredThem(EuchrePlayer.Seats seat)
+        private void SpeakWeEuchredThem()
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
-                gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayWeEuchredThem(gamePlayers[(int)seat].GetDisplayName());
+            if (_modeSpeechOn)
+                gamePlayers[(int)EuchrePlayer.Seats.Partner].gameVoice.SayWeEuchredThem(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
         }
 
-        private void SpeakWeSuperEuchredThem(EuchrePlayer.Seats seat)
+        private void SpeakWeSuperEuchredThem()
         {
-            if (seat != EuchrePlayer.Seats.Player && _modeSpeechOn)
-                gamePlayers[(int)gamePlayers[(int)seat].OppositeSeat()].gameVoice.SayWeSuperEuchredThem(gamePlayers[(int)seat].GetDisplayName());
+            if (_modeSpeechOn)
+                gamePlayers[(int)EuchrePlayer.Seats.Partner].gameVoice.SayWeSuperEuchredThem(gamePlayers[(int)EuchrePlayer.Seats.Player].GetDisplayName());
         }
 
-        private void SpeakTheyGotOne(EuchrePlayer.Seats seat)
+        private void SpeakTheyGotOne()
         {
-            if (seat != EuchrePlayer.Seats.Partner && _modeSpeechOn)
-                gamePlayers[(int)seat].gameVoice.SayTheyGotOne();
+            if (_modeSpeechOn)
+                gamePlayers[(int)EuchrePlayer.Seats.Partner].gameVoice.SayTheyGotOne();
         }
 
-        private void SpeakTheyGotTwo(EuchrePlayer.Seats seat)
+        private void SpeakTheyGotTwo()
         {
-            if (seat != EuchrePlayer.Seats.Partner && _modeSpeechOn)
-                gamePlayers[(int)seat].gameVoice.SayTheyGotTwo();
+            if (_modeSpeechOn)
+                gamePlayers[(int)EuchrePlayer.Seats.Partner].gameVoice.SayTheyGotTwo();
         }
 
-        private void SpeakTheyGotFour(EuchrePlayer.Seats seat)
+        private void SpeakTheyGotFour()
         {
-            if (seat != EuchrePlayer.Seats.Partner && _modeSpeechOn)
-                gamePlayers[(int)seat].gameVoice.SayTheyGotFour();
+            if (_modeSpeechOn)
+                gamePlayers[(int)EuchrePlayer.Seats.Partner].gameVoice.SayTheyGotFour();
         }
 
         private async Task PlayResourceSound(string resourceName)
@@ -923,17 +924,43 @@ namespace MAUIEuchre
 
             SetImage(ThemScore, GetScoreResourceName(ScorePrefix.ScoreThem, _gameTheirScore));
             SetImage(UsScore, GetScoreResourceName(ScorePrefix.ScoreUs, _gameYourScore));
+
+            ToolTipProperties.SetText(UsScore, sYourScore.ToString());
+            SemanticProperties.SetDescription(UsScore, sYourScore.ToString());
+            ToolTipProperties.SetText(ThemScore, sTheirScore.ToString());
+            SemanticProperties.SetDescription(ThemScore, sTheirScore.ToString());
         }
 
         private void UpdateTricksText()
         {
-            StringBuilder sTheirTricks = new StringBuilder();
-            sTheirTricks.AppendFormat(AppResources.GetString("Format_TheirTricks"), _gameTheirTricks);
-            TheirTricks.Text = sTheirTricks.ToString();
+            string theirTricksDesc = string.Format(AppResources.GetString("Format_TheirTricks")!, _gameTheirTricks);
+            string yourTricksDesc = string.Format(AppResources.GetString("Format_YourTricks")!, _gameYourTricks);
 
-            StringBuilder sYourTricks = new StringBuilder();
-            sYourTricks.AppendFormat(AppResources.GetString("Format_YourTricks"), _gameYourTricks);
-            YourTricks.Text = sYourTricks.ToString();
+            SemanticProperties.SetDescription(YourTricksContainer, yourTricksDesc);
+            ToolTipProperties.SetText(YourTricksContainer, yourTricksDesc);
+            SemanticProperties.SetDescription(TheirTricksContainer, theirTricksDesc);
+            ToolTipProperties.SetText(TheirTricksContainer, theirTricksDesc);
+        }
+
+        private void SyncTrickCardbacks()
+        {
+            SyncCardbackCount(YourTricksCards, _gameYourTricks);
+            SyncCardbackCount(TheirTricksCards, _gameTheirTricks);
+        }
+
+        private static void SyncCardbackCount(HorizontalStackLayout container, int count)
+        {
+            while (container.Children.Count > count)
+                container.Children.RemoveAt(container.Children.Count - 1);
+            while (container.Children.Count < count)
+            {
+                container.Children.Add(new Image
+                {
+                    Source = ImageSource.FromFile(EuchreCard.CardBackImageName),
+                    WidthRequest = 20,
+                    HeightRequest = 26
+                });
+            }
         }
 
         private bool TheirTeamPickedTrumpThisHand()
@@ -969,14 +996,14 @@ namespace MAUIEuchre
                     _gameYourScore += 4;
                     UpdateStatusBold(AppResources.GetString("Notice_YouSuperEuchredThem"));
                     await PlayApplause(3);
-                    SpeakWeSuperEuchredThem(EuchrePlayer.Seats.Player);
+                    SpeakWeSuperEuchredThem();
                 }
                 else if (TheirTotalTricks < 3)
                 {
                     _gameYourScore += 2;
                     UpdateStatusBold(AppResources.GetString("Notice_YouEuchredThem"));
                     await PlayApplause(2);
-                    SpeakWeEuchredThem(EuchrePlayer.Seats.Player);
+                    SpeakWeEuchredThem();
                 }
                 else if (TheirTotalTricks == 5)
                 {
@@ -984,20 +1011,20 @@ namespace MAUIEuchre
                     {
                         _gameTheirScore += 4;
                         UpdateStatusBold(AppResources.GetString("Notice_TheyWonTheHandAllTricksAlone"));
-                        SpeakTheyGotFour(EuchrePlayer.Seats.Partner);
+                        SpeakTheyGotFour();
                     }
                     else
                     {
                         _gameTheirScore += 2;
                         UpdateStatusBold(AppResources.GetString("Notice_TheyWonTheHandAllTricks"));
-                        SpeakTheyGotTwo(EuchrePlayer.Seats.Partner);
+                        SpeakTheyGotTwo();
                     }
                 }
                 else
                 {
                     _gameTheirScore += 1;
                     UpdateStatusBold(AppResources.GetString("Notice_TheyWonTheHand"));
-                    SpeakTheyGotOne(EuchrePlayer.Seats.Partner);
+                    SpeakTheyGotOne();
                 }
                 break;
 
@@ -1009,11 +1036,11 @@ namespace MAUIEuchre
                     UpdateStatusBold(AppResources.GetString("Notice_TheySuperEuchredYou"));
                     await PlaySadTrombone();
                     if (handPickedTrump == EuchrePlayer.Seats.Partner)
-                        SpeakWeGotEuchredMyFault(handPickedTrump);
+                        SpeakWeGotEuchredMyFault();
                     else if (!YourTeamWentAloneThisHand())
-                        SpeakWeGotEuchredOurFault(handPickedTrump);
+                        SpeakWeGotEuchredOurFault();
                     else
-                        SpeakWeGotEuchredYourFault(handPickedTrump);
+                        SpeakWeGotEuchredYourFault();
                 }
                 else if (YourTotalTricks < 3)
                 {
@@ -1021,11 +1048,11 @@ namespace MAUIEuchre
                     UpdateStatusBold(AppResources.GetString("Notice_TheyEuchredYou"));
                     await PlaySadTrombone();
                     if (handPickedTrump == EuchrePlayer.Seats.Partner)
-                        SpeakWeGotEuchredMyFault(handPickedTrump);
+                        SpeakWeGotEuchredMyFault();
                     else if (!YourTeamWentAloneThisHand())
-                        SpeakWeGotEuchredOurFault(handPickedTrump);
+                        SpeakWeGotEuchredOurFault();
                     else
-                        SpeakWeGotEuchredYourFault(handPickedTrump);
+                        SpeakWeGotEuchredYourFault();
                 }
                 else if (YourTotalTricks == 5)
                 {
@@ -1035,9 +1062,9 @@ namespace MAUIEuchre
                         UpdateStatusBold(AppResources.GetString("Notice_YouWonTheHandAllTricksAlone"));
                         await PlayApplause(3);
                         if (handPickedTrump == EuchrePlayer.Seats.Player)
-                            SpeakWeGotFour(handPickedTrump);
+                            SpeakWeGotFour();
                         else
-                            SpeakMeGotFour(handPickedTrump);
+                            SpeakMeGotFour();
                     }
                     else
                     {
@@ -1045,9 +1072,9 @@ namespace MAUIEuchre
                         UpdateStatusBold(AppResources.GetString("Notice_YouWonTheHandAllTricks"));
                         await PlayApplause(2);
                         if (handPickedTrump == EuchrePlayer.Seats.Player)
-                            SpeakWeGotTwo(handPickedTrump);
+                            SpeakWeGotTwo();
                         else
-                            SpeakMeGotTwo(handPickedTrump);
+                            SpeakMeGotTwo();
                     }
                 }
                 else
@@ -1056,9 +1083,9 @@ namespace MAUIEuchre
                     UpdateStatusBold(AppResources.GetString("Notice_YouWonTheHand"));
                     await PlayApplause(1);
                     if (handPickedTrump == EuchrePlayer.Seats.Player)
-                        SpeakWeGotOne(handPickedTrump);
+                        SpeakWeGotOne();
                     else
-                        SpeakMeGotOne(handPickedTrump);
+                        SpeakMeGotOne();
                 }
                 break;
             }
@@ -1135,16 +1162,47 @@ namespace MAUIEuchre
                 SetCardImage(
                     gamePlayers[(int)EuchrePlayer.Seats.Player].handCardsHeld[i],
                     EuchrePlayer.Seats.Player,
-                    gameTableTopCards[(int)EuchrePlayer.Seats.Player, i]);
+                    gameTableTopCards[(int)EuchrePlayer.Seats.Player, i],
+                    i);
             }
         }
 
-        private void SetCardImage(EuchreCard card, EuchrePlayer.Seats perspective, Image img)
+        private void SetCardImage(EuchreCard card, EuchrePlayer.Seats perspective, Image img, int slot = -1, string? descOverride = null, EuchreCard.Suits? trumpOverride = null)
         {
             card.Perspective = perspective;
             string source = card.GetImageSource(perspective);
             SetImage(img, source);
             img.Rotation = card.rotationAngle;
+
+            string desc;
+            if (descOverride != null)
+            {
+                desc = descOverride;
+            }
+            else
+            {
+                EuchreCard.Suits trump = trumpOverride ?? handTrumpSuit;
+                string resName = card.GetDisplayStringResourceName(trump);
+                string cardName = (resName == "CARDNAME_BACK") ? "" : (AppResources.ResourceManager.GetString(resName) ?? "");
+                string playerName = (perspective >= EuchrePlayer.Seats.LeftOpponent && perspective <= EuchrePlayer.Seats.Player)
+                                    ? gamePlayers[(int)perspective].GetDisplayName() : "";
+                if (slot >= 0 && slot <= 4)
+                {
+                    desc = string.IsNullOrEmpty(cardName)
+                        ? $"{playerName}'s card {slot + 1}"
+                        : $"{playerName}'s card {slot + 1} - {cardName}";
+                }
+                else if (slot == 5)
+                {
+                    desc = $"{playerName}'s played card - {cardName}";
+                }
+                else
+                {
+                    desc = string.IsNullOrEmpty(cardName) ? "Card back" : cardName;
+                }
+            }
+            ToolTipProperties.SetText(img, desc);
+            SemanticProperties.SetDescription(img, desc);
         }
 
         private void SetAllCardImages()
@@ -1159,17 +1217,18 @@ namespace MAUIEuchre
                     SetCardImage(
                         gamePlayers[(int)i].handCardsHeld[j],
                         i,
-                        gameTableTopCards[(int)i, j]);
+                        gameTableTopCards[(int)i, j],
+                        j);
                 }
             }
 
-            SetCardImage(handKitty[0], EuchrePlayer.Seats.Player, KittyCard1);
+            SetCardImage(handKitty[0], EuchrePlayer.Seats.Player, KittyCard1, descOverride: "Kitty card 1");
 
             if (!ruleUseNineOfHearts)
             {
-                SetCardImage(handKitty[1], EuchrePlayer.Seats.Player, KittyCard2);
-                SetCardImage(handKitty[2], EuchrePlayer.Seats.Player, KittyCard3);
-                SetCardImage(handKitty[3], EuchrePlayer.Seats.Player, KittyCard4);
+                SetCardImage(handKitty[1], EuchrePlayer.Seats.Player, KittyCard2, descOverride: "Kitty card 2");
+                SetCardImage(handKitty[2], EuchrePlayer.Seats.Player, KittyCard3, descOverride: "Kitty card 3");
+                SetCardImage(handKitty[3], EuchrePlayer.Seats.Player, KittyCard4, descOverride: "Kitty card 4");
             }
         }
 
@@ -1184,6 +1243,9 @@ namespace MAUIEuchre
             int angle = EuchreCard.GetSeatRotationAngle(player);
             SetImage(gameTableTopCards[(int)player, slot], EuchreCard.CardBackImageName);
             gameTableTopCards[(int)player, slot].Rotation = angle;
+            string dealDesc = $"{gamePlayers[(int)player].GetDisplayName()}'s card {slot + 1}";
+            ToolTipProperties.SetText(gameTableTopCards[(int)player, slot], dealDesc);
+            SemanticProperties.SetDescription(gameTableTopCards[(int)player, slot], dealDesc);
             await AnimateCards(null, gameTableTopCards[(int)player, slot]);
             gameTableTopCards[(int)player, slot].IsVisible = true;
             await PlayCardSound();
@@ -1270,7 +1332,7 @@ namespace MAUIEuchre
             if (index > 4) throw new Exception("Invalid index");
 
             player.handCardsHeld[index].stateCurrent = EuchreCard.States.FaceUp;
-            SetCardImage(player.handCardsHeld[index], player.Seat, gameTableTopCards[(int)player.Seat, 5]);
+            SetCardImage(player.handCardsHeld[index], player.Seat, gameTableTopCards[(int)player.Seat, 5], 5);
 
             string? s = AppResources.ResourceManager.GetString(player.handCardsHeld[index].GetDisplayStringResourceName(handTrumpSuit));
             if (string.IsNullOrEmpty(s)) throw new Exception("Invalid value");
@@ -1315,11 +1377,8 @@ namespace MAUIEuchre
             player.trickBuriedCard = handKitty[0];
         }
 
-        private async Task PrepTrick()
+        private async Task AnimateTrickAway()
         {
-            UpdateStatusSeparator();
-
-            // Animate played cards to the winning team's tricks-taken label
             var playedCards = new List<Image>();
             for (var i = EuchrePlayer.Seats.LeftOpponent; i <= EuchrePlayer.Seats.Player; i++)
             {
@@ -1330,12 +1389,17 @@ namespace MAUIEuchre
             {
                 View tricksTarget = (trickPlayerWhoPlayedHighestCardSoFar == EuchrePlayer.Seats.Player ||
                                      trickPlayerWhoPlayedHighestCardSoFar == EuchrePlayer.Seats.Partner)
-                                    ? YourTricks
-                                    : TheirTricks;
+                                    ? YourTricksContainer : TheirTricksContainer;
                 await AnimateCards(playedCards.ToArray(), tricksTarget);
             }
-
             HideAllPlayedCards();
+            SyncTrickCardbacks();
+        }
+
+        private async Task PrepTrick()
+        {
+            UpdateStatusSeparator();
+            await AnimateTrickAway();
 
             trickLeader = gamePlayers[(int)trickLeaderIndex];
             trickPlayer = trickLeader;
@@ -1470,6 +1534,7 @@ namespace MAUIEuchre
 
             ResetPlayedCards();
             UpdateTricksText();
+            SyncTrickCardbacks();
         }
 
         private void PreBid1()
@@ -1594,23 +1659,34 @@ namespace MAUIEuchre
 
             SetAllCardImages();
 
+            string trumpDesc = AppResources.ResourceManager.GetString(EuchreCard.GetSuitDisplayStringResourceName(handTrumpSuit)) ?? "";
+            trumpDesc = $"Trump: {trumpDesc}";
+
             switch (handPickedTrump)
             {
             case EuchrePlayer.Seats.Partner:
                 SetImage(TrumpPartner, EuchreCard.suitImageNames[(int)handTrumpSuit]);
                 TrumpPartner.IsVisible = true;
+                ToolTipProperties.SetText(TrumpPartner, trumpDesc);
+                SemanticProperties.SetDescription(TrumpPartner, trumpDesc);
                 break;
             case EuchrePlayer.Seats.Player:
                 SetImage(TrumpPlayer, EuchreCard.suitImageNames[(int)handTrumpSuit]);
                 TrumpPlayer.IsVisible = true;
+                ToolTipProperties.SetText(TrumpPlayer, trumpDesc);
+                SemanticProperties.SetDescription(TrumpPlayer, trumpDesc);
                 break;
             case EuchrePlayer.Seats.LeftOpponent:
                 SetImage(TrumpLeft, EuchreCard.suitImageNames[(int)handTrumpSuit]);
                 TrumpLeft.IsVisible = true;
+                ToolTipProperties.SetText(TrumpLeft, trumpDesc);
+                SemanticProperties.SetDescription(TrumpLeft, trumpDesc);
                 break;
             case EuchrePlayer.Seats.RightOpponent:
                 SetImage(TrumpRight, EuchreCard.suitImageNames[(int)handTrumpSuit]);
                 TrumpRight.IsVisible = true;
+                ToolTipProperties.SetText(TrumpRight, trumpDesc);
+                SemanticProperties.SetDescription(TrumpRight, trumpDesc);
                 break;
             }
         }
@@ -1621,12 +1697,13 @@ namespace MAUIEuchre
             {
                 UpdateStatusBold(AppResources.GetString("Notice_TheyWonTheGame"), 2);
                 await PlaySadTrombone();
-                SpeakTheyWon(EuchrePlayer.Seats.Player);
+                SpeakTheyWon();
             }
             else
             {
                 UpdateStatusBold(AppResources.GetString("Notice_YouWonTheGame"), 2);
-                SpeakWeWon(EuchrePlayer.Seats.Player);
+                await PlayApplause(3);
+                SpeakWeWon();
             }
             _stateGameStarted = false;
         }
@@ -1653,7 +1730,7 @@ namespace MAUIEuchre
             card.Perspective = player;
             card.stateCurrent = EuchreCard.States.FaceUp;
 
-            SetCardImage(card, player, gameTableTopCards[(int)player, slot]);
+            SetCardImage(card, player, gameTableTopCards[(int)player, slot], slot, trumpOverride: EuchreCard.Suits.NoSuit);
             await AnimateCards(null, gameTableTopCards[(int)player, slot]);
             gameTableTopCards[(int)player, slot].IsVisible = true;
 

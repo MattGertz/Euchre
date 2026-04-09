@@ -20,6 +20,45 @@ namespace MAUIEuchre
             RightOpponentVoice.SelectedIndexChanged += VoicePicker_SelectedIndexChanged;
             _ = InitializeVoicesAsync();
             UpdateSettings();
+            ApplyTooltips();
+        }
+
+        private void ApplyTooltips()
+        {
+            SetTip(PlayerName, "OPTION_Name");
+            SetTip(LeftOpponentName, "OPTION_LeftOpponent");
+            SetTip(PartnerName, "OPTION_YourPartner");
+            SetTip(RightOpponentName, "OPTION_RightOpponent");
+            SetTip(LeftOpponentVoice, "OPTION_LeftOpponentVoice");
+            SetTip(PartnerVoice, "OPTION_YourPartnerVoice");
+            SetTip(RightOpponentVoice, "OPTION_RightOpponentVoice");
+            SetTip(StickTheDealer, "OPTION_StickTheDealer");
+            SetTip(NineOfHearts, "OPTION_NineOfHearts");
+            SetTip(SuperEuchre, "OPTION_SuperEuchre");
+            SetTip(QuietDealer, "OPTION_QuietDealer");
+            SetTip(PeekAtOtherCards, "OPTION_PeekAtOtherCards");
+            SetTip(SoundOn, "OPTION_SoundEffects");
+            SetTip(SpeechOn, "OPTION_Speech");
+            SetTip(ShowAnimations, "OPTION_ShowAnimations");
+            SetTip(LeftOpponentCrazy, "OPTION_Crazy");
+            SetTip(LeftOpponentNormal, "OPTION_Normal");
+            SetTip(LeftOpponentConservative, "OPTION_Conservative");
+            SetTip(PartnerCrazy, "OPTION_Crazy");
+            SetTip(PartnerNormal, "OPTION_Normal");
+            SetTip(PartnerConservative, "OPTION_Conservative");
+            SetTip(RightOpponentCrazy, "OPTION_Crazy");
+            SetTip(RightOpponentNormal, "OPTION_Normal");
+            SetTip(RightOpponentConservative, "OPTION_Conservative");
+        }
+
+        private static void SetTip(View control, string resourceKey)
+        {
+            string text = AppResources.GetString(resourceKey);
+            if (!string.IsNullOrEmpty(text))
+            {
+                ToolTipProperties.SetText(control, text);
+                SemanticProperties.SetDescription(control, text);
+            }
         }
 
         private async Task InitializeVoicesAsync()

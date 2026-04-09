@@ -29,10 +29,16 @@
 
         <Grid Grid.Column="1" x:Name="CenterContainer" SizeChanged="OnCenterContainerSizeChanged">
             <AbsoluteLayout WidthRequest="855" HeightRequest="735" HorizontalOptions="Center" VerticalOptions="Center" AnchorX="0.5" AnchorY="0.5" x:Name="EuchreGrid">
-        <Label Text="Your Score: 0" AbsoluteLayout.LayoutBounds="12,39,128,40" AbsoluteLayout.LayoutFlags="None" x:Name="YourScore" BackgroundColor="#CC1A1A2E" TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="13" />
-        <Label BackgroundColor="#CC1A1A2E" Text="Their Score: 0" TextColor="White" AbsoluteLayout.LayoutBounds="713,39,128,40" AbsoluteLayout.LayoutFlags="None" x:Name="TheirScore" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="13" />
-        <Label BackgroundColor="#CC1A1A2E" Text="Your Tricks Taken: 0" TextColor="White" AbsoluteLayout.LayoutBounds="12,641,144,72" AbsoluteLayout.LayoutFlags="None" x:Name="YourTricks" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="13" />
-        <Label BackgroundColor="#CC1A1A2E" Text="Their Tricks Taken: 0" TextColor="White" AbsoluteLayout.LayoutBounds="697,641,144,72" AbsoluteLayout.LayoutFlags="None" x:Name="TheirTricks" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="13" />
+        <Label Text="Your Score: 0" AbsoluteLayout.LayoutBounds="12,39,128,40" AbsoluteLayout.LayoutFlags="None" x:Name="YourScore" BackgroundColor="#CC1A1A2E" TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="13" IsVisible="False" />
+        <Label BackgroundColor="#CC1A1A2E" Text="Their Score: 0" TextColor="White" AbsoluteLayout.LayoutBounds="713,39,128,40" AbsoluteLayout.LayoutFlags="None" x:Name="TheirScore" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="13" IsVisible="False" />
+        <Grid AbsoluteLayout.LayoutBounds="12,641,144,72" AbsoluteLayout.LayoutFlags="None" x:Name="YourTricksContainer" BackgroundColor="#CC1A1A2E" RowDefinitions="Auto,*" Padding="2">
+            <Label Text="Your Tricks:" TextColor="White" HorizontalTextAlignment="Center" FontSize="13" Grid.Row="0" />
+            <HorizontalStackLayout x:Name="YourTricksCards" HorizontalOptions="Center" VerticalOptions="Center" Spacing="3" Grid.Row="1" />
+        </Grid>
+        <Grid AbsoluteLayout.LayoutBounds="697,641,144,72" AbsoluteLayout.LayoutFlags="None" x:Name="TheirTricksContainer" BackgroundColor="#CC1A1A2E" RowDefinitions="Auto,*" Padding="2">
+            <Label Text="Their Tricks:" TextColor="White" HorizontalTextAlignment="Center" FontSize="13" Grid.Row="0" />
+            <HorizontalStackLayout x:Name="TheirTricksCards" HorizontalOptions="Center" VerticalOptions="Center" Spacing="3" Grid.Row="1" />
+        </Grid>
         <Editor AbsoluteLayout.LayoutBounds="12,737,829,81" AbsoluteLayout.LayoutFlags="None" x:Name="StatusAreaHidden" BackgroundColor="#FFF8E1" TextColor="#1A1A2E" IsReadOnly="True" FontSize="13" IsVisible="False" />
         <Image AbsoluteLayout.LayoutBounds="110,127,636,482" AbsoluteLayout.LayoutFlags="None" x:Name="Logo" Aspect="Fill" InputTransparent="True" />
 
