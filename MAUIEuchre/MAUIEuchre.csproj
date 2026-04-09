@@ -14,7 +14,11 @@
 		<ApplicationTitle>Matt's Euchre</ApplicationTitle>
 
 		<!-- Output file name -->
-		<AssemblyName Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">Matt's Euchre</AssemblyName>
+		<AssemblyName Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">Matts Euchre</AssemblyName>
+
+		<!-- Self-contained deployment for Windows -->
+		<SelfContained Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">true</SelfContained>
+		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.wheresthatcat.euchre</ApplicationId>
