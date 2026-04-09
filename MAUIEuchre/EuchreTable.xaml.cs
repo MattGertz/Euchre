@@ -48,6 +48,8 @@ namespace MAUIEuchre
                 gamePlayers[(int)i] = new EuchrePlayer(i, this);
             }
 
+            _ = InitializeTtsAsync();
+
             ContinueButton.Clicked += ContinueButton_Click;
 
             BidControl.gameTable = this;
@@ -150,8 +152,9 @@ namespace MAUIEuchre
             case EuchreState.StartNewGameRequested:
                 _gameCancel.Cancel();
                 _gameCancel = new CancellationTokenSource();
+                bool wasGameStarted = _stateGameStarted;
                 CleanUpGame();
-                if (_stateGameStarted)
+                if (wasGameStarted)
                 {
                     if (!await RestartGame())
                     {
@@ -203,15 +206,19 @@ namespace MAUIEuchre
                 break;
             case EuchreState.Bid1Player0:
                 await Bid1(EuchreState.Bid1Player1);
+                if (_statePendingBidResult != EuchreState.NoState) { var next = _statePendingBidResult; _statePendingBidResult = EuchreState.NoState; UpdateEuchreState(next); }
                 break;
             case EuchreState.Bid1Player1:
                 await Bid1(EuchreState.Bid1Player2);
+                if (_statePendingBidResult != EuchreState.NoState) { var next = _statePendingBidResult; _statePendingBidResult = EuchreState.NoState; UpdateEuchreState(next); }
                 break;
             case EuchreState.Bid1Player2:
                 await Bid1(EuchreState.Bid1Player3);
+                if (_statePendingBidResult != EuchreState.NoState) { var next = _statePendingBidResult; _statePendingBidResult = EuchreState.NoState; UpdateEuchreState(next); }
                 break;
             case EuchreState.Bid1Player3:
                 await Bid1(EuchreState.Bid2Starts);
+                if (_statePendingBidResult != EuchreState.NoState) { var next = _statePendingBidResult; _statePendingBidResult = EuchreState.NoState; UpdateEuchreState(next); }
                 break;
             case EuchreState.Bid1PickUp:
                 await Bid1PickUp();
@@ -234,15 +241,19 @@ namespace MAUIEuchre
                 break;
             case EuchreState.Bid2Player0:
                 await Bid2(EuchreState.Bid2Player1);
+                if (_statePendingBidResult != EuchreState.NoState) { var next = _statePendingBidResult; _statePendingBidResult = EuchreState.NoState; UpdateEuchreState(next); }
                 break;
             case EuchreState.Bid2Player1:
                 await Bid2(EuchreState.Bid2Player2);
+                if (_statePendingBidResult != EuchreState.NoState) { var next = _statePendingBidResult; _statePendingBidResult = EuchreState.NoState; UpdateEuchreState(next); }
                 break;
             case EuchreState.Bid2Player2:
                 await Bid2(EuchreState.Bid2Player3);
+                if (_statePendingBidResult != EuchreState.NoState) { var next = _statePendingBidResult; _statePendingBidResult = EuchreState.NoState; UpdateEuchreState(next); }
                 break;
             case EuchreState.Bid2Player3:
                 await Bid2(EuchreState.Bid2Failed);
+                if (_statePendingBidResult != EuchreState.NoState) { var next = _statePendingBidResult; _statePendingBidResult = EuchreState.NoState; UpdateEuchreState(next); }
                 break;
             case EuchreState.Bid2Succeeded:
                 ShowAndEnableContinueButton(EuchreState.Bid2SucceededAcknowledged);
@@ -716,6 +727,17 @@ namespace MAUIEuchre
             try
             {
                 _gameCancel.Token.ThrowIfCancellationRequested();
+#if WINDOWS
+                var filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, resourceName);
+                var mediaPlayer = new Windows.Media.Playback.MediaPlayer();
+                mediaPlayer.Source = Windows.Media.Core.MediaSource.CreateFromUri(new Uri(filePath));
+                var tcs = new TaskCompletionSource<bool>();
+                mediaPlayer.MediaEnded += (s, e) => tcs.TrySetResult(true);
+                mediaPlayer.MediaFailed += (s, e) => tcs.TrySetResult(false);
+                mediaPlayer.Play();
+                await Task.WhenAny(tcs.Task, Task.Delay(10000, _gameCancel.Token));
+                mediaPlayer.Dispose();
+#else
                 var stream = await FileSystem.OpenAppPackageFileAsync(resourceName);
                 var player = AudioManager.Current.CreatePlayer(stream);
                 player.Play();
@@ -723,6 +745,7 @@ namespace MAUIEuchre
                 while (player.IsPlaying)
                     await Task.Delay(50, _gameCancel.Token);
                 player.Dispose();
+#endif
             }
             catch (OperationCanceledException)
             {
@@ -1472,9 +1495,9 @@ namespace MAUIEuchre
                 _handCurrentBidder.ProcessBidFirstRound(GoingAlone, rv);
                 await Task.Delay(_timerBidSpeechDuration, _gameCancel.Token);
                 if (rv)
-                    UpdateEuchreState(EuchreState.Bid1PickUp);
+                    _statePendingBidResult = EuchreState.Bid1PickUp;
                 else
-                    UpdateEuchreState(passedState);
+                    _statePendingBidResult = passedState;
             }
         }
 
@@ -1545,9 +1568,9 @@ namespace MAUIEuchre
                 _handCurrentBidder.ProcessBidSecondRound(GoingAlone, rv);
                 await Task.Delay(_timerBidSpeechDuration, _gameCancel.Token);
                 if (rv)
-                    UpdateEuchreState(EuchreState.Bid2Succeeded);
+                    _statePendingBidResult = EuchreState.Bid2Succeeded;
                 else
-                    UpdateEuchreState(passedState);
+                    _statePendingBidResult = passedState;
             }
         }
 
@@ -1731,6 +1754,14 @@ namespace MAUIEuchre
                 _modeSpeechOn = GameSettings.SpeechOn;
                 _modeShowAnimations = GameSettings.ShowAnimations;
 
+                // Set per-player voices from saved settings
+                if (_nativeTts != null)
+                {
+                    SetPlayerVoice(EuchrePlayer.Seats.LeftOpponent, GameSettings.LeftOpponentVoice);
+                    SetPlayerVoice(EuchrePlayer.Seats.Partner, GameSettings.PartnerVoice);
+                    SetPlayerVoice(EuchrePlayer.Seats.RightOpponent, GameSettings.RightOpponentVoice);
+                }
+
                 gamePlayerName = string.IsNullOrEmpty(GameSettings.PlayerName) ? AppResources.GetString("Player_Player") : GameSettings.PlayerName;
                 gameLeftOpponentName = string.IsNullOrEmpty(GameSettings.LeftOpponentName) ? AppResources.GetString("Player_LeftOpponent") : GameSettings.LeftOpponentName;
                 gameRightOpponentName = string.IsNullOrEmpty(GameSettings.RightOpponentName) ? AppResources.GetString("Player_RightOpponent") : GameSettings.RightOpponentName;
@@ -1780,6 +1811,29 @@ namespace MAUIEuchre
             {
                 return false;
             }
+        }
+
+        private async Task InitializeTtsAsync()
+        {
+            try
+            {
+                _nativeTts = new NativeTts();
+                await _nativeTts.InitializeAsync();
+
+                // Pass the shared TTS to each player's voice
+                for (EuchrePlayer.Seats i = EuchrePlayer.Seats.LeftOpponent; i <= EuchrePlayer.Seats.Player; i++)
+                    gamePlayers[(int)i].gameVoice.SetTts(_nativeTts);
+            }
+            catch
+            {
+                _nativeTts = null;
+            }
+        }
+
+        private void SetPlayerVoice(EuchrePlayer.Seats seat, string voiceName)
+        {
+            if (_nativeTts == null || string.IsNullOrEmpty(voiceName)) return;
+            gamePlayers[(int)seat].gameVoice.SetVoice(voiceName);
         }
 
         private void CleanUpGame()
@@ -2000,6 +2054,7 @@ namespace MAUIEuchre
         private bool _stateGameStarted = false;
         private uint _animationDuration = 167;
         private CancellationTokenSource _gameCancel = new();
+        private INativeTts? _nativeTts;
 
         private EuchreCardDeck _gameDeck = null!;
 
@@ -2008,6 +2063,7 @@ namespace MAUIEuchre
         private int _trickPlayedCardIndex;
 
         private EuchreState _stateDesiredBidPass;
+        private EuchreState _statePendingBidResult = EuchreState.NoState;
         private EuchreState _stateDesiredStateAfterHumanClick;
         private EuchreState _stateLast;
         private EuchreState _stateCurrent;

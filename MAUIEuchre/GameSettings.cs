@@ -92,6 +92,24 @@ namespace MAUIEuchre
             set => Preferences.Default.Set("RightOpponentPlay", value);
         }
 
+        public static string LeftOpponentVoice
+        {
+            get => Preferences.Default.Get("LeftOpponentVoice", "");
+            set => Preferences.Default.Set("LeftOpponentVoice", value);
+        }
+
+        public static string PartnerVoice
+        {
+            get => Preferences.Default.Get("PartnerVoice", "");
+            set => Preferences.Default.Set("PartnerVoice", value);
+        }
+
+        public static string RightOpponentVoice
+        {
+            get => Preferences.Default.Get("RightOpponentVoice", "");
+            set => Preferences.Default.Set("RightOpponentVoice", value);
+        }
+
         public static void Reset()
         {
             Preferences.Default.Clear();

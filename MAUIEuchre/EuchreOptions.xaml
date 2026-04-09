@@ -78,6 +78,14 @@
                         <Entry Grid.Column="3" x:Name="RightOpponentName" TextColor="White" />
                     </Grid>
 
+                    <!-- Voice row (visible only when Speech is on) -->
+                    <Grid ColumnDefinitions="90,*,*,*" ColumnSpacing="8" x:Name="VoiceRow" IsVisible="False">
+                        <Label Text="Voice:" TextColor="#E0E0E0" VerticalTextAlignment="Center" />
+                        <Picker Grid.Column="1" x:Name="LeftOpponentVoice" TextColor="White" TitleColor="#999999" Title="Default" />
+                        <Picker Grid.Column="2" x:Name="PartnerVoice" TextColor="White" TitleColor="#999999" Title="Default" />
+                        <Picker Grid.Column="3" x:Name="RightOpponentVoice" TextColor="White" TitleColor="#999999" Title="Default" />
+                    </Grid>
+
                     <!-- Play style label -->
                     <Grid ColumnDefinitions="90,*,*,*" ColumnSpacing="8">
                         <Label Text="Play style:" TextColor="#E0E0E0" VerticalTextAlignment="Center" />

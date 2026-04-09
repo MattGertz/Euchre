@@ -1,47 +1,35 @@
 using System;
-using System.Threading;
 
 namespace MAUIEuchre
 {
     public class EuchreSpeech
     {
-        private CancellationTokenSource? _cts;
+        private INativeTts? _tts;
+        private string? _voiceName;
         private bool _disposed;
 
-        public void SetVoice(string Name)
+        public void SetVoice(string name)
         {
-            // MAUI TextToSpeech on Android uses the system default voice.
-            // Per-voice selection is not supported the same way as System.Speech.
+            _voiceName = name;
+        }
+
+        public void SetTts(INativeTts tts)
+        {
+            _tts = tts;
         }
 
         public void DisposeVoice()
         {
             _disposed = true;
-            _cts?.Cancel();
-            _cts?.Dispose();
-            _cts = null;
+            _tts?.Stop();
         }
 
-        private async void Say(string s)
+        private void Say(string s)
         {
-            if (_disposed || string.IsNullOrEmpty(s)) return;
-
-            _cts?.Cancel();
-            _cts?.Dispose();
-            _cts = new CancellationTokenSource();
-
-            try
-            {
-                await TextToSpeech.Default.SpeakAsync(s, cancelToken: _cts.Token);
-            }
-            catch (OperationCanceledException)
-            {
-                // Expected when new speech cancels previous speech
-            }
-            catch
-            {
-                // If speech fails, silently continue
-            }
+            if (_disposed || string.IsNullOrEmpty(s) || _tts == null) return;
+            if (!string.IsNullOrEmpty(_voiceName))
+                _tts.SetVoice(_voiceName);
+            _tts.Speak(s);
         }
 
         public void SayIPickItUp()

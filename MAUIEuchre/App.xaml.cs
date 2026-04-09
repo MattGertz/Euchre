@@ -9,6 +9,12 @@ public partial class App : Application
 
 	protected override Window CreateWindow(IActivationState? activationState)
 	{
-		return new Window(new SplashPage());
+		var window = new Window(new SplashPage());
+		window.Title = "Matt's Euchre";
+#if WINDOWS
+		window.Width = 1080;
+		window.Height = 800;
+#endif
+		return window;
 	}
 }
