@@ -6,6 +6,8 @@ namespace MAUIEuchre
     {
         private SpeechSynthesizer? _synth;
         private readonly List<VoiceInformation> _voices = new();
+        private float _pitch = 1.0f;
+        private float _rate = 1.0f;
 
         public Task InitializeAsync()
         {
@@ -33,6 +35,20 @@ namespace MAUIEuchre
                 _synth.Voice = voice;
         }
 
+        public void SetPitch(float pitch)
+        {
+            _pitch = pitch;
+            if (_synth != null)
+                _synth.Options.AudioPitch = pitch;
+        }
+
+        public void SetRate(float rate)
+        {
+            _rate = rate;
+            if (_synth != null)
+                _synth.Options.SpeakingRate = rate;
+        }
+
         public void Speak(string text)
         {
             if (_synth == null || string.IsNullOrEmpty(text)) return;
@@ -43,15 +59,16 @@ namespace MAUIEuchre
         {
             try
             {
-                var stream = await _synth!.SynthesizeTextToStreamAsync(text);
+                System.Diagnostics.Debug.WriteLine($"TTS: pitch={_synth!.Options.AudioPitch} rate={_synth.Options.SpeakingRate}");
+                var stream = await _synth.SynthesizeTextToStreamAsync(text);
                 var player = new Windows.Media.Playback.MediaPlayer();
                 player.Source = Windows.Media.Core.MediaSource.CreateFromStream(stream, stream.ContentType);
                 player.MediaEnded += (s, e) => player.Dispose();
                 player.Play();
             }
-            catch
+            catch (Exception ex)
             {
-                // If speech fails, silently continue
+                System.Diagnostics.Debug.WriteLine($"TTS ERROR: {ex.Message}");
             }
         }
 

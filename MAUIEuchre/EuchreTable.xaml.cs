@@ -1833,7 +1833,18 @@ namespace MAUIEuchre
         private void SetPlayerVoice(EuchrePlayer.Seats seat, string voiceName)
         {
             if (_nativeTts == null || string.IsNullOrEmpty(voiceName)) return;
-            gamePlayers[(int)seat].gameVoice.SetVoice(voiceName);
+            var variations = VoiceVariation.EnsureEnoughVoices(_nativeTts.GetVoiceNames());
+            var variation = VoiceVariation.Find(variations, voiceName);
+            if (variation != null)
+            {
+                gamePlayers[(int)seat].gameVoice.SetVoice(variation.RealVoiceName);
+                gamePlayers[(int)seat].gameVoice.SetPitchAndRate(variation.ClampedPitch, variation.ClampedRate);
+            }
+            else
+            {
+                gamePlayers[(int)seat].gameVoice.SetVoice(voiceName);
+                gamePlayers[(int)seat].gameVoice.SetPitchAndRate(1.0f, 1.0f);
+            }
         }
 
         private void CleanUpGame()

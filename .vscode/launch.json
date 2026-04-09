@@ -1,0 +1,35 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "MAUI Windows Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-windows",
+            "program": "${workspaceFolder}/MAUIEuchre/bin/Debug/net9.0-windows10.0.19041.0/win10-x64/MAUIEuchre.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}/MAUIEuchre",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": ".NET Core Launch (console)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/MAUIEuchre/bin/Debug/net9.0-windows10.0.19041.0/win10-x64/MAUIEuchre.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/MAUIEuchre",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
+        }
+    ]
+}

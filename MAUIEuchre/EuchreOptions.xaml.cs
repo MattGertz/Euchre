@@ -5,6 +5,7 @@ namespace MAUIEuchre
         #region "Public properties"
         public bool LocalDialogResult { get; set; }
         private List<string> _voiceNames = new();
+        private List<VoiceVariation> _variations = new();
         private INativeTts? _previewTts;
         private bool _voicesInitializing = true;
         #endregion
@@ -28,8 +29,18 @@ namespace MAUIEuchre
                 _previewTts = new NativeTts();
                 await _previewTts.InitializeAsync();
                 _voiceNames = _previewTts.GetVoiceNames();
+                _variations = VoiceVariation.EnsureEnoughVoices(_voiceNames);
+#if DEBUG
+                _variations = VoiceVariation.EnsureDebugVariation(_voiceNames, _variations);
+                foreach (var v in _variations)
+                    System.Diagnostics.Debug.WriteLine($"VARIATION: '{v.DisplayName}' -> real='{v.RealVoiceName}' pitch={v.Pitch} rate={v.Rate}");
+#endif
 
-                foreach (var name in _voiceNames)
+                var allNames = new List<string>(_voiceNames);
+                foreach (var v in _variations)
+                    allNames.Add(v.DisplayName);
+
+                foreach (var name in allNames)
                 {
                     LeftOpponentVoice.Items.Add(name);
                     PartnerVoice.Items.Add(name);
@@ -101,7 +112,20 @@ namespace MAUIEuchre
             if (_voicesInitializing || _previewTts == null || sender is not Picker picker) return;
             if (picker.SelectedIndex < 0 || picker.SelectedIndex >= picker.Items.Count) return;
             string voiceName = picker.Items[picker.SelectedIndex];
-            _previewTts.SetVoice(voiceName);
+            var variation = VoiceVariation.Find(_variations, voiceName);
+            if (variation != null)
+            {
+                System.Diagnostics.Debug.WriteLine($"PREVIEW VARIATION: '{variation.DisplayName}' pitch={variation.ClampedPitch} rate={variation.ClampedRate}");
+                _previewTts.SetVoice(variation.RealVoiceName);
+                _previewTts.SetPitch(variation.ClampedPitch);
+                _previewTts.SetRate(variation.ClampedRate);
+            }
+            else
+            {
+                _previewTts.SetVoice(voiceName);
+                _previewTts.SetPitch(1.0f);
+                _previewTts.SetRate(1.0f);
+            }
             _previewTts.Speak(AppResources.GetString("SAY_LetsPlayEuchre"));
         }
 

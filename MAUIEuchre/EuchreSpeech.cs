@@ -6,11 +6,19 @@ namespace MAUIEuchre
     {
         private INativeTts? _tts;
         private string? _voiceName;
+        private float _pitch = 1.0f;
+        private float _rate = 1.0f;
         private bool _disposed;
 
         public void SetVoice(string name)
         {
             _voiceName = name;
+        }
+
+        public void SetPitchAndRate(float pitch, float rate)
+        {
+            _pitch = pitch;
+            _rate = rate;
         }
 
         public void SetTts(INativeTts tts)
@@ -29,6 +37,8 @@ namespace MAUIEuchre
             if (_disposed || string.IsNullOrEmpty(s) || _tts == null) return;
             if (!string.IsNullOrEmpty(_voiceName))
                 _tts.SetVoice(_voiceName);
+            _tts.SetPitch(_pitch);
+            _tts.SetRate(_rate);
             _tts.Speak(s);
         }
 

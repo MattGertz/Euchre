@@ -49,6 +49,16 @@ namespace MAUIEuchre
                 _tts.SetVoice(voice);
         }
 
+        public void SetPitch(float pitch)
+        {
+            _tts?.SetPitch(pitch);
+        }
+
+        public void SetRate(float rate)
+        {
+            _tts?.SetSpeechRate(rate);
+        }
+
         public void Speak(string text)
         {
             _tts?.Speak(text, QueueMode.Flush, null, null);
