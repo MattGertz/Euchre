@@ -13,6 +13,9 @@
 		<!-- Display name -->
 		<ApplicationTitle>Matt's Euchre</ApplicationTitle>
 
+		<!-- Output file name -->
+		<AssemblyName>Matt's Euchre</AssemblyName>
+
 		<!-- App Identifier -->
 		<ApplicationId>com.wheresthatcat.euchre</ApplicationId>
 

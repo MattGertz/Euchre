@@ -1222,7 +1222,7 @@ namespace MAUIEuchre
                 }
             }
 
-            SetCardImage(handKitty[0], EuchrePlayer.Seats.Player, KittyCard1, descOverride: "Kitty card 1");
+            SetCardImage(handKitty[0], EuchrePlayer.Seats.Player, KittyCard1, trumpOverride: EuchreCard.Suits.NoSuit);
 
             if (!ruleUseNineOfHearts)
             {
