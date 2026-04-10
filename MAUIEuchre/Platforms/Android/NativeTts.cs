@@ -61,7 +61,7 @@ namespace MAUIEuchre
 
         public void Speak(string text)
         {
-            _tts?.Speak(text, QueueMode.Flush, null, null);
+            _tts?.Speak(text, QueueMode.Add, null, null);
         }
 
         public void Stop()
