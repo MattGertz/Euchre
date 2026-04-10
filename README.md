@@ -15,18 +15,14 @@ about that UI stack.  The biggest change, though, was that I changed the entire 
 I simply cached the current state and let the message loop carryout whatever business it needed to do (including quitting/closing, something that was a lot trickier to handle in 
 the VB version in that case), and then whenever the user clicked something on the screen, I'd figure out what state we were in and handle the event accordingly.
 
-Time has marched on, and even my later C#/WPF implementation is looking a little, um, _quaint_.  If I were rewriting this app now, I'd certainly make this a mobile app and (in the 
-spirit of .NET dogfooding) leverage something like MAUI to handle the UI stack.  MAUI and WPF are similar in the way that they handle UI elements and both are XAML-based, so the resource 
-and event handling wouldn't be too much of a change, but the graphics themselves would certainly need an overhaul.  I'd also probably include a way to play with friends online.
-The AI & rules logic in this code still holds up well, at least! 
+Time has marched on, and I've finally updated this game, porting it from WPF to .NET MAUI so that it can run on both Android and Windows.  A number of bug fixes made it into the port, and I've also added card animation, a new card back, chamfered cards, and made other important UI improvements.  The Windows version will now create extra voices if you don't have enough installed (though you need at least one to copy from) -- Android has enough voices most of the time.  Android requires API 21 (Androidn 5.0 or later), and Windows requires Win 10 version 2004 (May 2020 or later).   .NET 9.0 is used for the framework. 
 
-Alas, I don't currently have the time to dig into another version, but as at least one person has recently expressed an interest in revisiting the code, I'm putting both the VB and C# versions
-up on GitHub in case anyone else wants to play around with it.  I'm going to leave the main branch intact as the nominal baseline (mostly because I am unlikely to find time
+Feel free to submit your own improvements.  I'm going to leave the main branch intact as the nominal baseline (mostly because I am unlikely to find time
 to review PRs); changes should go into branches instead.
 
 As far as the legal stuff goes (drum roll for the MIT license, please):
 
-Copyright 2006, 2013, 2021 Matthew W. Gertz
+Copyright 2006, 2013, 2021, 2026 Matthew W. Gertz
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
