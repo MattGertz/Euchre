@@ -591,6 +591,58 @@ namespace MAUIEuchre
             EuchreGrid.Scale = scale;
         }
 
+        private void OnPageSizeChanged(object? sender, EventArgs e)
+        {
+            if (Width <= 0 || Height <= 0) return;
+
+            bool isPortrait = Height > Width;
+            if (isPortrait == _isPortrait) return;
+            _isPortrait = isPortrait;
+
+            if (isPortrait)
+            {
+                // Portrait: buttons on top, table in middle, status at bottom
+                OuterGrid.ColumnDefinitions.Clear();
+                OuterGrid.RowDefinitions.Clear();
+                OuterGrid.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+                OuterGrid.RowDefinitions.Add(new RowDefinition(GridLength.Star));
+                OuterGrid.RowDefinitions.Add(new RowDefinition(new GridLength(150)));
+
+                ButtonPanel.Orientation = StackOrientation.Horizontal;
+                ButtonPanel.HorizontalOptions = LayoutOptions.Center;
+                Grid.SetRow(ButtonPanel, 0);
+                Grid.SetColumn(ButtonPanel, 0);
+
+                Grid.SetRow(CenterContainer, 1);
+                Grid.SetColumn(CenterContainer, 0);
+
+                Grid.SetRow(StatusPanel, 2);
+                Grid.SetColumn(StatusPanel, 0);
+                StatusPanel.Margin = new Thickness(4, 2, 4, 4);
+            }
+            else
+            {
+                // Landscape: buttons left, table center, status right
+                OuterGrid.RowDefinitions.Clear();
+                OuterGrid.ColumnDefinitions.Clear();
+                OuterGrid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
+                OuterGrid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+                OuterGrid.ColumnDefinitions.Add(new ColumnDefinition(new GridLength(200)));
+
+                ButtonPanel.Orientation = StackOrientation.Vertical;
+                ButtonPanel.HorizontalOptions = LayoutOptions.Fill;
+                Grid.SetRow(ButtonPanel, 0);
+                Grid.SetColumn(ButtonPanel, 0);
+
+                Grid.SetRow(CenterContainer, 0);
+                Grid.SetColumn(CenterContainer, 1);
+
+                Grid.SetRow(StatusPanel, 0);
+                Grid.SetColumn(StatusPanel, 2);
+                StatusPanel.Margin = new Thickness(2, 4, 4, 4);
+            }
+        }
+
         private void InitializeLabelArray()
         {
             gameTableTopCards[(int)EuchrePlayer.Seats.LeftOpponent, 0] = LeftOpponentCard1;
@@ -2026,7 +2078,16 @@ namespace MAUIEuchre
 
         private async void RulesButton_Click(object? sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new EuchreRules());
+            try
+            {
+                var rulesPage = new EuchreRules();
+                await Navigation.PushModalAsync(rulesPage);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Rules crash: {ex}");
+                await DisplayAlert("Error", ex.ToString(), "OK");
+            }
         }
 
         #endregion
@@ -2143,6 +2204,7 @@ namespace MAUIEuchre
         private uint _animationDuration = 167;
         private CancellationTokenSource _gameCancel = new();
         private INativeTts? _nativeTts;
+        private bool _isPortrait = false;
 
         private EuchreCardDeck _gameDeck = null!;
 

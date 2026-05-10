@@ -8,6 +8,7 @@ namespace MAUIEuchre
         private List<VoiceVariation> _variations = new();
         private INativeTts? _previewTts;
         private bool _voicesInitializing = true;
+        private bool _isPortrait = false;
         #endregion
 
         #region "Public methods"
@@ -224,6 +225,46 @@ namespace MAUIEuchre
             _previewTts = null;
             GameSettings.Reset();
             UpdateSettings();
+        }
+
+        private void OnOptionsSizeChanged(object? sender, EventArgs e)
+        {
+            if (Width <= 0 || Height <= 0) return;
+
+            bool isPortrait = Width < 600;
+            if (isPortrait == _isPortrait) return;
+            _isPortrait = isPortrait;
+
+            if (isPortrait)
+            {
+                // Stack rule/gameplay options vertically
+                OptionsColumnsGrid.ColumnDefinitions.Clear();
+                OptionsColumnsGrid.RowDefinitions.Clear();
+                OptionsColumnsGrid.ColumnSpacing = 0;
+                OptionsColumnsGrid.RowSpacing = 12;
+                OptionsColumnsGrid.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+                OptionsColumnsGrid.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+
+                Grid.SetColumn(RuleOptionsBorder, 0);
+                Grid.SetRow(RuleOptionsBorder, 0);
+                Grid.SetColumn(GameplayOptionsBorder, 0);
+                Grid.SetRow(GameplayOptionsBorder, 1);
+            }
+            else
+            {
+                // Side by side
+                OptionsColumnsGrid.RowDefinitions.Clear();
+                OptionsColumnsGrid.ColumnDefinitions.Clear();
+                OptionsColumnsGrid.RowSpacing = 0;
+                OptionsColumnsGrid.ColumnSpacing = 12;
+                OptionsColumnsGrid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+                OptionsColumnsGrid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+
+                Grid.SetColumn(RuleOptionsBorder, 0);
+                Grid.SetRow(RuleOptionsBorder, 0);
+                Grid.SetColumn(GameplayOptionsBorder, 1);
+                Grid.SetRow(GameplayOptionsBorder, 0);
+            }
         }
         #endregion
     }

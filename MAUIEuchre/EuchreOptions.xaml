@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MAUIEuchre.EuchreOptions"
              Shell.NavBarIsVisible="False"
+             SizeChanged="OnOptionsSizeChanged"
              Title="Matt's Euchre Options"
              BackgroundColor="#1A1A2E">
     <ScrollView>
@@ -22,9 +23,9 @@
             </Grid>
 
             <!-- Rule options and Gameplay options side by side -->
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+            <Grid x:Name="OptionsColumnsGrid" ColumnDefinitions="*,*" ColumnSpacing="12">
                 <!-- Rule options -->
-                <Border Stroke="#FFD700" Padding="8" StrokeShape="RoundRectangle 6" Grid.Column="0" BackgroundColor="#2A2A4A">
+                <Border x:Name="RuleOptionsBorder" Stroke="#FFD700" Padding="8" StrokeShape="RoundRectangle 6" Grid.Column="0" BackgroundColor="#2A2A4A">
                     <VerticalStackLayout Spacing="6">
                         <Label Text="Rule options:" TextColor="#FFD700" FontAttributes="Bold" />
                         <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="6" ColumnSpacing="6">
@@ -41,7 +42,7 @@
                 </Border>
 
                 <!-- Gameplay options -->
-                <Border Stroke="#FFD700" Padding="8" StrokeShape="RoundRectangle 6" Grid.Column="1" BackgroundColor="#2A2A4A">
+                <Border x:Name="GameplayOptionsBorder" Stroke="#FFD700" Padding="8" StrokeShape="RoundRectangle 6" Grid.Column="1" BackgroundColor="#2A2A4A">
                     <VerticalStackLayout Spacing="6">
                         <Label Text="Gameplay options:" TextColor="#FFD700" FontAttributes="Bold" />
                         <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="6" ColumnSpacing="6">

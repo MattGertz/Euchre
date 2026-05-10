@@ -4,12 +4,13 @@
              xmlns:local="clr-namespace:MAUIEuchre"
              x:Class="MAUIEuchre.EuchreTable"
              Shell.NavBarIsVisible="False"
+             SizeChanged="OnPageSizeChanged"
              Title="Matt's Euchre">
 
-    <Grid BackgroundColor="#1B5E20" ColumnDefinitions="Auto,*,200">
+    <Grid x:Name="OuterGrid" BackgroundColor="#1B5E20" ColumnDefinitions="Auto,*,200">
 
         <!-- Left side buttons -->
-        <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" Spacing="10" Padding="8">
+        <StackLayout x:Name="ButtonPanel" Grid.Column="0" Orientation="Vertical" VerticalOptions="Center" Spacing="10" Padding="8">
             <Button Text="New Game" x:Name="NewGameButton" Clicked="NewGameButton_Click" BackgroundColor="#2E7D32" TextColor="White" CornerRadius="8" FontSize="12" WidthRequest="90">
                 <Button.Shadow>
                     <Shadow Brush="Black" Offset="3,3" Radius="6" Opacity="0.6" />
@@ -25,7 +26,7 @@
                     <Shadow Brush="Black" Offset="3,3" Radius="6" Opacity="0.6" />
                 </Button.Shadow>
             </Button>
-        </VerticalStackLayout>
+        </StackLayout>
 
         <Grid Grid.Column="1" x:Name="CenterContainer" SizeChanged="OnCenterContainerSizeChanged">
             <AbsoluteLayout WidthRequest="855" HeightRequest="735" HorizontalOptions="Center" VerticalOptions="Center" AnchorX="0.5" AnchorY="0.5" x:Name="EuchreGrid">
@@ -130,7 +131,7 @@
         </Grid>
 
         <!-- Right side: feedback area -->
-        <Border Grid.Column="2" BackgroundColor="#FFF8E1" Margin="2,4,4,4" StrokeShape="RoundRectangle 6" Stroke="#C8B560" StrokeThickness="1" Padding="0">
+        <Border x:Name="StatusPanel" Grid.Column="2" BackgroundColor="#FFF8E1" Margin="2,4,4,4" StrokeShape="RoundRectangle 6" Stroke="#C8B560" StrokeThickness="1" Padding="0">
             <ScrollView x:Name="StatusScrollView">
                 <Label x:Name="StatusArea" TextColor="#1A1A2E" FontSize="12" Padding="6" LineBreakMode="WordWrap" TextType="Html" />
             </ScrollView>
