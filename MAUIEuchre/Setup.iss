@@ -1,4 +1,5 @@
 [Setup]
+AppId={{B8A3D4E1-7F2C-4A5D-9E6B-1C3D5F7A8B9E}
 AppName=Matt's Euchre
 AppVersion=5.1
 AppPublisher=Matthew Gertz
