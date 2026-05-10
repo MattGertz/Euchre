@@ -1,6 +1,6 @@
 [Setup]
 AppName=Matt's Euchre
-AppVersion=5.0
+AppVersion=5.1
 AppPublisher=Matthew Gertz
 DefaultDirName={autopf}\Matts Euchre
 DefaultGroupName=Matt's Euchre

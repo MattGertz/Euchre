@@ -628,6 +628,7 @@ effects and speech, better window handling, menus, and better resource handling.
 &lt;p&gt;Version 4.0 &amp;mdash; 6/3/2013. Rewrote code (still VB) to use a state model.&lt;/p&gt;
 &lt;p&gt;Version 4.1 &amp;mdash; 12/29/2014. Ported code to C#.&lt;/p&gt;
 &lt;p&gt;Version 5.0 &amp;mdash; 2026. Ported to .NET MAUI for Android.&lt;/p&gt;
+&lt;p&gt;Version 5.1 &amp;mdash; 2026. Added portrait mode support.&lt;/p&gt;
 
 &lt;p&gt;I hope you enjoy this game!&lt;/p&gt;
 &lt;p&gt;&amp;mdash;Matt&amp;mdash;&lt;/p&gt;
